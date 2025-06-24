@@ -1,14 +1,3 @@
-import "./globals.css";
-
-export const metadata = {
-  title: "",
-  description: "",
-};
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+export default function DashboardLayout({ children }) {
+  return <div className="ms-full-creen">{children}</div>;
 }

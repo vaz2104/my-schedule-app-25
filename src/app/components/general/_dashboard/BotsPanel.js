@@ -1,0 +1,23 @@
+"use client";
+import { useEffect, useState } from "react";
+import FullScreenLoader from "../../ui/FullScreenLoader";
+import BotsList from "./BotsList";
+import NewBotButton from "./NewBotButton";
+
+export default function BotsPanel() {
+  const [isLoader, setIsLoader] = useState(false);
+
+  if (isLoader) return <FullScreenLoader />;
+
+  return (
+    <div className="flex-1 flex flex-col justify-center items-center">
+      <NewBotButton />
+
+      <div className="my-4 border-t border-gray-100 max-w-40 mx-auto w-full border-dashedbox-content"></div>
+
+      <div className="ms-container">
+        <BotsList />
+      </div>
+    </div>
+  );
+}

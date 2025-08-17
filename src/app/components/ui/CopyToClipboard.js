@@ -1,5 +1,7 @@
+"use client";
+import { cn } from "@/app/lib/cn";
+import { CopyIcon } from "./Icons";
 import { useCallback, useState } from "react";
-import { CopyIcon } from "../components/ui/Icons";
 
 export default function CopyToClipboard({ text, onCopy, children, className }) {
   const [copied, setCopied] = useState(false);
@@ -27,12 +29,16 @@ export default function CopyToClipboard({ text, onCopy, children, className }) {
   return (
     <button
       onClick={() => copyFn(text)}
-      className={`${className} flex items-center text-gray-500 bg-gray-100 px-4 py-2 rounded-md hover:bg-gray-200 transition-all ${
-        copied && "!bg-green-200 !text-green-700"
-      }`}
+      className={cn(
+        "button dark flex items-center text-md mt-4 transition-all w-full border border-transparent",
+        className,
+        copied && "!bg-green-200 !text-green-700 border border-green-600"
+      )}
     >
-      <span className="w-4 h-4 block mr-2">
-        <CopyIcon />
+      <span className="block mr-2">
+        <CopyIcon
+          className={cn("w-4 h-4 text-white", copied && "text-green-700")}
+        />
       </span>
       <span>{children ? children : copied ? "Скопійовано" : "Скопіювати"}</span>
     </button>

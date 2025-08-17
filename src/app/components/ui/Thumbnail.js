@@ -1,9 +1,15 @@
 import { cn } from "@/app/lib/cn";
 import { NoImageIcon } from "./Icons";
 
-export default function Thumbnail({ url, size = "sm" }) {
+export default function Thumbnail({ url, size = "sm", theme = "dark" }) {
   let sizeStyles = "";
   let iconSizeStyles = "";
+  let themeStyles = "border-gray-800 bg-gray-600";
+
+  if ((theme = "light")) {
+    themeStyles = "border-gray-200  bg-gray-100";
+  }
+
   switch (size) {
     case "xs":
       sizeStyles = "size-10";
@@ -26,8 +32,9 @@ export default function Thumbnail({ url, size = "sm" }) {
   return (
     <div
       className={cn(
-        "flex justify-center items-center border-gray-800 border bg-gray-600 overflow-hidden rounded-full",
-        sizeStyles
+        "flex justify-center items-center border overflow-hidden rounded-full",
+        sizeStyles,
+        themeStyles
       )}
     >
       {url ? (

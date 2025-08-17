@@ -9,7 +9,7 @@ export default function NotificationCard({ type }) {
           <div
             className={cn(
               "relative inline-block shrink-0 w-12 h-12  border-2 border-gray-200 rounded-full",
-              type === "subscribe" && "border-green-500",
+              type === "subscribe" && "border-green-600",
               type === "unsubscribe" && "border-red-500"
             )}
           >
@@ -23,14 +23,14 @@ export default function NotificationCard({ type }) {
 
             <span
               className={cn(
-                "absolute bottom-0 right-0 -mr-0.5 -mb-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full",
-                type === "subscribe" && "text-green-500 bg-green-100",
-                type === "unsubscribe" && "text-red-500 bg-red-100"
+                "absolute bottom-0 right-0 -mr-1 -mb-1 inline-flex items-center justify-center rounded-full",
+                type === "subscribe" && "text-green-600 ",
+                type === "unsubscribe" && "text-red-500 "
               )}
             >
               {type === "subscribe" && <CheckCircleIcon className="w-6 h-6" />}
               {type === "unsubscribe" && (
-                <ExclamationCircleIcon className="w-6 h-6" />
+                <ExclamationCircleIcon className="w-7 h-7" />
               )}
             </span>
           </div>

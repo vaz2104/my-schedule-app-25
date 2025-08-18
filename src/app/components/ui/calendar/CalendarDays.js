@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CalendarService from "./CalendarService";
 import { useCalendarStore } from "./useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import { cn } from "@/app/lib/cn";
 
 export default function CalendarDays({ options }) {
   const {
@@ -101,23 +102,24 @@ export default function CalendarDays({ options }) {
           let classes = "";
 
           if (day.selected || selected.includes(formatDate(day.date)))
-            classes += " selectedWeekDay";
+            classes += " selectedWeekDay animate__animated animate__bounceIn";
 
           if (
             day.number === new Date().getDate() &&
             day.month === new Date().getMonth()
           ) {
-            classes += " activeWeekDay";
+            classes += " activeWeekDay animate__animated animate__bounceIn";
           }
 
           if (formatDate(day.date) == formatDate(new Date(customStateValue)))
-            classes += " selectedWeekDay";
+            classes += " selectedWeekDay animate__animated animate__bounceIn";
 
-          if (!isDisabled) {
-            classes += " hover:bg-slate-200 cursor-pointer";
-          } else {
-            classes += " !cursor-default";
-          }
+          // FOR DESKTOP
+          // if (!isDisabled) {
+          //   classes += " hover:bg-slate-200 cursor-pointer";
+          // } else {
+          //   classes += " !cursor-default";
+          // }
 
           return (
             <div
@@ -128,10 +130,16 @@ export default function CalendarDays({ options }) {
               key={`day-${index}`}
             >
               <div
-                className={`relative w-11 h-11 flex justify-center items-center rounded-full ${classes}`}
+                className={`relative w-11 h-11 flex justify-center items-center`}
                 onClick={() => (!isDisabled ? dayHandler(day) : {})}
               >
-                <p className="block">{day.number}</p>
+                <span
+                  className={cn(
+                    "absolute top-0 left-0 right-0 bottom-0 rounded-full",
+                    classes
+                  )}
+                ></span>
+                <p className="block relative z-20">{day.number}</p>
 
                 {day.currentMonth && schedule.length ? (
                   <>

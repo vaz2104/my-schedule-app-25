@@ -135,14 +135,14 @@ body {
 
 
 .selectedWeekDay {
-  @apply !bg-gray-300
+  @apply !bg-gray-300 
 }
 
 .activeWeekDay {
   @apply !text-red-600 !bg-red-200
 }
 
-.activeWeekDay p {
+.activeWeekDay + p {
   @apply !text-red-600
 }
 

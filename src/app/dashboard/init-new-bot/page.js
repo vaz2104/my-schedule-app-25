@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import CopyToClipboard from "@/app/lib/CopyToClipboard";
 import BackButton from "@/app/components/ui/BackButton";
+import CopyToClipboard from "@/app/components/ui/CopyToClipboard";
+import { CheckCircleIcon } from "@/app/components/ui/Icons";
+import { cn } from "@/app/lib/cn";
 
 export default function InitNewBot() {
   const [activeStep, setActiveStep] = useState(4);
@@ -123,7 +125,15 @@ export default function InitNewBot() {
             <div></div>
           </div>
           <div className={`step ${activeStep === 4 ? "stepActive" : ""}`}>
-            <span>🎉</span>
+            <span className="">
+              <CheckCircleIcon
+                className={cn(
+                  "w-6 h-6 text-gray-400",
+                  activeStep === 4 &&
+                    "text-white animate__animated animate__bounceIn"
+                )}
+              />
+            </span>
           </div>
         </div>
 

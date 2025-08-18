@@ -18,6 +18,7 @@ export default function BaseModal({
   size, // sx | sm | md | lg | xl
   loading,
   error,
+  hideErrorFn,
 }) {
   const modalSize = size ? `max-w-${size}` : "";
 
@@ -35,6 +36,26 @@ export default function BaseModal({
           {loading && (
             <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-white/40 backdrop-blur-xs 75 z-50 flex justify-center items-center">
               <Spinner size="md" />
+            </div>
+          )}
+
+          {error && (
+            <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-black/20 backdrop-blur-xs 75 z-50 flex justify-center items-center">
+              <div className="p-4">
+                <div className=" bg-white rounded-lg p-4">
+                  <Alert type={"error"}>{error}</Alert>
+                  {hideErrorFn && (
+                    <button
+                      type="button"
+                      className="min-w-40 button m-auto"
+                      onClick={hideErrorFn}
+                      disabled={loading}
+                    >
+                      OK
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           )}
 
@@ -71,11 +92,6 @@ export default function BaseModal({
               </div>
             )}
 
-            {error && (
-              <div className="mt-4">
-                <Alert type={"error"}>{error}</Alert>
-              </div>
-            )}
             {children}
 
             {!hideControls && (

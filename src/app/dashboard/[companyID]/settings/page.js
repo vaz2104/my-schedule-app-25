@@ -1,5 +1,7 @@
 import Plans from "@/app/components/admin/Plans";
 import ThemePalette from "@/app/components/admin/ThemePalette";
+import PlanFree from "@/app/components/ui/PlanFree";
+import Link from "next/link";
 
 export default function SettingsPage() {
   return (
@@ -9,9 +11,14 @@ export default function SettingsPage() {
       </div>
       <div className="mb-8">
         <div className="mb-2">
-          <h2 className="font-bold text-lg">Тарифний план</h2>
+          <h2 className="font-bold text-lg">Ваш тарифний план</h2>
         </div>
-        <Plans />
+        <PlanFree />
+        <div className="mt-4">
+          <Link href="/dashboard/3/pricing" className="button w-full">
+            Переглянути інші плани
+          </Link>
+        </div>
       </div>
       <div className="mb-8">
         <div className="mb-4">

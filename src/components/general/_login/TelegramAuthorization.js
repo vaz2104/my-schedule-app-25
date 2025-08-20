@@ -31,7 +31,9 @@ export default function TelegramAuthorization({ telegramUserID }) {
       redirect(`/`);
     }
 
-    redirect(role === "client" ? `/panel/${panelID}` : "/dashboard");
+    redirect(
+      role === "client" ? `/panel/${panelID}` : "/dashboard/presentation"
+    );
   }
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/cn";
+import { cn } from "@/lib/cn";
 import React from "react";
 
 export default function ClientSingle() {

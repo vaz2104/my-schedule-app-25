@@ -1,5 +1,5 @@
-import ClientCard from "@/app/components/admin/ClientCard";
-import ClientsWidget from "@/app/components/admin/ClientsWidget";
+import ClientCard from "@/components/admin/ClientCard";
+import ClientsWidget from "@/components/admin/ClientsWidget";
 import React from "react";
 
 export default function Clients() {

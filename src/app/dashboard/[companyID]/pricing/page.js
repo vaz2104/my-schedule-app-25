@@ -1,4 +1,4 @@
-import Plans from "@/app/components/admin/Plans";
+import Plans from "@/components/admin/Plans";
 
 export default function PricingPage() {
   return (

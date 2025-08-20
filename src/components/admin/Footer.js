@@ -8,7 +8,7 @@ import {
   UserSettingsIcon,
   UsersGroupIcon,
 } from "../ui/Icons";
-import { useBaseURL } from "@/app/hooks/useBaseURL";
+import { useBaseURL } from "@/hooks/useBaseURL";
 
 export default function Footer() {
   const { baseDashboardLink } = useBaseURL();

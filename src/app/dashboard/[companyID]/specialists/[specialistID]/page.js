@@ -1,9 +1,9 @@
-import ScheduleModalForm from "@/app/components/admin/ScheduleModalForm";
-import GenerateSchedule from "@/app/components/admin/GenerateSchedule";
-import StatisticWidget from "@/app/components/admin/StatisticWidget";
-import Calendar from "@/app/components/ui/calendar/Calendar";
-import { PlusIcon, TrashIcon } from "@/app/components/ui/Icons";
-import { cn } from "@/app/lib/cn";
+import ScheduleModalForm from "@/components/admin/ScheduleModalForm";
+import GenerateSchedule from "@/components/admin/GenerateSchedule";
+import StatisticWidget from "@/components/admin/StatisticWidget";
+import Calendar from "@/components/ui/calendar/Calendar";
+import { PlusIcon, TrashIcon } from "@/components/ui/Icons";
+import { cn } from "@/lib/cn";
 
 export default function SpecialistSingle() {
   return (

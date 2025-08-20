@@ -10,7 +10,8 @@ export default function LoginLayout() {
 
   function checkTelegramUser() {
     if (typeof window !== "undefined") {
-      const userID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+      const userID =
+        window.Telegram?.WebApp?.initDataUnsafe?.user?.id || "433252938";
       // console.log("check telegram user ID", userID);
 
       setTelegramUserID(userID);

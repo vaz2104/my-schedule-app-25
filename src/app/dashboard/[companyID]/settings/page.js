@@ -1,6 +1,6 @@
-import Plans from "@/app/components/admin/Plans";
-import ThemePalette from "@/app/components/admin/ThemePalette";
-import PlanFree from "@/app/components/ui/PlanFree";
+import Plans from "@/components/admin/Plans";
+import ThemePalette from "@/components/admin/ThemePalette";
+import PlanFree from "@/components/ui/PlanFree";
 import Link from "next/link";
 
 export default function SettingsPage() {

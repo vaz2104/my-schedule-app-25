@@ -1,5 +1,5 @@
-import ServiceForm from "@/app/components/admin/ServiceForm";
-import { FireIcon, PencilIcon, TrashIcon } from "@/app/components/ui/Icons";
+import ServiceForm from "@/components/admin/ServiceForm";
+import { FireIcon, PencilIcon, TrashIcon } from "@/components/ui/Icons";
 
 export default function Services() {
   return (

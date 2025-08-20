@@ -1,4 +1,4 @@
-import NotificationCard from "@/app/components/ui/NotificationCard";
+import NotificationCard from "@/components/ui/NotificationCard";
 import React from "react";
 
 export default function Events() {

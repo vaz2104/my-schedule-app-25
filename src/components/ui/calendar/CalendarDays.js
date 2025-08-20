@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import CalendarService from "./CalendarService";
 import { useCalendarStore } from "./useCalendarStore";
 import { useShallow } from "zustand/shallow";
-import { cn } from "@/app/lib/cn";
+import { cn } from "@/lib/cn";
 
 export default function CalendarDays({ options }) {
   const {

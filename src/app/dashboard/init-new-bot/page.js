@@ -3,12 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-import BackButton from "@/app/components/ui/BackButton";
-import CopyToClipboard from "@/app/components/ui/CopyToClipboard";
-import { CheckCircleIcon } from "@/app/components/ui/Icons";
-import { cn } from "@/app/lib/cn";
+import BackButton from "@/components/ui/BackButton";
+import CopyToClipboard from "@/components/ui/CopyToClipboard";
+import { CheckCircleIcon } from "@/components/ui/Icons";
+import { cn } from "@/lib/cn";
 import Lottie from "lottie-react";
-import successAnimation from "@/app/lib/success-animation.json";
+import successAnimation from "@/lib/success-animation.json";
 
 export default function InitNewBot() {
   const [activeStep, setActiveStep] = useState(1);

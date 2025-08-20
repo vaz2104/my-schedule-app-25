@@ -1,5 +1,5 @@
-import Footer from "@/app/components/admin/Footer";
-import Header from "@/app/components/admin/Header";
+import Footer from "@/components/admin/Footer";
+import Header from "@/components/admin/Header";
 
 export default function DashboardCompanyLayout({ children }) {
   return (

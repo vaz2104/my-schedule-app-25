@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from "@/app/components/ui/Icons";
+import { CheckCircleIcon } from "@/components/ui/Icons";
 
 export default function ThemePalette() {
   return (

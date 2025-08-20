@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/cn";
+import { cn } from "@/lib/cn";
 import { CheckCircleIcon, ExclamationCircleIcon } from "./Icons";
 
 export default function NotificationCard({ type }) {

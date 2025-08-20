@@ -1,5 +1,5 @@
 import Alert from "../Alert";
-import { cn } from "@/app/lib/cn";
+import { cn } from "@/lib/cn";
 import Spinner from "../Spinner";
 import { CloseIcon } from "../Icons";
 import Calendar from "./Calendar";

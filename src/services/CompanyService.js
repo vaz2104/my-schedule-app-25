@@ -45,23 +45,6 @@ class CompanyServiceClass {
     );
     return bots;
   }
-  async getAdminBots(botId) {
-    const bots = await fetchApi(
-      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/bot/${botId}/students`,
-      {},
-      "GET"
-    );
-    return bots;
-  }
-
-  // async deleteGroupStudent(relationId) {
-  //   const groups = await fetchApi(
-  //     `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/group-relations/student/?id=${relationId}`,
-  //     {},
-  //     "DELETE"
-  //   );
-  //   return groups;
-  // }
 }
 
 export const CompanyService = new CompanyServiceClass();

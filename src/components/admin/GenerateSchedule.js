@@ -3,9 +3,9 @@ import { CheckCircleIcon, PlusIcon, TrashIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
 import { useRef, useState } from "react";
 import Calendar from "../ui/calendar/Calendar";
-import { cn } from "@/app/lib/cn";
+import { cn } from "@/lib/cn";
 import Lottie from "lottie-react";
-import successAnimation from "@/app/lib/success-animation.json";
+import successAnimation from "@/lib/success-animation.json";
 
 export default function GenerateSchedule() {
   const [isModalVisible, setIsModalVisible] = useState(false);

@@ -1,7 +1,7 @@
-import StatisticWidget from "@/app/components/admin/StatisticWidget";
-import WeekCalendar from "@/app/components/ui/calendar/WeekCalendar";
-import { CheckCircleIcon } from "@/app/components/ui/Icons";
-import { cn } from "@/app/lib/cn";
+import StatisticWidget from "@/components/admin/StatisticWidget";
+import WeekCalendar from "@/components/ui/calendar/WeekCalendar";
+import { CheckCircleIcon } from "@/components/ui/Icons";
+import { cn } from "@/lib/cn";
 import Link from "next/link";
 
 export default function DashboardHome() {

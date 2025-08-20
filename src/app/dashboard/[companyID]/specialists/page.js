@@ -1,5 +1,6 @@
-import ClientCard from "@/app/components/admin/ClientCard";
-import InviteWorker from "@/app/components/admin/InviteWorker";
+import ClientCard from "@/components/admin/ClientCard";
+import InviteWorker from "@/components/admin/InviteWorker";
+// import InviteWorker from "@/components/admin/InviteWorker";
 import React from "react";
 
 export default function Specialists() {

@@ -1,39 +1,45 @@
 "use client";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import FullScreenLoader from "../../ui/FullScreenLoader";
 import { UserService } from "@/services/UserService";
 import { redirect, useSearchParams } from "next/navigation";
+import { ThemeContext } from "@/context/ThemeContext";
 
 export default function TelegramAuthorization({ telegramUserID }) {
+  const { setCriticallError } = useContext(ThemeContext);
   const searchParams = useSearchParams();
   const panelID = searchParams.get("panelID");
   const role = searchParams.get("role");
 
   async function loadUserInfo() {
-    const platformUser = await UserService.getTelegramUser({
+    const platformUserResponse = await UserService.getTelegramUser({
       userId: telegramUserID,
     });
 
-    if (!platformUser?.length) {
-      redirect(`/`);
+    if (
+      platformUserResponse.status !== 200 ||
+      !platformUserResponse?.data?.length
+    ) {
+      setCriticallError("При завантаженні даних сталася помилка!");
+      return;
     }
+
+    const platformUser = platformUserResponse?.data[0];
 
     const newSession = await fetch("/api/session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: platformUser[0]?._id,
+        userId: platformUser?._id,
         role,
       }),
     });
 
-    if (!newSession) {
-      redirect(`/`);
+    if (newSession) {
+      redirect(
+        role === "client" ? `/panel/${panelID}` : "/dashboard/presentation"
+      );
     }
-
-    redirect(
-      role === "client" ? `/panel/${panelID}` : "/dashboard/presentation"
-    );
   }
 
   useEffect(() => {

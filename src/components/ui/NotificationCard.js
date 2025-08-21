@@ -4,7 +4,7 @@ import { CheckCircleIcon, ExclamationCircleIcon } from "./Icons";
 export default function NotificationCard({ type }) {
   return (
     <div>
-      <div className="w-full mb-4 p-4 text-gray-900 rounded-lg shadow-sm bg-gray-50 bg-white border border-gray-50">
+      <div className="w-full mb-4 p-4 text-gray-900 rounded-lg shadow-sm bg-white border border-gray-50">
         <div className="flex">
           <div
             className={cn(

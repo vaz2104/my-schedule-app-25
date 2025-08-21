@@ -6,10 +6,12 @@ import Spinner from "@/components/ui/Spinner";
 import { CompanyService } from "@/services/CompanyService";
 import { AuthService } from "@/services/AuthService";
 import { redirect } from "next/navigation";
+import Alert from "@/components/ui/Alert";
 
 export default function BotsList() {
   const [bots, setBots] = useState([]);
   const [isLoader, setIsLoader] = useState(true);
+  const [error, setError] = useState(null);
 
   async function goToBotDashboard(botId, role) {
     localStorage.removeItem("activePanel");
@@ -21,12 +23,12 @@ export default function BotsList() {
   async function loadBots() {
     const session = await AuthService.getSession();
     const botsListResponse = await CompanyService.getBots(session.userId);
-    console.log(botsListResponse);
 
-    if (botsListResponse.status === 200) {
-      setBots(botsListResponse.data);
+    if (botsListResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
     }
 
+    setBots(botsListResponse.data);
     setIsLoader(false);
   }
 
@@ -40,6 +42,10 @@ export default function BotsList() {
         <Spinner />
       </div>
     );
+
+  if (error) {
+    return <Alert className={"mt-4"}>{error}</Alert>;
+  }
 
   if (!bots?.length)
     return (

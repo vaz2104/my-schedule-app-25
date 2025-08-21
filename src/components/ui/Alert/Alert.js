@@ -1,11 +1,11 @@
 import { cn } from "@/lib/cn";
 
-export default function Alert({ type, children, className }) {
+export default function Alert({ type = "error", children, className }) {
   let classes = "";
 
   switch (type) {
     case "error":
-      classes = "bg-red-50 text-red-800 dark:text-red-400";
+      classes = "bg-red-100 text-red-800 dark:text-red-400";
       break;
     case "warning":
       classes = "bg-yellow-50 text-yellow-800 dark:text-yellow-400";
@@ -25,7 +25,8 @@ export default function Alert({ type, children, className }) {
     <div
       className={cn(
         "flex items-center p-4 mb-4 text-sm rounded-lg dark:bg-gray-800",
-        classes
+        classes,
+        className
       )}
       role="alert"
     >

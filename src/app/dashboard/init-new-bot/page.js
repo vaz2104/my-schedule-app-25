@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import BackButton from "@/components/ui/BackButton";
 
 import Spinner from "@/components/ui/Spinner";
-import WarningModal from "@/components/ui/WarningModal";
 import Steps from "./Steps";
 import Step1 from "./Step1";
 import Presentation from "./Presentation";
@@ -16,19 +15,20 @@ import { CompanyService } from "@/services/CompanyService";
 import ConfirmProccessModal from "@/components/ui/ConfirmProccessModal";
 import { AuthService } from "@/services/AuthService";
 import BotCard from "@/components/admin/BotCard";
+import { ThemeContext } from "@/context/ThemeContext";
 
 export default function InitNewBot() {
+  const { setWarningError } = useContext(ThemeContext);
   const [activeStep, setActiveStep] = useState(1);
   const [isHintChecked, setIsHintChecked] = useState(false);
   const [botToken, setBotToken] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [telegramBotData, setTelegramBotData] = useState(null);
   const [bot, setBot] = useState({ _id: "68a621163e4da7cf817c8775" });
 
   async function nextStep(step) {
     if (activeStep === 1 && botToken === "") {
-      setErrorMessage(
+      setWarningError(
         "Щоб продовжити, введіть токен вашого бота у відповідне поле"
       );
       return false;
@@ -39,12 +39,10 @@ export default function InitNewBot() {
 
       const botInfoResponse = await CompanyService.getBotInfo(botToken);
 
-      console.log(botInfoResponse);
-
       if (botInfoResponse?.status === 200) {
         setTelegramBotData(botInfoResponse?.data);
       } else {
-        setErrorMessage(
+        setWarningError(
           "Cхоже, Ви ввели невірний токен! Система не може знайти Ваший бот!"
         );
       }
@@ -67,11 +65,11 @@ export default function InitNewBot() {
       botToken
     );
 
-    console.log(newBotResponse);
-
     if (newBotResponse?.status === 200) {
       setBot(newBotResponse?.data);
       setActiveStep(activeStep + 1);
+    } else {
+      setWarningError("Бот з даним токеном вже зареєстрований в системі!");
     }
 
     clearStepOneState();
@@ -149,12 +147,6 @@ export default function InitNewBot() {
           )}
         </div>
       </div>
-
-      <WarningModal
-        triger={errorMessage}
-        title={errorMessage}
-        confirmFn={() => setErrorMessage(null)}
-      />
 
       <ConfirmProccessModal
         triger={telegramBotData}

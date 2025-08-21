@@ -1,3 +1,3 @@
-export default function Page() {
+export default function Panel() {
   return <div>page</div>;
 }

@@ -1,3 +1,10 @@
+"use client";
+import { ThemeProvider } from "@/context/ThemeContext";
+
 export default function DashboardLayout({ children }) {
-  return <div className="ms-full-creen">{children}</div>;
+  return (
+    <ThemeProvider>
+      <div className="ms-full-creen">{children}</div>
+    </ThemeProvider>
+  );
 }

@@ -16,12 +16,12 @@ export default async function fetchApi(url, query = {}, method = "POST") {
 
     let response = await fetch(url, options);
 
-    if (response.status !== 200) {
-      console.log(await response.json());
-      return null;
-    }
-
-    return await response.json();
+    const answer = {
+      status: response.status,
+    };
+    const parsedData = await response.json();
+    answer.data = parsedData;
+    return answer;
   } catch (err) {
     console.warn("A ferchAPI Error", err.message);
     throw new Error(err);

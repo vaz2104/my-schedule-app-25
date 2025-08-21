@@ -1,13 +1,13 @@
 import { cn } from "@/lib/cn";
 
-export default function Spinner({ size = "md" }) {
+export default function Spinner({ size = "md", className }) {
   let sizeStyles = "";
   switch (size) {
     case "xs":
       sizeStyles = "size-4";
       break;
     case "sm":
-      sizeStyles = "size-6";
+      sizeStyles = "size-5";
       break;
     case "md":
       sizeStyles = "size-8";
@@ -20,7 +20,11 @@ export default function Spinner({ size = "md" }) {
     <div role="status">
       <svg
         aria-hidden="true"
-        className={cn("inline animate-spin spinner", sizeStyles)}
+        className={cn(
+          "inline animate-spin text-gray-200 fill-gray-600",
+          sizeStyles,
+          className
+        )}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

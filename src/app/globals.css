@@ -50,10 +50,6 @@ body {
   @apply mx-auto max-w-5xl w-full px-4
 }
 
-.spinner {
-  @apply text-gray-200 fill-gray-600
-}
-
 .button-bg-light {
   @apply border-gray-200 bg-gray-100 hover:bg-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300 transition-all
 }
@@ -62,7 +58,7 @@ body {
 }
 
 .button {
-  @apply flex items-center justify-center md:max-w-48 text-white bg-mainBlue hover:bg-mainBlueDark focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center
+  @apply flex items-center justify-center min-w-32 md:max-w-48 text-white bg-mainBlue hover:bg-mainBlueDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center
 }
 
 .button.yellow {

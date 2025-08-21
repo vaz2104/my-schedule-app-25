@@ -5,10 +5,6 @@ import BotsList from "./BotsList";
 import NewBotButton from "./NewBotButton";
 
 export default function BotsPanel() {
-  const [isLoader, setIsLoader] = useState(false);
-
-  if (isLoader) return <FullScreenLoader />;
-
   return (
     <div className="flex-1 flex flex-col justify-center items-center">
       <NewBotButton />

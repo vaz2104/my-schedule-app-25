@@ -1,6 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import FullScreenLoader from "../../ui/FullScreenLoader";
+
 import BotsList from "./BotsList";
 import NewBotButton from "./NewBotButton";
 

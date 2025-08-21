@@ -58,7 +58,7 @@ body {
 }
 
 .button {
-  @apply flex items-center justify-center min-w-32 md:max-w-48 text-white bg-mainBlue hover:bg-mainBlueDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center
+  @apply flex items-center justify-center md:max-w-48 text-white bg-mainBlue hover:bg-mainBlueDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center
 }
 
 .button.yellow {

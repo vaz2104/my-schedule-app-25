@@ -1,4 +1,3 @@
-"use client";
 import BotWidget from "./BotWidget";
 
 export default function ClientsWidget({ totalNumber }) {

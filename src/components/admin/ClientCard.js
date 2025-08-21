@@ -1,3 +1,4 @@
+"use client";
 import Thumbnail from "../ui/Thumbnail";
 import Link from "next/link";
 import { useBaseURL } from "@/hooks/useBaseURL";

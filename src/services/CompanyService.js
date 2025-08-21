@@ -45,6 +45,30 @@ class CompanyServiceClass {
     );
     return bots;
   }
+
+  async getClients(options) {
+    let sp = new URLSearchParams(options);
+    const queryString = sp.toString();
+
+    const data = await fetchApi(
+      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company-relation/client/${
+        queryString ? `?${queryString}` : ``
+      }`,
+      {},
+      "GET"
+    );
+
+    return data;
+  }
+
+  async getCompanyInfo(id) {
+    const bots = await fetchApi(
+      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company/${id}`,
+      {},
+      "GET"
+    );
+    return bots;
+  }
 }
 
 export const CompanyService = new CompanyServiceClass();

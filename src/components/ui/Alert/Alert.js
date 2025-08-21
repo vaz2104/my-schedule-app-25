@@ -24,7 +24,7 @@ export default function Alert({ type = "error", children, className }) {
   return (
     <div
       className={cn(
-        "flex items-center p-4 mb-4 text-sm rounded-lg dark:bg-gray-800",
+        "flex items-center p-4 text-sm rounded-lg dark:bg-gray-800",
         classes,
         className
       )}

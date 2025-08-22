@@ -30,7 +30,7 @@ export default function WarningModal({
             <span className="sr-only">Close modal</span>
           </button>
           <div className="p-4 md:p-5 text-center">
-            <div className="mb-16">
+            <div className="mb-8">
               <div className="m-auto w-32">
                 <Lottie animationData={warningAnimation} loop={false} />
               </div>

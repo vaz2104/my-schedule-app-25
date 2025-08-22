@@ -45,14 +45,16 @@ export default function BaseModal({
                 <div className=" bg-white rounded-lg p-4">
                   <Alert type={"error"}>{error}</Alert>
                   {hideErrorFn && (
-                    <button
-                      type="button"
-                      className="min-w-40 button m-auto"
-                      onClick={hideErrorFn}
-                      disabled={loading}
-                    >
-                      OK
-                    </button>
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        className="min-w-40 button m-auto"
+                        onClick={hideErrorFn}
+                        disabled={loading}
+                      >
+                        OK
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>

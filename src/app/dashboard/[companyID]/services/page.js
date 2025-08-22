@@ -1,151 +1,64 @@
+"use client";
 import ServiceForm from "@/components/admin/ServiceForm";
-import { FireIcon, PencilIcon, TrashIcon } from "@/components/ui/Icons";
+
+import Alert from "@/components/ui/Alert";
+import Spinner from "@/components/ui/Spinner";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { ServicesService } from "@/services/ServicesService ";
+import ServicesList from "@/components/admin/ServicesList";
 
 export default function Services() {
+  const [services, setServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const params = useParams();
+
+  async function loadServices() {
+    setIsLoading(true);
+    const servicesResponse = await ServicesService.getMany({
+      botId: params?.companyID,
+    });
+
+    if (servicesResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      setServices(servicesResponse.data);
+    }
+
+    setIsLoading(false);
+  }
+
+  console.log(services);
+
+  useEffect(() => {
+    loadServices();
+  }, []);
+
+  if (isLoading)
+    return (
+      <div className="py-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <Spinner />
+      </div>
+    );
+
+  if (error) {
+    return (
+      <div className="p-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <Alert className={"w-full"}>{error}</Alert>
+      </div>
+    );
+  }
   return (
     <div className="p-4">
       <div className="mb-8 mt-4 text-center">
         <h2 className="font-bold text-xl">Мої послуги</h2>
       </div>
       <div className="mb-6">
-        <ServiceForm />
+        <ServiceForm successHandler={loadServices} />
       </div>
-      <div className="border-t border-gray-200">
-        <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
-          <div>
-            <div className="font-bold">Комбінований манікюр</div>
-            <div>
-              <span className="mr-1 translate-y-1 inline-block">
-                <FireIcon className={"text-red-500"} />
-              </span>
-              <span className="text-red-500 text-sm">
-                знижка діє до 23-09-2015
-              </span>
-            </div>
-            <div className="text-gray-500">
-              <span className="text-red-600">220 грн.</span>
-              <span className="ml-2 line-through">320 грн.</span>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="mr-4">
-              <button className="button blank !px-2">
-                <PencilIcon className="w-4 text-black" />
-              </button>
-            </div>
-
-            <div className="">
-              <button className="button blank !px-2">
-                <TrashIcon className="w-4 text-red-600" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
-          <div>
-            <div className="font-bold">Покриття гель-лаком</div>
-            <div className="text-gray-500">
-              <span>620 грн.</span>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="mr-4">
-              <button className="button blank !px-2">
-                <PencilIcon className="w-4 text-black" />
-              </button>
-            </div>
-
-            <div className="">
-              <button className="button blank !px-2">
-                <TrashIcon className="w-4 text-red-600" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
-          <div>
-            <div className="font-bold">Нарощування нігтів</div>
-            <div className="text-gray-500">
-              <span>440 грн.</span>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="mr-4">
-              <button className="button blank !px-2">
-                <PencilIcon className="w-4 text-black" />
-              </button>
-            </div>
-
-            <div className="">
-              <button className="button blank !px-2">
-                <TrashIcon className="w-4 text-red-600" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
-          <div>
-            <div className="font-bold">Покриття гель-лаком</div>
-            <div className="text-gray-500">
-              <span>240 грн.</span>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="mr-4">
-              <button className="button blank !px-2">
-                <PencilIcon className="w-4 text-black" />
-              </button>
-            </div>
-
-            <div className="">
-              <button className="button blank !px-2">
-                <TrashIcon className="w-4 text-red-600" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
-          <div>
-            <div className="font-bold">Апаратний манікюр</div>
-            <div className="text-gray-500">
-              <span>340 грн.</span>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="mr-4">
-              <button className="button blank !px-2">
-                <PencilIcon className="w-4 text-black" />
-              </button>
-            </div>
-
-            <div className="">
-              <button className="button blank !px-2">
-                <TrashIcon className="w-4 text-red-600" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
-          <div>
-            <div className="font-bold">Дизайн нігтів</div>
-            <div className="text-gray-500">
-              <span>740 грн.</span>
-            </div>
-          </div>
-          <div className="flex">
-            <div className="mr-4">
-              <button className="button blank !px-2">
-                <PencilIcon className="w-4 text-black" />
-              </button>
-            </div>
-
-            <div className="">
-              <button className="button blank !px-2">
-                <TrashIcon className="w-4 text-red-600" />
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className="">
+        <ServicesList updateListHandler={loadServices} services={services} />
       </div>
     </div>
   );

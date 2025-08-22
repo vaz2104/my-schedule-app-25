@@ -3,28 +3,83 @@ import { PlusIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
 import { useState } from "react";
 import Calendar from "../ui/calendar/Calendar";
+import { ServicesService } from "@/services/ServicesService ";
+import { useParams } from "next/navigation";
 
-export default function ServiceForm() {
+export default function ServiceForm({ successHandler }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [priceWithSale, setPriceWithSale] = useState("");
+  const [saleEndDay, setSaleEndDay] = useState("");
   const [isSale, setIsSale] = useState(false);
+  const [error, setError] = useState(null);
+  const params = useParams();
 
   function closeModal() {
     setIsModalVisible(false);
-    setLoading(false);
+    setIsLoading(false);
     setIsSale(false);
     setPriceWithSale("");
     setName("");
     setPrice("");
   }
 
-  async function createService(params) {}
+  async function createService() {
+    setIsLoading(true);
+
+    if (!name) {
+      setError("Ви не вказали назву послуги");
+      setIsLoading(false);
+      return;
+    }
+
+    if (priceWithSale && !saleEndDay) {
+      setError(
+        "Ви вказали ціну зі знижкою, але не вказали дату закінчення акції"
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    if (!priceWithSale && saleEndDay) {
+      setError("Ви не вказали ціну зі знижкою");
+      setIsLoading(false);
+      return;
+    }
+
+    if (priceWithSale && saleEndDay && !price) {
+      setError("Ціна зі знижкою вказана, проте Ви не вказали стару ціну");
+      setIsLoading(false);
+      return;
+    }
+
+    const query = {
+      botId: params?.companyID,
+      service: name,
+      price,
+      timestamp: Date.now(),
+    };
+
+    if (isSale) {
+      query.priceWithSale = priceWithSale;
+      query.saleEndDay = saleEndDay;
+    }
+
+    const newServiceResponse = await ServicesService.create(query);
+    if (newServiceResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+      setIsLoading(false);
+    } else {
+      if (successHandler) successHandler();
+      closeModal();
+    }
+  }
 
   function selectSale() {
     setIsSale((saleState) => !saleState);
+
     if (!isSale) {
       setPriceWithSale("");
     }
@@ -47,7 +102,9 @@ export default function ServiceForm() {
           triger={isModalVisible}
           cancelFn={closeModal}
           confirmFn={createService}
-          loading={loading}
+          error={error}
+          hideErrorFn={() => setError(null)}
+          loading={isLoading}
         >
           <div className="">
             <div className="my-4">
@@ -122,7 +179,7 @@ export default function ServiceForm() {
                       Дата завершення акції
                     </label>
                     <div className="">
-                      <Calendar />
+                      <Calendar options={{ setChosenDate: setSaleEndDay }} />
                     </div>
                   </div>
                 </div>

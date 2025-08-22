@@ -79,7 +79,12 @@ body {
 .button.blank {
   @apply bg-transparent transition-all
 }
-
+.button.white {
+  @apply bg-white transition-all text-gray-900 border border-gray-200
+}
+.button.red {
+  @apply text-white bg-red-600
+}
 
 .step {
   @apply h-10 w-10 bg-gray-200 border border-gray-200 flex items-center justify-center rounded-full text-gray-400

@@ -28,6 +28,7 @@ export default function CalendarDays({ options }) {
   const multiselect = options?.multiselect || false;
   const isDisabledOldDays = options?.disabledOldDays || false;
   const setSelectedDays = options?.setSelectedDays || undefined;
+  const setChosenDate = options?.setChosenDate || undefined;
   const customStateValue = options?.customStateValue || null;
   const setCustomStateValue = options?.setCustomStateValue || undefined;
 
@@ -63,6 +64,7 @@ export default function CalendarDays({ options }) {
       setInitWeekDate(day.date);
       setSelectedDate(day.date);
       // closeModal("modalCalendar");
+      setChosenDate(day.date);
 
       if (day.month != new Date(setSelectedDate).getMonth()) {
         setInitCalendarDate(day.date);

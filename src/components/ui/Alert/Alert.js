@@ -8,7 +8,7 @@ export default function Alert({ type = "error", children, className }) {
       classes = "bg-red-100 text-red-800 dark:text-red-400";
       break;
     case "warning":
-      classes = "bg-yellow-50 text-yellow-800 dark:text-yellow-400";
+      classes = "bg-yellow-100 text-yellow-800 dark:text-yellow-400";
       break;
     case "success":
       classes = "bg-green-50 text-green-800 dark:text-green-400";

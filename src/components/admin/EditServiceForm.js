@@ -5,6 +5,7 @@ import { useState } from "react";
 import Calendar from "../ui/calendar/Calendar";
 import { ServicesService } from "@/services/ServicesService ";
 import { useParams } from "next/navigation";
+import Alert from "../ui/Alert";
 
 export default function EditServiceForm({ mapItem, successHandler }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -14,6 +15,7 @@ export default function EditServiceForm({ mapItem, successHandler }) {
   const [priceWithSale, setPriceWithSale] = useState("");
   const [saleEndDay, setSaleEndDay] = useState("");
   const [isSale, setIsSale] = useState(false);
+  const [sentNotification, setSentNotification] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
 
@@ -65,6 +67,12 @@ export default function EditServiceForm({ mapItem, successHandler }) {
       return;
     }
 
+    if (priceWithSale > price) {
+      setError("Ціна зі знижкою не може перевищувати стару ціну");
+      setIsLoading(false);
+      return;
+    }
+
     const query = {
       botId: params?.companyID,
       service: name,
@@ -74,10 +82,11 @@ export default function EditServiceForm({ mapItem, successHandler }) {
       saleEndDay: saleEndDay,
     };
 
-    const updatedServiceResponse = await ServicesService.update(
-      mapItem?.id,
-      query
-    );
+    const updatedServiceResponse = await ServicesService.update(mapItem?.id, {
+      query,
+      hasNotification: sentNotification,
+    });
+
     if (updatedServiceResponse.status !== 200) {
       setError("Сталася помилка при оновленні даних");
       setIsLoading(false);
@@ -94,6 +103,7 @@ export default function EditServiceForm({ mapItem, successHandler }) {
     if (!newState) {
       setPriceWithSale("");
       setSaleEndDay("");
+      setSentNotification(false);
     }
   }
 
@@ -196,6 +206,30 @@ export default function EditServiceForm({ mapItem, successHandler }) {
                         }}
                       />
                     </div>
+                  </div>
+                  <div className="my-4">
+                    {sentNotification && (
+                      <div className="mb-4">
+                        <Alert type="warning">
+                          Будьте уважні та перевірте всі зміни! Після збереження
+                          клієнти отримають повідомлення із всіма деталями про
+                          знижку!
+                        </Alert>
+                      </div>
+                    )}
+                    <label className="inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        value={sentNotification}
+                        onChange={() => setSentNotification(!sentNotification)}
+                        className="sr-only peer"
+                        checked={sentNotification}
+                      />
+                      <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-mainBlue "></div>
+                      <span className="block ms-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Сповістити клієнтів про знижку
+                      </span>
+                    </label>
                   </div>
                 </div>
               )}

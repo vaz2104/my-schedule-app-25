@@ -31,12 +31,13 @@ export default function EditServiceForm({ mapItem, successHandler }) {
     setIsLoading(false);
     setIsSale(false);
     setPriceWithSale("");
+    setSaleEndDay("");
     setName("");
     setPrice("");
   }
 
   async function createService() {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     if (!name) {
       setError("Ви не вказали назву послуги");
@@ -69,12 +70,9 @@ export default function EditServiceForm({ mapItem, successHandler }) {
       service: name,
       price,
       timestamp: Date.now(),
+      priceWithSale: priceWithSale,
+      saleEndDay: saleEndDay,
     };
-
-    if (isSale) {
-      query.priceWithSale = priceWithSale;
-      query.saleEndDay = saleEndDay;
-    }
 
     const updatedServiceResponse = await ServicesService.update(
       mapItem?.id,
@@ -89,10 +87,11 @@ export default function EditServiceForm({ mapItem, successHandler }) {
     }
   }
 
-  function selectSale() {
-    setIsSale((saleState) => !saleState);
+  function selectSale(state) {
+    const newState = !state;
+    setIsSale(newState);
 
-    if (!isSale) {
+    if (!newState) {
       setPriceWithSale("");
       setSaleEndDay("");
     }
@@ -153,7 +152,7 @@ export default function EditServiceForm({ mapItem, successHandler }) {
                 <input
                   type="checkbox"
                   value={isSale}
-                  onChange={() => selectSale()}
+                  onChange={() => selectSale(isSale)}
                   className="sr-only peer"
                   checked={isSale}
                 />
@@ -193,6 +192,7 @@ export default function EditServiceForm({ mapItem, successHandler }) {
                         options={{
                           setCustomStateValue: setSaleEndDay,
                           customStateValue: saleEndDay,
+                          disabledOldDays: true,
                         }}
                       />
                     </div>

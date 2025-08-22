@@ -2,6 +2,8 @@ import Alert from "../Alert";
 import { cn } from "@/lib/cn";
 import Spinner from "../Spinner";
 import { CloseIcon } from "../Icons";
+import Lottie from "lottie-react";
+import errorAnimation from "@/lib/error-animation.json";
 
 export default function BaseModal({
   triger,
@@ -34,29 +36,32 @@ export default function BaseModal({
         <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
           {/* <!-- Modal loader layer --> */}
           {loading && (
-            <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-white/40 backdrop-blur-xs 75 z-50 flex justify-center items-center">
+            <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-white/40 backdrop-blur-xs z-50 flex justify-center items-center">
               <Spinner size="md" />
             </div>
           )}
 
           {error && (
-            <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-black/20 backdrop-blur-xs 75 z-50 flex justify-center items-center">
-              <div className="p-4">
-                <div className=" bg-white rounded-lg p-4">
-                  <Alert type={"error"}>{error}</Alert>
-                  {hideErrorFn && (
-                    <div className="mt-4">
-                      <button
-                        type="button"
-                        className="min-w-40 button m-auto"
-                        onClick={hideErrorFn}
-                        disabled={loading}
-                      >
-                        OK
-                      </button>
-                    </div>
-                  )}
+            <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-white/20 backdrop-blur-xs 75 z-50 flex justify-center items-center">
+              <div className=" bg-red-200 rounded-lg w-full pt-8 pb-4 px-4 mx-8 border border-red-300">
+                <div className="w-24 m-auto">
+                  <Lottie animationData={errorAnimation} loop={false} />
                 </div>
+                <p className="text-center mt-2 mb-8 text-sm text-red-700">
+                  {error}
+                </p>
+                {hideErrorFn && (
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="min-w-40 button red m-auto"
+                      onClick={hideErrorFn}
+                      disabled={loading}
+                    >
+                      OK
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}

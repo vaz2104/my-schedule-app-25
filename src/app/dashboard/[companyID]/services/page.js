@@ -1,5 +1,5 @@
 "use client";
-import ServiceForm from "@/components/admin/ServiceForm";
+import NewServiceForm from "@/components/admin/NewServiceForm";
 
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
@@ -29,8 +29,6 @@ export default function Services() {
     setIsLoading(false);
   }
 
-  console.log(services);
-
   useEffect(() => {
     loadServices();
   }, []);
@@ -55,7 +53,7 @@ export default function Services() {
         <h2 className="font-bold text-xl">Мої послуги</h2>
       </div>
       <div className="mb-6">
-        <ServiceForm successHandler={loadServices} />
+        <NewServiceForm successHandler={loadServices} />
       </div>
       <div className="">
         <ServicesList updateListHandler={loadServices} services={services} />

@@ -1,12 +1,10 @@
 "use client";
-import { FireIcon, PencilIcon, TrashIcon } from "@/components/ui/Icons";
+import { FireIcon } from "@/components/ui/Icons";
 import { cn } from "@/lib/cn";
 import formatDate from "@/lib/formatDate";
 import Alert from "../ui/Alert";
-import ConfirmModal from "../ui/ConfirmModal";
-import { useContext, useState } from "react";
-import { ServicesService } from "@/services/ServicesService ";
-import { ThemeContext } from "@/context/ThemeContext";
+import DeleteServiceForm from "./DeleteServiceForm";
+import EditServiceForm from "./EditServiceForm";
 
 export default function ServiceCard({
   id,
@@ -16,33 +14,12 @@ export default function ServiceCard({
   saleEndDay,
   updateListHandler,
 }) {
-  const [editServiceId, setEditServiceId] = useState(null);
-  const [deleteServiceId, setDeleteServiceId] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const { setWarningError } = useContext(ThemeContext);
-
-  async function deleteService() {
-    setIsLoading(true);
-    const servicesResponse = await ServicesService.delete(deleteServiceId);
-
-    if (servicesResponse.status !== 200) {
-      setDeleteServiceId(null);
-      setWarningError("Сталася помилка при виконанні запиту");
-    } else {
-      if (updateListHandler) updateListHandler();
-    }
-
-    setIsLoading(false);
-  }
-
   if (!service)
     return (
       <div className="my-4">
         <Alert type="default">Помилка! Відсутні дані!</Alert>
       </div>
     );
-
-  console.log(deleteServiceId);
 
   return (
     <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
@@ -73,30 +50,18 @@ export default function ServiceCard({
       </div>
       <div className="flex">
         <div className="mr-4">
-          <button
-            className="button blank !px-2"
-            onClick={() => setEditServiceId(id)}
-          >
-            <PencilIcon className="w-4 text-black" />
-          </button>
+          <EditServiceForm
+            mapItem={{ id, service, price, priceWithSale, saleEndDay }}
+            successHandler={updateListHandler}
+          />
         </div>
         <div className="">
-          <button
-            className="button blank !px-2"
-            onClick={() => setDeleteServiceId(id)}
-          >
-            <TrashIcon className="w-4 text-red-600" />
-          </button>
+          <DeleteServiceForm
+            mapItemId={id}
+            successHandler={updateListHandler}
+          />
         </div>
       </div>
-
-      <ConfirmModal
-        triger={deleteServiceId}
-        cancelFn={() => setDeleteServiceId(null)}
-        confirmFn={deleteService}
-        title={`Ви дійсно бажаєте видалити дану послугу?`}
-        loading={isLoading}
-      />
     </div>
   );
 }

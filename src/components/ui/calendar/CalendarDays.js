@@ -28,7 +28,6 @@ export default function CalendarDays({ options }) {
   const multiselect = options?.multiselect || false;
   const isDisabledOldDays = options?.disabledOldDays || false;
   const setSelectedDays = options?.setSelectedDays || undefined;
-  const setChosenDate = options?.setChosenDate || undefined;
   const customStateValue = options?.customStateValue || null;
   const setCustomStateValue = options?.setCustomStateValue || undefined;
 

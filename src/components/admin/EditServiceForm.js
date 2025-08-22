@@ -36,8 +36,8 @@ export default function EditServiceForm({ mapItem, successHandler }) {
     setPrice("");
   }
 
-  async function createService() {
-    // setIsLoading(true);
+  async function updateService() {
+    setIsLoading(true);
 
     if (!name) {
       setError("Ви не вказали назву послуги");
@@ -109,7 +109,7 @@ export default function EditServiceForm({ mapItem, successHandler }) {
           title={"Редагування послуги"}
           triger={isModalVisible}
           cancelFn={closeModal}
-          confirmFn={createService}
+          confirmFn={updateService}
           error={error}
           hideErrorFn={() => setError(null)}
           loading={isLoading}

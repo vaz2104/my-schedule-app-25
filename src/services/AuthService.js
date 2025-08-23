@@ -42,26 +42,14 @@ class AuthServiceClass {
     if (session) redirect("/login");
   }
 
-  // async login(username, pass, role) {
-  //   const authData = await fetchApi(
-  //     `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/auth/login`,
-  //     {
-  //       username,
-  //       key: pass,
-  //       role,
-  //     }
-  //   );
+  async getInviteLink(options) {
+    const authData = await fetchApi(
+      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/auth/invite-link`,
+      options
+    );
 
-  //   return authData;
-  // }
-  // async getInviteLink(botId) {
-  //   const authData = await fetchApi(
-  //     `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/auth/invite-link`,
-  //     { botId }
-  //   );
-
-  //   return authData;
-  // }
+    return authData;
+  }
 }
 
 export const AuthService = new AuthServiceClass();

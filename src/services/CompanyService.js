@@ -37,9 +37,14 @@ class CompanyServiceClass {
     return bots;
   }
 
-  async getWorkers(adminId) {
+  async getWorkers(options) {
+    let sp = new URLSearchParams(options);
+    const queryString = sp.toString();
+
     const bots = await fetchApi(
-      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/bot/teacher/${adminId}`,
+      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company-relation/worker/${
+        queryString ? `?${queryString}` : ``
+      }`,
       {},
       "GET"
     );

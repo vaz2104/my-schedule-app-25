@@ -1,26 +1,64 @@
+"use client";
+import AppointmentsList from "@/components/admin/AppointmentsList";
+import Alert from "@/components/ui/Alert";
+import Spinner from "@/components/ui/Spinner";
+import Thumbnail from "@/components/ui/Thumbnail";
 import { cn } from "@/lib/cn";
-import React from "react";
+import { AuthService } from "@/services/AuthService";
+import { ClientService } from "@/services/ClientService";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ClientSingle() {
+  const [client, setClient] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const params = useParams();
+
+  async function loadClientData() {
+    setIsLoading(true);
+    const session = await AuthService.getSession();
+    const clientDataResponse = await ClientService.getSingle(session?.userId);
+
+    if (clientDataResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      setClient(clientDataResponse.data);
+    }
+
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    loadClientData();
+  }, []);
+
+  if (isLoading)
+    return (
+      <div className="py-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <Spinner />
+      </div>
+    );
+
+  if (error) {
+    return (
+      <div className="p-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <Alert className={"w-full"}>{error}</Alert>
+      </div>
+    );
+  }
+
+  // console.log(client);
+
   return (
     <div className="p-4">
       <div className="mt-1.5">
-        <div
-          className={cn(
-            "m-auto w-16 h-16  border-2 border-gray-200 rounded-full"
-          )}
-        >
-          <img
-            src={
-              "https://doodleipsum.com/700x700/avatar?i=310c74837ffe0803164ed110256826e1"
-            }
-            className="w-16 h-16 rounded-full"
-            alt="Jese Leos image"
-          />
+        <div className={"flex justify-center"}>
+          <Thumbnail url={client?.photoUrl} size="lg" />
         </div>
-        <div className="ms-3 text-sm font-normal text-center mt-2">
+        <div className="text-sm font-normal text-center mt-2">
           <div className="font-bold text-xl text-gray-900 dark:text-white">
-            Bonnie Green
+            {client?.firstName} {client?.lastName}
           </div>
         </div>
       </div>
@@ -28,48 +66,7 @@ export default function ClientSingle() {
         <h2 className="font-bold text-lg text-center">Історія записів</h2>
       </div>
       <div className="">
-        <div className="py-6 flex justify-between border-b border-gray-200">
-          <div className="flex items-center">
-            <div
-              className={cn(
-                "m-auto w-8 h-8  border-1 border-gray-300 rounded-full"
-              )}
-            >
-              <img
-                src={
-                  "https://doodleipsum.com/700x700/avatar?i=310c74837ffe0803164ed110256826e1"
-                }
-                className="w-8 h-8 rounded-full"
-                alt="Jese Leos image"
-              />
-            </div>
-            <span className="ml-2 font-bold ">Bonnie Green</span>
-          </div>
-          <div className="flex justify-center items-center font-bold text-sm px-3 rounded-full bg-mainBlue text-white">
-            28-01-2025 в 17:00
-          </div>
-        </div>
-        <div className="py-6 flex justify-between border-b border-gray-200">
-          <div className="flex items-center">
-            <div
-              className={cn(
-                "m-auto w-8 h-8  border-1 border-gray-300 rounded-full"
-              )}
-            >
-              <img
-                src={
-                  "https://doodleipsum.com/700x700/avatar?i=310c74837ffe0803164ed110256826e1"
-                }
-                className="w-8 h-8 rounded-full"
-                alt="Jese Leos image"
-              />
-            </div>
-            <span className="ml-2 font-bold ">Bonnie Green</span>
-          </div>
-          <div className="flex justify-center items-center font-bold text-sm px-3 rounded-full bg-mainBlue text-white">
-            28-01-2025 в 09:00
-          </div>
-        </div>
+        <AppointmentsList />
       </div>
     </div>
   );

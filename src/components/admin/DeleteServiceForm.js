@@ -1,7 +1,7 @@
 import { Fragment, useContext, useState } from "react";
 import ConfirmModal from "../ui/ConfirmModal";
 import { ThemeContext } from "@/context/ThemeContext";
-import { ServicesService } from "@/services/ServicesService ";
+import { ServicesService } from "@/services/ServicesService";
 import { TrashIcon } from "../ui/Icons";
 
 export default function DeleteServiceForm({ mapItemId, successHandler }) {

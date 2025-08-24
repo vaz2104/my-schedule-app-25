@@ -3,7 +3,7 @@ import { PencilIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
 import { useState } from "react";
 import Calendar from "../ui/calendar/Calendar";
-import { ServicesService } from "@/services/ServicesService ";
+import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import Alert from "../ui/Alert";
 

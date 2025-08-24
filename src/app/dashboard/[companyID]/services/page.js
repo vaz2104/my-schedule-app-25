@@ -5,7 +5,7 @@ import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ServicesService } from "@/services/ServicesService ";
+import { ServicesService } from "@/services/ServicesService";
 import ServicesList from "@/components/admin/ServicesList";
 
 export default function Services() {

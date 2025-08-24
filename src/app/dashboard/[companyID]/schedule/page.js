@@ -1,5 +1,5 @@
-import React from "react";
+import ScheduleSingle from "@/components/admin/ScheduleSingle";
 
 export default function Schedule() {
-  return <div>Schedule</div>;
+  return <ScheduleSingle />;
 }

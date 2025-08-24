@@ -20,9 +20,14 @@ class CompanyServiceClass {
     );
     return botData;
   }
-  async getBots(adminId) {
+  async getBots(options) {
+    let sp = new URLSearchParams(options);
+    const queryString = sp.toString();
+
     const bots = await fetchApi(
-      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company/?adminId=${adminId}`,
+      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company${
+        queryString ? `?${queryString}` : ``
+      }`,
       {},
       "GET"
     );
@@ -64,15 +69,6 @@ class CompanyServiceClass {
     );
 
     return data;
-  }
-
-  async getCompanyInfo(id) {
-    const bots = await fetchApi(
-      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company/${id}`,
-      {},
-      "GET"
-    );
-    return bots;
   }
 }
 

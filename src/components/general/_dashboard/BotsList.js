@@ -22,7 +22,9 @@ export default function BotsList() {
 
   async function loadBots() {
     const session = await AuthService.getSession();
-    const botsListResponse = await CompanyService.getBots(session.userId);
+    const botsListResponse = await CompanyService.getBots({
+      adminId: session.userId,
+    });
 
     if (botsListResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

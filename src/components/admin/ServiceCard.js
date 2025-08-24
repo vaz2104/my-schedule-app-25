@@ -31,7 +31,7 @@ export default function ServiceCard({
               <FireIcon className={"text-red-500"} />
             </span>
             <span className="text-red-500 text-sm">
-              знижка діє до {formatDate(saleEndDay)}
+              знижка діє до {formatDate(saleEndDay, "ui")}
             </span>
           </div>
         )}

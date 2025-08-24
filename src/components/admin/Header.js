@@ -14,7 +14,7 @@ export default function Header() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full px-4 bg-gray-50 z-10">
+    <div className="fixed top-0 left-0 w-full px-4 bg-gray-50 z-30">
       <div className="flex justify-between items-center py-3">
         <Link href={baseDashboardLink} className="flex items-center">
           <div className="relative">

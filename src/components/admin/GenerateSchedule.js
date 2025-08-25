@@ -6,16 +6,28 @@ import Calendar from "../ui/calendar/Calendar";
 import { cn } from "@/lib/cn";
 import Lottie from "lottie-react";
 import successAnimation from "@/lib/success-animation.json";
+import { ScheduleService } from "@/services/ScheduleService";
+import { useParams } from "next/navigation";
+import { AuthService } from "@/services/AuthService";
+import { useCalendarStore } from "../ui/calendar/useCalendarStore";
+import { useShallow } from "zustand/shallow";
 
-export default function GenerateSchedule() {
+export default function GenerateSchedule({ successHandler, disabledDays }) {
+  const { setInitCalendarDate } = useCalendarStore(
+    useShallow((state) => ({
+      setInitCalendarDate: state.setInitCalendarDate,
+    }))
+  );
+
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [startMinutes, setStartMinutes] = useState("");
   const [startHours, setStartHours] = useState("");
   const [hoursList, setHoursList] = useState([]);
   const [activeStep, setActiveStep] = useState(1);
   const [selectedDays, setSelectedDays] = useState([]);
   const [error, setError] = useState("");
+  const params = useParams();
 
   function closeModal() {
     setIsModalVisible(false);
@@ -24,6 +36,8 @@ export default function GenerateSchedule() {
     setStartHours("");
     setStartMinutes("");
     setActiveStep(1);
+    setInitCalendarDate(new Date());
+    if (successHandler) successHandler();
   }
 
   const hours = [];
@@ -60,16 +74,73 @@ export default function GenerateSchedule() {
     setStartHours("");
   }
 
+  function deleteScheduleItem(appointmentTime) {
+    setHoursList((prevHoursState) =>
+      prevHoursState.filter((id) => id !== appointmentTime)
+    );
+    setStartMinutes("");
+    setStartHours("");
+  }
+
   function selectHours(hours) {
     setStartHours(hours);
     setStartMinutes("00");
   }
+
+  function hoursValidation(hour) {
+    const lastSelected = hoursList[hoursList.length - 1];
+    if (!lastSelected) return false;
+
+    const lastSelectedParts = lastSelected.split(":");
+
+    return (
+      hour < lastSelectedParts[0] ||
+      (hour <= lastSelectedParts[0] &&
+        lastSelectedParts[1] == minutes[minutes.length - 1])
+    );
+  }
+
+  function minutesValidation(minutes) {
+    const lastSelected = hoursList[hoursList.length - 1];
+    if (!lastSelected) return false;
+
+    const lastSelectedParts = lastSelected.split(":");
+
+    return (
+      startHours == lastSelectedParts[0] && minutes <= lastSelectedParts[1]
+    );
+  }
+
   const lottieRef = useRef();
 
-  function saveSchedule() {
-    setActiveStep(activeStep + 1);
-    // lottieRef.current.destroy();
-    lottieRef.current.play();
+  async function saveSchedule() {
+    setIsLoading(true);
+
+    const session = await AuthService.getSession();
+    const modifiedHoursList = {};
+    hoursList.forEach((el, index) => (modifiedHoursList[`item${index}`] = el));
+
+    console.log(selectedDays);
+
+    try {
+      Promise.all(
+        selectedDays.map(async (day) => {
+          await ScheduleService.create({
+            botId: params?.companyID,
+            workerId: session?.userId,
+            date: day,
+            schedule: modifiedHoursList,
+            timestamp: Date.now(),
+          });
+        })
+      ).then(() => {
+        setIsLoading(false);
+        setActiveStep(activeStep + 1);
+        lottieRef.current.play();
+      });
+    } catch (error) {
+      setError("Сталася помилка при завантаженні даних");
+    }
   }
 
   return (
@@ -88,8 +159,10 @@ export default function GenerateSchedule() {
         title={"Додати графік"}
         triger={isModalVisible}
         closeFn={closeModal}
-        loading={loading}
+        loading={isLoading}
         hideControls={true}
+        error={error}
+        hideErrorFn={() => setError(null)}
       >
         <div className="pb-4">
           <div className="flex items-center">
@@ -160,9 +233,9 @@ export default function GenerateSchedule() {
               <Calendar
                 options={{
                   multiselect: true,
-                  // isDisabledOldDays={true}
+                  disabledOldDays: true,
                   setSelectedDays,
-                  // disabledDays
+                  disabledDays: disabledDays,
                 }}
               />
             </div>
@@ -197,7 +270,15 @@ export default function GenerateSchedule() {
                     >
                       <option value="">Години</option>
                       {hours.map((el) => {
-                        return <option key={`startHours-${el}`}>{el}</option>;
+                        return (
+                          <option
+                            key={`startHours-${el}`}
+                            disabled={hoursValidation(el)}
+                            className={`${hoursValidation(el) ? "hidden" : ""}`}
+                          >
+                            {el}
+                          </option>
+                        );
                       })}
                     </select>
                   </div>
@@ -210,7 +291,15 @@ export default function GenerateSchedule() {
                       <option value="">Хвилини</option>
                       {minutes.map((el) => {
                         return (
-                          <option key={`startMinutess-${el}`}>{el}</option>
+                          <option
+                            key={`startMinutess-${el}`}
+                            disabled={minutesValidation(el)}
+                            className={`${
+                              minutesValidation(el) ? "hidden" : ""
+                            }`}
+                          >
+                            {el}
+                          </option>
                         );
                       })}
                     </select>
@@ -244,7 +333,7 @@ export default function GenerateSchedule() {
                             <div className="ml-1">
                               <button
                                 className="button blank !px-2"
-                                // onClick={() => deleteSchedule(el)}
+                                onClick={() => deleteScheduleItem(el)}
                               >
                                 <TrashIcon className="w-4 text-red-600" />
                               </button>

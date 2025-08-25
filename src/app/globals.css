@@ -126,26 +126,6 @@ body {
   @apply text-xs font-bold text-center hidden
 }
 
-.calendar-day {
-  @apply text-gray-400
-}
-.calendar-day.current {
-  @apply text-gray-900
-}
-
-
-
-.selectedWeekDay {
-  @apply !bg-gray-300 
-}
-
-.activeWeekDay {
-  @apply !text-red-600 !bg-red-200
-}
-
-.activeWeekDay + p {
-  @apply !text-red-600
-}
 
 
 /***********************************************************************/

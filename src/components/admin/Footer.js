@@ -26,7 +26,7 @@ export default function Footer() {
   async function loadCompanyData() {
     setIsLoading(true);
     const companyDataResponse = await CompanyService.getBot(params?.companyID);
-    console.log(companyDataResponse);
+
     if (companyDataResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {

@@ -4,7 +4,6 @@ import CalendarService from "./CalendarService";
 import { useCalendarStore } from "./useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import { cn } from "@/lib/cn";
-import { CheckCircleIcon } from "../Icons";
 
 export default function CalendarDays({ options }) {
   const {
@@ -37,10 +36,6 @@ export default function CalendarDays({ options }) {
   function dayHandler(day) {
     if (setCustomStateValue) {
       setCustomStateValue(day.date);
-
-      if (day.month != new Date(selectedDate).getMonth()) {
-        setInitCalendarDate(day.date);
-      }
       return;
     }
 
@@ -68,6 +63,7 @@ export default function CalendarDays({ options }) {
     } else {
       setInitWeekDate(day.date);
       setSelectedDate(day.date);
+      // closeModal("modalCalendar");
 
       if (day.month != new Date(setSelectedDate).getMonth()) {
         setInitCalendarDate(day.date);
@@ -96,10 +92,10 @@ export default function CalendarDays({ options }) {
             disabledDays.includes(formatDate(day.date)) ||
             (isDisabledOldDays && isDayOlder(day.date));
 
-          // let disabledDaysOfMonth = !day.currentMonth;
-          let disabledDaysOfMonth = multiselect
-            ? new Date(day.date).getMonth() < new Date().getMonth()
-            : !day.currentMonth;
+          let disabledDaysOfMonth = !day.currentMonth;
+          // multiselect
+          //   ? new Date(day.date).getMonth() < new Date().getMonth()
+          //   : !day.currentMonth;
 
           let markerClasses = "";
           let numberClasses = "";
@@ -119,13 +115,13 @@ export default function CalendarDays({ options }) {
             numberClasses = " text-red-700";
           }
 
-          if (day.weekDay === 0 || day.weekDay === 6) {
-            numberClasses = " text-red-500";
-          }
-
           return (
             <div
-              className={`mt-1 flex justify-center calendar-day`}
+              className={`mt-1 flex justify-center calendar-day ${
+                disabledDaysOfMonth || isDisabled
+                  ? " text-gray-400"
+                  : "text-gray-900"
+              }${numberClasses}`}
               style={{ width: "14.286%" }}
               key={`day-${index}`}
             >
@@ -140,36 +136,12 @@ export default function CalendarDays({ options }) {
                   )}
                 ></span>
 
-                {selected.includes(formatDate(day.date)) && (
-                  <span
-                    className={cn(
-                      "absolute top-0 right-0 animate__animated animate__bounceIn bg-white w-3.5 h-3.5 rounded-full"
-                    )}
-                  >
-                    <CheckCircleIcon className={"w-3.5 h-3.5 text-green-600"} />
-                  </span>
-                )}
-
-                {multiselect && (disabledDaysOfMonth || isDisabled) && (
-                  <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center animate__animated animate__bounceIn">
-                    <span
-                      className={cn(" w-1/2 h-[1px] block bg-gray-500")}
-                    ></span>
-                  </div>
-                )}
-
-                <p
-                  className={`block relative z-10 text-gray-900 transition-all ${
-                    disabledDaysOfMonth || isDisabled ? " opacity-30" : ""
-                  } ${numberClasses}`}
-                >
-                  {day.number}
-                </p>
+                <p className="block relative z-10">{day.number}</p>
 
                 {markedDays.length > 0 &&
                   markedDays.includes(formatDate(day.date)) && (
                     <span
-                      className={`absolute top-1 right-1 w-2 h-2 rounded-full animate__animated animate__bounceIn ${
+                      className={`absolute -top-0 -right-0 w-3 h-3 rounded-full animate__animated animate__bounceIn ${
                         day.currentMonth ? "bg-green-600 " : "bg-gray-400"
                       }`}
                     ></span>

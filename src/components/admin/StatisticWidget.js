@@ -6,6 +6,8 @@ export default function StatisticWidget({ schedule }) {
   const appointmentsNumber = 1;
 
   function getTotalScheduleItems(list) {
+    if (!list) return 0;
+
     let items = 0;
     list.forEach((element) => {
       items += Object.keys(element.schedule).length;

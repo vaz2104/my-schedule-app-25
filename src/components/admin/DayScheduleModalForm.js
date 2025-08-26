@@ -193,9 +193,15 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
 
   async function updateSchedule() {
     setIsLoading(true);
-    const response = await ScheduleService.update(activeSchedule?._id, {
-      schedule: hoursList,
-    });
+    let response = null;
+
+    if (!Object.keys(hoursList).length) {
+      response = await ScheduleService.delete(activeSchedule?._id);
+    } else {
+      response = await ScheduleService.update(activeSchedule?._id, {
+        schedule: hoursList,
+      });
+    }
 
     if (response.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
@@ -303,28 +309,6 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
             <div className="mt-6">
               <p className="text-gray-500">Додані години</p>
               <div className="mt-4 mb-8 -mx-1">
-                {/* {hoursList.map((el, index) => {
-                  return (
-                    <div
-                      className="p-1 w-1/3 animate__animated animate__bounceIn"
-                      key={`hours-${index}`}
-                    >
-                      <div className="flex justify-center items-center font-bold text-xl">
-                        <span>{el}</span>
-
-                        <div className="ml-1">
-                          <button
-                            className="button blank !px-2"
-                            onClick={() => deleteScheduleItem(el)}
-                          >
-                            <TrashIcon className="w-4 text-red-600" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })} */}
-
                 {Object.keys(hoursList).map((itemKey) => {
                   return (
                     <div

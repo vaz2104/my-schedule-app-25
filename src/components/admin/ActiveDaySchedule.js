@@ -9,6 +9,7 @@ import { Fragment, useEffect, useState } from "react";
 import { AuthService } from "@/services/AuthService";
 import formatDate from "@/lib/formatDate";
 import { monthsFullName } from "@/lib/calendar-vars";
+import CalendarService from "../ui/calendar/CalendarService";
 
 export default function ActiveDaySchedule({ selectedDate }) {
   const [selectedDaySchedule, setSelectedDaySchedule] = useState();
@@ -65,16 +66,23 @@ export default function ActiveDaySchedule({ selectedDate }) {
         </h2>
       </div>
 
-      <DayScheduleModalForm
-        activeSchedule={selectedDaySchedule}
-        selectedDate={selectedDate}
-      />
+      {!CalendarService.isOldDay(selectedDate) && (
+        <DayScheduleModalForm
+          activeSchedule={selectedDaySchedule}
+          selectedDate={selectedDate}
+        />
+      )}
 
       {selectedDaySchedule &&
       Object.keys(selectedDaySchedule?.schedule).length ? (
         <Fragment>
           <div className="mt-2">
             {Object.keys(selectedDaySchedule?.schedule).map((itemKey) => {
+              const isOldDate = CalendarService.isOldDate(
+                selectedDate,
+                selectedDaySchedule?.schedule[itemKey]
+              );
+
               return (
                 <div
                   className="py-4 relative flex justify-between items-center"
@@ -87,15 +95,18 @@ export default function ActiveDaySchedule({ selectedDate }) {
                   <div className="flex-1 ml-4 flex items-center">
                     <p className="text-sm text-gray-500">Запис відсутній</p>
                   </div>
-                  <div className="text-right">
-                    <div className="flex">
-                      <div className="flex justify-center">
-                        <button className="button blank !px-2">
-                          <TrashIcon className="w-4 text-red-600" />
-                        </button>
+
+                  {!isOldDate && (
+                    <div className="text-right">
+                      <div className="flex">
+                        <div className="flex justify-center">
+                          <button className="button blank !px-2">
+                            <TrashIcon className="w-4 text-red-600" />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               );
             })}

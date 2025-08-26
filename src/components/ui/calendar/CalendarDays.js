@@ -38,7 +38,7 @@ export default function CalendarDays({ options }) {
     if (setCustomStateValue) {
       setCustomStateValue(day.date);
 
-      if (day.month != new Date(selectedDate).getMonth()) {
+      if (day.month != new Date(customStateValue).getMonth()) {
         setInitCalendarDate(day.date);
       }
       return;

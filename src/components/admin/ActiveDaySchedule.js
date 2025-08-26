@@ -1,5 +1,5 @@
 "use client";
-import ScheduleModalForm from "@/components/admin/ScheduleModalForm";
+import DayScheduleModalForm from "@/components/admin/DayScheduleModalForm";
 import { TrashIcon } from "@/components/ui/Icons";
 import Alert from "../ui/Alert";
 import Spinner from "../ui/Spinner";
@@ -65,9 +65,14 @@ export default function ActiveDaySchedule({ selectedDate }) {
         </h2>
       </div>
 
-      {selectedDaySchedule ? (
+      <DayScheduleModalForm
+        activeSchedule={selectedDaySchedule}
+        selectedDate={selectedDate}
+      />
+
+      {selectedDaySchedule &&
+      Object.keys(selectedDaySchedule?.schedule).length ? (
         <Fragment>
-          <ScheduleModalForm />
           <div className="mt-2">
             {Object.keys(selectedDaySchedule?.schedule).map((itemKey) => {
               return (
@@ -98,9 +103,6 @@ export default function ActiveDaySchedule({ selectedDate }) {
         </Fragment>
       ) : (
         <Fragment>
-          <p className="mt-4 flex justify-center">
-            <button className="button dark w-full">Додати графік</button>
-          </p>
           <div className="mt-8">
             <p className="text-center text-md font-medium my-12 text-gray-400">
               Часи прийому не вказані

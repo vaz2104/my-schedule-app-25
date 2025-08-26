@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { AuthService } from "@/services/AuthService";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import generateRandomKey from "@/lib/generateRandomKey";
 
 export default function GenerateSchedule({ successHandler, disabledDays }) {
   const { setInitCalendarDate } = useCalendarStore(
@@ -118,7 +119,10 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
 
     const session = await AuthService.getSession();
     const modifiedHoursList = {};
-    hoursList.forEach((el, index) => (modifiedHoursList[`item${index}`] = el));
+    hoursList.forEach(
+      (el) =>
+        (modifiedHoursList[`appointment_${generateRandomKey(5, true)}`] = el)
+    );
 
     console.log(selectedDays);
 

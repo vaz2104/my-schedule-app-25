@@ -10,11 +10,14 @@ import Thumbnail from "../ui/Thumbnail";
 import MonthScheduleCalendar from "./MonthScheduleCalendar";
 
 export default function ScheduleSingle({ isWorkerSchedule = false }) {
-  const { initCalendarDate } = useCalendarStore(
-    useShallow((state) => ({
-      initCalendarDate: state.initCalendarDate,
-    }))
-  );
+  const { initCalendarDate, setSelectedCalendarDate, setInitCalendarDate } =
+    useCalendarStore(
+      useShallow((state) => ({
+        initCalendarDate: state.initCalendarDate,
+        setSelectedCalendarDate: state.setSelectedDate,
+        setInitCalendarDate: state.setInitCalendarDate,
+      }))
+    );
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   function getSelectedDateOnCalendarChange(initDate) {
@@ -25,6 +28,7 @@ export default function ScheduleSingle({ isWorkerSchedule = false }) {
 
   useEffect(() => {
     setSelectedDate(getSelectedDateOnCalendarChange(initCalendarDate));
+    setSelectedCalendarDate(new Date());
   }, [initCalendarDate]);
 
   return (

@@ -55,7 +55,7 @@ export default function AppointmentsList() {
     return (
       <div className="p-4">
         <div className="text-center text-gray-400 mt-16">
-          <p>У Вас поки немає записів</p>
+          <p>Записи відсутні</p>
         </div>
       </div>
     );

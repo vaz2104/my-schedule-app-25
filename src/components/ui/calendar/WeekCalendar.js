@@ -7,8 +7,11 @@ import { useShallow } from "zustand/shallow";
 import { months } from "./calendar-vars";
 import { AngleLeftIcon, AngleRightIcon, CalendarIcon } from "./Icons";
 import CalendarModal from "./CalendarModal";
+import formatDate from "./formatDate";
 
-export default function WeekCalendar({ dateSelectHandler }) {
+export default function WeekCalendar({ options }) {
+  const markedDays = options?.markedDays || [];
+  const setCustomStateValue = options?.setCustomStateValue || [];
   const [isModalCalendar, setIsModalCalendar] = useState(false);
   const {
     initWeekDate,
@@ -47,9 +50,9 @@ export default function WeekCalendar({ dateSelectHandler }) {
   }
 
   function chooseDateHandler(date) {
-    setInitCalendarDate(date);
+    // setInitCalendarDate(date);
     setSelectedDate(date);
-    if (dateSelectHandler) dateSelectHandler(date);
+    if (setCustomStateValue) setCustomStateValue(date);
   }
 
   useEffect(() => {
@@ -91,22 +94,47 @@ export default function WeekCalendar({ dateSelectHandler }) {
           {weekDays.map((day, index) => {
             return (
               <div
-                className={`flex-1 relative text-center p-1 mx-0.5 rounded week-calendar-day ${
+                className={`flex-1 relative text-center p-1 py-2 mx-0.5 rounded week-calendar-day ${
                   day.weekDay == 6 || day.weekDay == 0 ? "weekend" : ""
                 } ${day.currentMonth ? "default" : "disabled"}`}
                 onClick={() => chooseDateHandler(day.date)}
                 key={`cdl-day-${day.number}`}
               >
+                {markedDays.length > 0 &&
+                  markedDays.includes(formatDate(day.date)) && (
+                    <span
+                      className={`absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full animate__animated animate__bounceIn z-10 ${
+                        day.currentMonth ? "bg-green-600 " : "bg-gray-400"
+                      }`}
+                    ></span>
+                  )}
                 {day.weekDay === new Date(selectedDate).getDay() && (
-                  <span className="absolute rounded-full w-3 h-3 bg-green-600 -top-1 right-0 animate__animated animate__bounceIn"></span>
+                  <span className="absolute rounded-lg w-full h-full bg-gray-300 top-1 right-0 animate__animated animate__bounceIn z-0"></span>
                 )}
 
                 {isToday(day.date) && (
                   <span className="absolute rounded w-full h-1 bg-red-600 -bottom-1 left-0 animate__animated animate__bounceIn"></span>
                 )}
 
-                <span className="block text-xs">{day.day}</span>
-                <span className="block font-bold text-xl">{day.number}</span>
+                <span
+                  className={`relative z-10 block text-xs ${
+                    day.weekDay === 0 || day.weekDay === 6
+                      ? " text-red-500"
+                      : ""
+                  }`}
+                >
+                  {day.day}
+                </span>
+                <span
+                  className={`relative z-10 block font-bold text-xl ${
+                    day.weekDay === 0 || day.weekDay === 6
+                      ? " text-red-500"
+                      : ""
+                  }
+                  `}
+                >
+                  {day.number}
+                </span>
               </div>
             );
           })}

@@ -11,7 +11,7 @@ export const useBaseURL = () => {
   }, []);
 
   const baseDashboardLink = `/dashboard/${activePanel}`;
-  const basePlatformLink = `/platform/${activePanel}`;
+  const basePlatformLink = `/panel/${activePanel}`;
 
   return { baseDashboardLink, basePlatformLink, activePanel };
 };

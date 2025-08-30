@@ -1,6 +1,7 @@
 "use client";
 import ActiveWeekDaySchedule from "@/components/client/ActiveWeekDaySchedule";
-import DiscountServices from "@/components/general/DiscountServices";
+import BookedAppointments from "@/components/client/BookedAppointments";
+import DiscountServices from "@/components/client/DiscountServices";
 import WeekScheduleCalendar from "@/components/general/WeekScheduleCalendar";
 import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
 import { useEffect, useState } from "react";
@@ -21,6 +22,10 @@ export default function PanelHome() {
 
   return (
     <div className="p-4">
+      {/* <div className="my-4">
+        <BookedAppointments />
+      </div> */}
+
       <WeekScheduleCalendar setSelectedDate={setSelectedDate} />
       <div className="mt-8 mb-4">
         <ActiveWeekDaySchedule selectedDate={selectedDate} />

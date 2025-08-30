@@ -9,6 +9,7 @@ import { AuthService } from "@/services/AuthService";
 import formatDate from "@/lib/formatDate";
 import Calendar from "../ui/calendar/Calendar";
 import CalendarService from "../ui/calendar/CalendarService";
+import { getScheduleDays } from "@/lib/schedule-helpers";
 
 export default function MonthScheduleCalendar({
   selectedDate,
@@ -45,13 +46,6 @@ export default function MonthScheduleCalendar({
     setIsLoading(false);
   }
 
-  function getScheduleDays(schedule) {
-    const days = [];
-    schedule.forEach((el) => days.push(formatDate(el?.date)));
-
-    return days;
-  }
-
   useEffect(() => {
     loadFullMonthSchedule();
   }, [initCalendarDate]);
@@ -73,9 +67,14 @@ export default function MonthScheduleCalendar({
       )}
       <Calendar
         options={{
-          markedDays: getScheduleDays(schedule),
+          markedActiveDays: getScheduleDays(schedule, "daysWithAppointments"),
+          markedDisabledDays: getScheduleDays(
+            schedule,
+            "daysWithNoAppointments"
+          ),
           customStateValue: selectedDate,
           setCustomStateValue: setSelectedDate,
+          theme: "client",
         }}
       />
     </div>

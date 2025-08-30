@@ -6,6 +6,7 @@ import Spinner from "../ui/Spinner";
 import { AuthService } from "@/services/AuthService";
 import { cn } from "@/lib/cn";
 import { AppointmentService } from "@/services/AppointmentService";
+import formatDate from "@/lib/formatDate";
 
 export default function AppointmentsList() {
   const [appointments, setAppointments] = useState([]);
@@ -38,14 +39,14 @@ export default function AppointmentsList() {
 
   if (isLoading)
     return (
-      <div className="py-4 flex justify-center items-center h-[calc(50vh-9rem)]">
+      <div className="py-4 flex justify-center items-center">
         <Spinner />
       </div>
     );
 
   if (error) {
     return (
-      <div className="p-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+      <div className="p-4 flex justify-center items-center">
         <Alert className={"w-full"}>{error}</Alert>
       </div>
     );
@@ -63,12 +64,14 @@ export default function AppointmentsList() {
   return (
     <div>
       {appointments.map((appointment) => {
+        // console.log(appointment);
+
         return (
           <div
             className="py-6 flex justify-between border-b border-gray-200"
             key={appointment?._id}
           >
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <div
                 className={cn(
                   "m-auto w-8 h-8  border-1 border-gray-300 rounded-full"
@@ -83,9 +86,13 @@ export default function AppointmentsList() {
                 />
               </div>
               <span className="ml-2 font-bold ">Bonnie Green</span>
-            </div>
-            <div className="flex justify-center items-center font-bold text-sm px-3 rounded-full bg-mainBlue text-white">
+            </div> */}
+            {/* <div className="flex justify-center items-center font-bold text-sm px-3 rounded-full bg-mainBlue text-white">
               28-01-2025 в 09:00
+            </div> */}
+            <div>{formatDate(appointment?.scheduleId?.date)}</div>
+            <div>
+              {appointment?.scheduleId?.schedule[appointment?.appointmentKey]}
             </div>
           </div>
         );

@@ -85,6 +85,12 @@ export default function Footer() {
             <div className="footer-nav-item__label">Працівники</div>
           </Link>
         )}
+        <Link href={`${basePlatformLink}/services`} className="footer-nav-item">
+          <div className="footer-nav-item__icon">
+            <BriefCaseIcon className={"size-7"} />
+          </div>
+          <div className="footer-nav-item__label">Послуги</div>
+        </Link>
         <Link
           href={`${basePlatformLink}/client-history`}
           className="footer-nav-item"
@@ -93,12 +99,6 @@ export default function Footer() {
             <ClockArrowIcon className={"size-8"} />
           </div>
           <div className="footer-nav-item__label">Історія</div>
-        </Link>
-        <Link href={`${basePlatformLink}/services`} className="footer-nav-item">
-          <div className="footer-nav-item__icon">
-            <BriefCaseIcon className={"size-7"} />
-          </div>
-          <div className="footer-nav-item__label">Послуги</div>
         </Link>
 
         <Link href={`${basePlatformLink}/settings`} className="footer-nav-item">

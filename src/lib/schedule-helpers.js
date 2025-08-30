@@ -1,3 +1,6 @@
+import CalendarService from "@/components/ui/calendar/CalendarService";
+import formatDate from "./formatDate";
+
 export function generateHours() {
   const hours = [];
   for (let i = 0; i < 24; i++) {
@@ -46,4 +49,34 @@ export function sortHours(arr) {
 
   // console.log(list);
   return list;
+}
+
+export function getScheduleDays(schedule, key) {
+  const daysWithSchedule = [];
+  const daysWithAppointments = [];
+  const daysWithNoAppointments = [];
+
+  schedule.forEach((el) => {
+    daysWithSchedule.push(formatDate(el?.date));
+
+    if (el.relations?.length !== Object.keys(el.schedule).length) {
+      const isOldDay = CalendarService.isOldDay(new Date(el?.date));
+
+      if (isOldDay) {
+        daysWithNoAppointments.push(formatDate(el?.date));
+      } else {
+        daysWithAppointments.push(formatDate(el?.date));
+      }
+    } else {
+      daysWithNoAppointments.push(formatDate(el?.date));
+    }
+  });
+
+  const object = {
+    daysWithSchedule,
+    daysWithAppointments,
+    daysWithNoAppointments,
+  };
+
+  return key ? object[key] : object;
 }

@@ -11,6 +11,7 @@ import WeekCalendar from "../ui/calendar/WeekCalendar";
 import CalendarService from "../ui/calendar/CalendarService";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import { getScheduleDays } from "@/lib/schedule-helpers";
 
 export default function WeekScheduleCalendar({
   selectedDate,
@@ -50,12 +51,12 @@ export default function WeekScheduleCalendar({
     setIsLoading(false);
   }
 
-  function getScheduleDays(schedule) {
-    const days = [];
-    schedule.forEach((el) => days.push(formatDate(el?.date)));
+  // function getScheduleDays(schedule) {
+  //   const days = [];
+  //   schedule.forEach((el) => days.push(formatDate(el?.date)));
 
-    return days;
-  }
+  //   return days;
+  // }
 
   useEffect(() => {
     loadFullMonthSchedule();
@@ -78,7 +79,11 @@ export default function WeekScheduleCalendar({
       )}
       <WeekCalendar
         options={{
-          markedDays: getScheduleDays(schedule),
+          markedActiveDays: getScheduleDays(schedule, "daysWithAppointments"),
+          markedDisabledDays: getScheduleDays(
+            schedule,
+            "daysWithNoAppointments"
+          ),
           customStateValue: selectedDate,
           setCustomStateValue: setSelectedDate,
         }}

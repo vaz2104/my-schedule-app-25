@@ -7,7 +7,7 @@ import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import MonthScheduleStatistic from "./MonthScheduleStatistic";
 import Thumbnail from "../ui/Thumbnail";
-import MonthScheduleCalendar from "./MonthScheduleCalendar";
+import MonthScheduleCalendar from "../general/MonthScheduleCalendar";
 
 export default function ScheduleSingle({ isWorkerSchedule = false }) {
   const { initCalendarDate, setSelectedCalendarDate, setInitCalendarDate } =

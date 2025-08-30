@@ -84,7 +84,9 @@ export default function ActiveWeekDaySchedule({ selectedDate }) {
               {Object.keys(selectedDaySchedule?.schedule).map((itemKey) => {
                 let isReserved = false;
                 selectedDaySchedule.relations.forEach((element) => {
-                  isReserved = element.appointmentKey === itemKey;
+                  if (element.appointmentKey === itemKey) {
+                    isReserved = true;
+                  }
                 });
 
                 const isOldDate = CalendarService.isOldDate(
@@ -109,7 +111,7 @@ export default function ActiveWeekDaySchedule({ selectedDate }) {
                         : null
                     }
                   >
-                    {isDisabled && (
+                    {isReserved && (
                       <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center animate__animated animate__bounceIn">
                         <span
                           className={cn(

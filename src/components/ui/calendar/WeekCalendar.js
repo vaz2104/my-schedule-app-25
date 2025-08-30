@@ -8,9 +8,12 @@ import { months } from "./calendar-vars";
 import { AngleLeftIcon, AngleRightIcon, CalendarIcon } from "./Icons";
 import CalendarModal from "./CalendarModal";
 import formatDate from "./formatDate";
+import { CircleMinusIcon } from "../Icons";
 
 export default function WeekCalendar({ options }) {
-  const markedDays = options?.markedDays || [];
+  const markedActiveDays = options?.markedActiveDays || [];
+  const markedDisabledDays = options?.markedDisabledDays || [];
+
   const setCustomStateValue = options?.setCustomStateValue || [];
   const [isModalCalendar, setIsModalCalendar] = useState(false);
   const {
@@ -100,13 +103,29 @@ export default function WeekCalendar({ options }) {
                 onClick={() => chooseDateHandler(day.date)}
                 key={`cdl-day-${day.number}`}
               >
-                {markedDays.length > 0 &&
+                {/* {markedDays.length > 0 &&
                   markedDays.includes(formatDate(day.date)) && (
                     <span
                       className={`absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full animate__animated animate__bounceIn z-10 ${
                         day.currentMonth ? "bg-green-600 " : "bg-gray-400"
                       }`}
                     ></span>
+                  )} */}
+                {markedActiveDays.length > 0 &&
+                  markedActiveDays.includes(formatDate(day.date)) && (
+                    <span
+                      className={`z-20 absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full animate__animated animate__bounceIn ${
+                        day.currentMonth ? "bg-green-600 " : "bg-gray-400"
+                      }`}
+                    ></span>
+                  )}
+                {markedDisabledDays.length > 0 &&
+                  markedDisabledDays.includes(formatDate(day.date)) && (
+                    <CircleMinusIcon
+                      className={
+                        "z-20 absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full animate__animated animate__bounceIn text-gray-400"
+                      }
+                    />
                   )}
                 {day.weekDay === new Date(selectedDate).getDay() && (
                   <span className="absolute rounded-lg w-full h-full bg-gray-300 top-1 right-0 animate__animated animate__bounceIn z-0"></span>

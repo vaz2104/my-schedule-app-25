@@ -1,10 +1,10 @@
 import formatDate from "./formatDate";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import CalendarService from "./CalendarService";
 import { useCalendarStore } from "./useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import { cn } from "@/lib/cn";
-import { CheckCircleIcon } from "../Icons";
+import { CheckCircleIcon, CircleMinusIcon } from "../Icons";
 
 export default function CalendarDays({ options }) {
   const {
@@ -24,12 +24,15 @@ export default function CalendarDays({ options }) {
   );
 
   const markedDays = options?.markedDays || [];
+  const markedActiveDays = options?.markedActiveDays || [];
+  const markedDisabledDays = options?.markedDisabledDays || [];
   const disabledDays = options?.disabledDays || [];
   const multiselect = options?.multiselect || false;
   const isDisabledOldDays = options?.disabledOldDays || false;
   const setSelectedDays = options?.setSelectedDays || undefined;
   const customStateValue = options?.customStateValue || null;
   const setCustomStateValue = options?.setCustomStateValue || undefined;
+  const theme = options?.theme || undefined;
 
   const [selected, setSelected] = useState([]);
   const [daysArray, setDaysArray] = useState([]);
@@ -174,6 +177,27 @@ export default function CalendarDays({ options }) {
                       }`}
                     ></span>
                   )}
+
+                {theme === "client" && (
+                  <Fragment>
+                    {markedActiveDays.length > 0 &&
+                      markedActiveDays.includes(formatDate(day.date)) && (
+                        <span
+                          className={`absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full animate__animated animate__bounceIn ${
+                            day.currentMonth ? "bg-green-600 " : "bg-gray-400"
+                          }`}
+                        ></span>
+                      )}
+                    {markedDisabledDays.length > 0 &&
+                      markedDisabledDays.includes(formatDate(day.date)) && (
+                        <CircleMinusIcon
+                          className={
+                            "absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full animate__animated animate__bounceIn text-gray-400"
+                          }
+                        />
+                      )}
+                  </Fragment>
+                )}
               </div>
             </div>
           );

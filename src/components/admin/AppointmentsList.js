@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Alert from "../ui/Alert";
 import Spinner from "../ui/Spinner";
 import { AuthService } from "@/services/AuthService";
-import { cn } from "@/lib/cn";
+
 import { AppointmentService } from "@/services/AppointmentService";
 import formatDate from "@/lib/formatDate";
 

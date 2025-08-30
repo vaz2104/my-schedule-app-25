@@ -1,6 +1,6 @@
 "use client";
 import ActiveWeekDaySchedule from "@/components/admin/ActiveWeekDaySchedule";
-import WeekScheduleCalendar from "@/components/admin/WeekScheduleCalendar";
+import WeekScheduleCalendar from "@/components/general/WeekScheduleCalendar";
 import WeekScheduleStatistic from "@/components/admin/WeekScheduleStatistic";
 import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
 import { useEffect, useState } from "react";

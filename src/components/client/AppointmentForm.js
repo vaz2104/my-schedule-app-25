@@ -2,7 +2,6 @@
 import { CheckCircleIcon, PlusIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
 import { useEffect, useState } from "react";
-import Calendar from "../ui/calendar/Calendar";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import { monthsFullName } from "../ui/calendar/calendar-vars";
@@ -37,7 +36,7 @@ export default function AppointmentForm({
       botId: params?.companyID,
     });
 
-    console.log(servicesResponse);
+    // console.log(servicesResponse);
 
     if (servicesResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
@@ -49,7 +48,7 @@ export default function AppointmentForm({
   }
 
   async function createService() {
-    // setIsLoading(true);
+    setIsLoading(true);
     const session = await AuthService.getSession();
 
     const query = {
@@ -61,9 +60,6 @@ export default function AppointmentForm({
       timestamp: Date.now(),
     };
 
-    console.log(query);
-
-    return false;
     const response = await AppointmentService.create(query);
     console.log(response);
 
@@ -71,22 +67,24 @@ export default function AppointmentForm({
       setError("Сталася помилка при завантаженні даних");
       setIsLoading(false);
     } else {
-      if (successHandler) successHandler();
       closeModal();
+      if (successHandler) successHandler();
     }
   }
 
-  function selectService(status) {
+  async function selectService(status) {
     setIsService(status);
 
     if (!status) {
       setSelectedService(null);
+    } else {
+      await loadServices();
     }
   }
 
-  useEffect(() => {
-    loadServices();
-  }, []);
+  // useEffect(() => {
+  //   loadServices();
+  // }, []);
 
   if (!selectedSchedule) return <></>;
 

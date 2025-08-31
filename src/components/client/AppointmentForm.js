@@ -1,13 +1,14 @@
 "use client";
 import { CheckCircleIcon, PlusIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import { monthsFullName } from "../ui/calendar/calendar-vars";
 import { cn } from "@/lib/cn";
 import { AppointmentService } from "@/services/AppointmentService";
 import { AuthService } from "@/services/AuthService";
+import { ThemeContext } from "@/context/ThemeContext";
 
 export default function AppointmentForm({
   selectedSchedule,
@@ -15,6 +16,7 @@ export default function AppointmentForm({
   successHandler,
   closeHandler,
 }) {
+  const { setSuccessMessage } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [services, setServices] = useState([]);
@@ -68,6 +70,7 @@ export default function AppointmentForm({
       setIsLoading(false);
     } else {
       closeModal();
+      setSuccessMessage("Вітаємо! Даний час успішно зарезервовано за Вами");
       if (successHandler) successHandler();
     }
   }

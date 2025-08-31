@@ -1,4 +1,5 @@
 import FullScreenError from "@/components/ui/FullScreenError";
+import SuccessModal from "@/components/ui/SuccessModal";
 import WarningModal from "@/components/ui/WarningModal";
 import { createContext, useState } from "react";
 
@@ -6,17 +7,18 @@ export const ThemeContext = createContext({});
 
 export function ThemeProvider({ children }) {
   const [warningError, setWarningError] = useState(null);
-  //   const [callback, setCallback] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [criticallError, setCriticallError] = useState(false);
 
   function confirmFn() {
     setWarningError(null);
+    setSuccessMessage(null);
   }
 
   const actions = {
     setWarningError,
-    // setCallback,
     setCriticallError,
+    setSuccessMessage,
   };
 
   return (
@@ -29,6 +31,11 @@ export function ThemeProvider({ children }) {
           <WarningModal
             triger={warningError}
             title={warningError}
+            confirmFn={confirmFn}
+          />
+          <SuccessModal
+            triger={successMessage}
+            title={successMessage}
             confirmFn={confirmFn}
           />
         </>

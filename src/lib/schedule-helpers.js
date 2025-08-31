@@ -1,5 +1,6 @@
 import CalendarService from "@/components/ui/calendar/CalendarService";
 import formatDate from "./formatDate";
+import { monthsFullName } from "./calendar-vars";
 
 export function generateHours() {
   const hours = [];
@@ -79,4 +80,36 @@ export function getScheduleDays(schedule, key) {
   };
 
   return key ? object[key] : object;
+}
+
+export function printDateWithMonth(date) {
+  if (!date) return "";
+  const dateObject = typeof date === "object" ? date : new Date(date);
+  const year = dateObject.getFullYear();
+  const month = dateObject.getMonth();
+  const day = dateObject.getDate();
+
+  return `${day} ${monthsFullName[month]} ${year}`;
+}
+
+export function filterAppointments(list) {
+  const filtered = [];
+  const temp = [];
+  list.map((appointment, index) => {
+    const dateMiliseconds = new Date(appointment?.scheduleId?.date).getTime();
+
+    const hoursParts =
+      appointment?.scheduleId?.schedule[appointment?.appointmentKey].split(":");
+    const hoursInMiliseconds = (hoursParts[0] * 60 + hoursParts[1] * 1) * 60000;
+    const convertedDate = dateMiliseconds + hoursInMiliseconds;
+    temp.push({ key: index, date: convertedDate });
+  });
+
+  temp.sort((a, b) => b.date - a.date);
+
+  temp.forEach((el) => {
+    filtered.push(list[el.key]);
+  });
+
+  return filtered;
 }

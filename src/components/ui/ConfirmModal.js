@@ -1,6 +1,6 @@
 import { CloseIcon } from "./Icons";
 import Lottie from "lottie-react";
-import warningAnimation from "@/lib/warning-animation.json";
+import warningAnimation from "@/lib/error-animation.json";
 import Spinner from "./Spinner";
 
 export default function ConfirmModal({

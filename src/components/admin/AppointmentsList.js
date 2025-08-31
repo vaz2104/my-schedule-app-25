@@ -6,8 +6,10 @@ import Spinner from "../ui/Spinner";
 import { AuthService } from "@/services/AuthService";
 
 import { AppointmentService } from "@/services/AppointmentService";
-import formatDate from "@/lib/formatDate";
 import CancelAppointmentForm from "../client/CancelAppointmentForm";
+import CalendarService from "../ui/calendar/CalendarService";
+import { filterAppointments, printDateWithMonth } from "@/lib/schedule-helpers";
+import { cn } from "@/lib/cn";
 
 export default function AppointmentsList() {
   const [appointments, setAppointments] = useState([]);
@@ -28,7 +30,7 @@ export default function AppointmentsList() {
     if (appointmentsResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      setAppointments(appointmentsResponse.data);
+      setAppointments(filterAppointments(appointmentsResponse.data));
     }
 
     setIsLoading(false);
@@ -65,27 +67,35 @@ export default function AppointmentsList() {
   return (
     <div>
       {appointments.map((appointment) => {
-        // console.log(appointment);
+        const idDateDisabled = CalendarService.isOldDate(
+          new Date(appointment?.scheduleId?.date),
+          appointment?.scheduleId?.schedule[appointment?.appointmentKey]
+        );
 
         return (
           <div
-            className="py-6 flex justify-between items-center border-b border-gray-200"
+            className={cn(
+              "py-6 flex justify-between items-center border-b border-gray-200",
+              idDateDisabled && "text-gray-400"
+            )}
             key={appointment?._id}
           >
-            <div className="flex-1">
-              {formatDate(appointment?.scheduleId?.date)}
+            <div className="flex-1 lowercase">
+              {printDateWithMonth(appointment?.scheduleId?.date)}
             </div>
-            <div>
+            <div className="">
               <div>
                 {appointment?.scheduleId?.schedule[appointment?.appointmentKey]}
               </div>
             </div>
-            <div className="ml-2">
-              <CancelAppointmentForm
-                mapItemId={appointment?._id}
-                successHandler={loadAppointments}
-              />
-            </div>
+            {!idDateDisabled && (
+              <div className="ml-4 flex-1 flex justify-end">
+                <CancelAppointmentForm
+                  mapItemId={appointment?._id}
+                  successHandler={loadAppointments}
+                />
+              </div>
+            )}
           </div>
         );
       })}

@@ -7,6 +7,7 @@ import { AuthService } from "@/services/AuthService";
 
 import { AppointmentService } from "@/services/AppointmentService";
 import formatDate from "@/lib/formatDate";
+import CancelAppointmentForm from "../client/CancelAppointmentForm";
 
 export default function AppointmentsList() {
   const [appointments, setAppointments] = useState([]);
@@ -68,31 +69,22 @@ export default function AppointmentsList() {
 
         return (
           <div
-            className="py-6 flex justify-between border-b border-gray-200"
+            className="py-6 flex justify-between items-center border-b border-gray-200"
             key={appointment?._id}
           >
-            {/* <div className="flex items-center">
-              <div
-                className={cn(
-                  "m-auto w-8 h-8  border-1 border-gray-300 rounded-full"
-                )}
-              >
-                <img
-                  src={
-                    "https://doodleipsum.com/700x700/avatar?i=310c74837ffe0803164ed110256826e1"
-                  }
-                  className="w-8 h-8 rounded-full"
-                  alt="Jese Leos image"
-                />
-              </div>
-              <span className="ml-2 font-bold ">Bonnie Green</span>
-            </div> */}
-            {/* <div className="flex justify-center items-center font-bold text-sm px-3 rounded-full bg-mainBlue text-white">
-              28-01-2025 в 09:00
-            </div> */}
-            <div>{formatDate(appointment?.scheduleId?.date)}</div>
+            <div className="flex-1">
+              {formatDate(appointment?.scheduleId?.date)}
+            </div>
             <div>
-              {appointment?.scheduleId?.schedule[appointment?.appointmentKey]}
+              <div>
+                {appointment?.scheduleId?.schedule[appointment?.appointmentKey]}
+              </div>
+            </div>
+            <div className="ml-2">
+              <CancelAppointmentForm
+                mapItemId={appointment?._id}
+                successHandler={loadAppointments}
+              />
             </div>
           </div>
         );

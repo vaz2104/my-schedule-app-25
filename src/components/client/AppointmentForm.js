@@ -1,7 +1,7 @@
 "use client";
-import { CheckCircleIcon, PlusIcon } from "../ui/Icons";
+import { CheckCircleIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import { monthsFullName } from "../ui/calendar/calendar-vars";
@@ -84,10 +84,6 @@ export default function AppointmentForm({
       await loadServices();
     }
   }
-
-  // useEffect(() => {
-  //   loadServices();
-  // }, []);
 
   if (!selectedSchedule) return <></>;
 

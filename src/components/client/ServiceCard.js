@@ -3,6 +3,8 @@ import { FireIcon } from "@/components/ui/Icons";
 import { cn } from "@/lib/cn";
 import formatDate from "@/lib/formatDate";
 import Alert from "../ui/Alert";
+import ServiceAppointmentForm from "./ServiceAppointmentForm";
+import { useState } from "react";
 
 export default function ServiceCard({
   id,
@@ -11,7 +13,10 @@ export default function ServiceCard({
   priceWithSale,
   saleEndDay,
   updateListHandler,
+  mapItem,
 }) {
+  const [selectedService, setSelectedService] = useState(null);
+
   if (!service)
     return (
       <div className="my-4">
@@ -47,8 +52,19 @@ export default function ServiceCard({
         </div>
       </div>
       <div className="mt-4">
-        <button className="button w-full gray">Записатися</button>
+        <button
+          className="button w-full gray"
+          onClick={() => setSelectedService(mapItem)}
+        >
+          Записатися
+        </button>
       </div>
+
+      <ServiceAppointmentForm
+        selectedService={selectedService}
+        successHandler={updateListHandler}
+        closeHandler={() => setSelectedService(null)}
+      />
     </div>
   );
 }

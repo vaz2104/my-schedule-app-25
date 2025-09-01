@@ -23,6 +23,7 @@ export default function ServicesList({ updateListHandler, services }) {
               saleEndDay={service?.saleEndDay}
               updateListHandler={updateListHandler}
               id={service._id}
+              mapItem={service}
             />
           </div>
         );

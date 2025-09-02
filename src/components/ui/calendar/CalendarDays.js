@@ -72,7 +72,7 @@ export default function CalendarDays({ options }) {
       setInitWeekDate(day.date);
       setSelectedDate(day.date);
 
-      if (day.month != new Date(setSelectedDate).getMonth()) {
+      if (day.month != new Date(selectedDate).getMonth()) {
         setInitCalendarDate(day.date);
       }
     }

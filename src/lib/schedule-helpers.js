@@ -113,3 +113,9 @@ export function filterAppointments(list) {
 
   return filtered;
 }
+
+export function getSelectedDateOnCalendarChange(initDate) {
+  return new Date(initDate).getMonth() === new Date().getMonth()
+    ? new Date()
+    : initDate;
+}

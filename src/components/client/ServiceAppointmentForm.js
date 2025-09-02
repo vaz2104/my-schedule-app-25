@@ -1,7 +1,7 @@
 "use client";
 import { TrashIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { monthsFullName } from "../ui/calendar/calendar-vars";
 import { cn } from "@/lib/cn";
@@ -12,6 +12,7 @@ import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import MonthScheduleCalendar from "../general/MonthScheduleCalendar";
 import ActiveWeekScheduleNoForm from "./ActiveWeekScheduleNoForm";
+import { getSelectedDateOnCalendarChange } from "@/lib/schedule-helpers";
 
 export default function ServiceAppointmentForm({
   selectedService,
@@ -41,6 +42,10 @@ export default function ServiceAppointmentForm({
   }
 
   async function BookAppointment() {
+    if (!selectedAppointment || !selectedSchedule?._id) {
+      setError("Будь ласка, оберіть дату та час прийому!");
+      return;
+    }
     setIsLoading(true);
     const session = await AuthService.getSession();
 
@@ -65,6 +70,10 @@ export default function ServiceAppointmentForm({
       if (successHandler) successHandler();
     }
   }
+
+  useEffect(() => {
+    setSelectedDate(getSelectedDateOnCalendarChange(initCalendarDate));
+  }, [initCalendarDate]);
 
   if (!selectedService) return <></>;
 

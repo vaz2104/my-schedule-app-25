@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import CalendarDays from "./CalendarDays";
 import { AngleLeftIcon, AngleRightIcon } from "./Icons";
 import { months, weekdaysShortName } from "./calendar-vars";
@@ -7,12 +8,14 @@ import { useCalendarStore } from "./useCalendarStore";
 import { useShallow } from "zustand/shallow";
 
 export default function Calendar({ options = {} }) {
-  const { initCalendarDate, setInitCalendarDate } = useCalendarStore(
-    useShallow((state) => ({
-      initCalendarDate: state.initCalendarDate,
-      setInitCalendarDate: state.setInitCalendarDate,
-    }))
-  );
+  const { initCalendarDate, setInitCalendarDate, setSelectedDate } =
+    useCalendarStore(
+      useShallow((state) => ({
+        initCalendarDate: state.initCalendarDate,
+        setInitCalendarDate: state.setInitCalendarDate,
+        setSelectedDate: state.setSelectedDate,
+      }))
+    );
 
   function nextMonth(day) {
     setInitCalendarDate(new Date(day.getFullYear(), day.getMonth() + 1, 1));
@@ -21,6 +24,11 @@ export default function Calendar({ options = {} }) {
   function prevMonth(day) {
     setInitCalendarDate(new Date(day.getFullYear(), day.getMonth() - 1, 1));
   }
+
+  useEffect(() => {
+    setInitCalendarDate(new Date());
+    setSelectedDate(new Date());
+  }, []);
 
   return (
     <div>

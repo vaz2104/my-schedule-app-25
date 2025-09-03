@@ -52,19 +52,11 @@ export default function WeekScheduleCalendar({
     setIsLoading(false);
   }
 
-  // function getScheduleDays(schedule) {
-  //   const days = [];
-  //   schedule.forEach((el) => days.push(formatDate(el?.date)));
-
-  //   return days;
-  // }
-
   useEffect(() => {
     const calendarPeriod = CalendarService.generateWeekDays(initCalendarDate);
     setWeekDays(calendarPeriod);
     loadFullMonthSchedule();
   }, [initCalendarDate]);
-  // console.log(initCalendarDate, initWeekDate);
 
   if (error) {
     return (

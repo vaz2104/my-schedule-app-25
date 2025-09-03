@@ -62,8 +62,15 @@ export function getScheduleDays(schedule, key) {
 
     if (el.relations?.length !== Object.keys(el.schedule).length) {
       const isOldDay = CalendarService.isOldDay(new Date(el?.date));
+      let availableHours = 0;
 
-      if (isOldDay) {
+      Object.keys(el.schedule).forEach((key) => {
+        if (!CalendarService.isOldDate(new Date(el?.date), el.schedule[key])) {
+          availableHours++;
+        }
+      });
+
+      if (isOldDay || availableHours === 0) {
         daysWithNoAppointments.push(formatDate(el?.date));
       } else {
         daysWithAppointments.push(formatDate(el?.date));

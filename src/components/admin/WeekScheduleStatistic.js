@@ -27,7 +27,6 @@ export default function WeekScheduleStatistic({ selectedDate }) {
   async function loadFullMonthSchedule() {
     setIsLoading(true);
     const session = await AuthService.getSession();
-
     const calendarPeriod = CalendarService.generateWeekDays(initCalendarDate);
     const startDate = formatDate(calendarPeriod[0].date);
     const endDate = formatDate(calendarPeriod[calendarPeriod.length - 1].date);

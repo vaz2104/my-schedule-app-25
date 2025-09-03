@@ -3,17 +3,18 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 export default function StatisticWidget({ schedule }) {
-  const appointmentsNumber = 1;
-
-  function getTotalScheduleItems(list) {
+  function getScheduleData(list, key) {
     if (!list) return 0;
 
-    let items = 0;
+    let bookedAppointments = 0;
+    let totalAppointments = 0;
     list.forEach((element) => {
-      items += Object.keys(element.schedule).length;
+      totalAppointments += Object.keys(element.schedule).length;
+      bookedAppointments += element.relations.length;
     });
 
-    return items;
+    const data = { bookedAppointments, totalAppointments };
+    return key ? data[key] : data;
   }
 
   function getActiveRecordsPercentage(total, active) {
@@ -29,7 +30,9 @@ export default function StatisticWidget({ schedule }) {
       <div className="flex -m-1">
         <div className="w-1/3 rounded-xl bg-gray-100 py-2 mx-1 text-center">
           <div className="flex flex-col items-center justify-center h-full">
-            <div className="text-4xl font-bold">{appointmentsNumber}</div>
+            <div className="text-4xl font-bold">
+              {getScheduleData(schedule, "bookedAppointments")}
+            </div>
             <div className="text-xs mt-2">
               Записані <br />
               на прийом
@@ -39,7 +42,7 @@ export default function StatisticWidget({ schedule }) {
         <div className="w-1/3 rounded-xl bg-gray-100 py-2 px-1 mx-1 text-center">
           <div className="flex flex-col items-center justify-center h-full">
             <div className="text-4xl font-bold">
-              {getTotalScheduleItems(schedule)}
+              {getScheduleData(schedule, "totalAppointments")}
             </div>
             <div className="text-xs mt-2">
               Загальна <br />
@@ -51,12 +54,12 @@ export default function StatisticWidget({ schedule }) {
           <div style={{ width: 100, height: 100 }}>
             <CircularProgressbar
               value={getActiveRecordsPercentage(
-                getTotalScheduleItems(schedule),
-                appointmentsNumber
+                getScheduleData(schedule, "totalAppointments"),
+                getScheduleData(schedule, "bookedAppointments")
               )}
               text={`${getActiveRecordsPercentage(
-                getTotalScheduleItems(schedule),
-                appointmentsNumber
+                getScheduleData(schedule, "totalAppointments"),
+                getScheduleData(schedule, "bookedAppointments")
               )}%`}
               styles={buildStyles({
                 pathColor: `rgba(22, 163, 74, 100)`,

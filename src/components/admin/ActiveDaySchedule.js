@@ -10,12 +10,16 @@ import { AuthService } from "@/services/AuthService";
 import formatDate from "@/lib/formatDate";
 import { monthsFullName } from "@/lib/calendar-vars";
 import CalendarService from "../ui/calendar/CalendarService";
+import Link from "next/link";
+import { useBaseURL } from "@/hooks/useBaseURL";
+import { cn } from "@/lib/cn";
 
 export default function ActiveDaySchedule({ selectedDate }) {
   const [selectedDaySchedule, setSelectedDaySchedule] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
+  const { baseDashboardLink } = useBaseURL();
 
   const currentMonth = monthsFullName[new Date(selectedDate).getMonth()];
 
@@ -66,11 +70,32 @@ export default function ActiveDaySchedule({ selectedDate }) {
         </h2>
       </div>
 
-      {!CalendarService.isOldDay(selectedDate) && (
-        <DayScheduleModalForm
-          activeSchedule={selectedDaySchedule}
-          selectedDate={selectedDate}
-        />
+      {selectedDaySchedule &&
+      Object.keys(selectedDaySchedule?.schedule).length ? (
+        <>
+          {!CalendarService.isOldDate(
+            new Date(selectedDaySchedule?.date),
+            selectedDaySchedule?.schedule[
+              Object.keys(selectedDaySchedule?.schedule)[
+                Object.keys(selectedDaySchedule?.schedule).length - 1
+              ]
+            ]
+          ) && (
+            <DayScheduleModalForm
+              activeSchedule={selectedDaySchedule}
+              selectedDate={selectedDate}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {!CalendarService.isOldDay(selectedDate) && (
+            <DayScheduleModalForm
+              activeSchedule={selectedDaySchedule}
+              selectedDate={selectedDate}
+            />
+          )}
+        </>
       )}
 
       {selectedDaySchedule &&
@@ -83,18 +108,41 @@ export default function ActiveDaySchedule({ selectedDate }) {
                 selectedDaySchedule?.schedule[itemKey]
               );
 
+              let bookedAppointment = null;
+
+              selectedDaySchedule.relations.forEach((relation) => {
+                if (relation?.appointmentKey === itemKey) {
+                  bookedAppointment = relation;
+                }
+              });
+
               return (
                 <div
-                  className="py-4 relative flex justify-between items-center"
+                  className={cn(
+                    "py-4 relative flex justify-between items-center",
+                    isOldDate && "opacity-45"
+                  )}
                   key={`schedule-${itemKey}`}
                 >
                   <div className="absolute bottom-0 left-2 right-2 border-t border-t-gray-200"></div>
-                  <div className="font-bold text-lg ml-2">
+                  <div className="font-bold text-lg ml-2 py-1">
                     {selectedDaySchedule?.schedule[itemKey]}
                   </div>
-                  <div className="flex-1 ml-4 flex items-center">
-                    <p className="text-sm text-gray-500">Запис відсутній</p>
-                  </div>
+                  {bookedAppointment ? (
+                    <div className="flex-1 ml-4 flex items-center">
+                      <Link
+                        href={`${baseDashboardLink}/clients/${bookedAppointment?.clientId?._id}`}
+                        className="text-sm text-gray-500"
+                      >
+                        {bookedAppointment?.clientId?.firstName ||
+                          bookedAppointment?.clientId?.username}
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="flex-1 ml-4 flex items-center">
+                      <p className="text-sm text-gray-500">Запис відсутній</p>
+                    </div>
+                  )}
 
                   {!isOldDate && (
                     <div className="text-right">

@@ -127,7 +127,7 @@ export default function WeekCalendar({ options }) {
                       }
                     />
                   )}
-                {day.weekDay === new Date(selectedDate).getDay() && (
+                {day.number === new Date(selectedDate).getDate() && (
                   <span className="absolute rounded-lg w-full h-full bg-gray-300 top-1 right-0 animate__animated animate__bounceIn z-0"></span>
                 )}
 

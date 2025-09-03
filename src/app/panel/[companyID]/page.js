@@ -8,9 +8,10 @@ import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function PanelHome() {
-  const { initCalendarDate } = useCalendarStore(
+  const { initWeekDate, initCalendarDate } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
+      initWeekDate: state.initWeekDate,
     }))
   );
 
@@ -19,6 +20,10 @@ export default function PanelHome() {
   useEffect(() => {
     setSelectedDate(initCalendarDate);
   }, [initCalendarDate]);
+
+  useEffect(() => {
+    setSelectedDate(new Date(initWeekDate));
+  }, [initWeekDate]);
 
   return (
     <div className="p-4">

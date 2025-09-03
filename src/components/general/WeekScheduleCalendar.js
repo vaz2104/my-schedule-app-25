@@ -17,9 +17,10 @@ export default function WeekScheduleCalendar({
   selectedDate,
   setSelectedDate,
 }) {
-  const { initCalendarDate } = useCalendarStore(
+  const { initCalendarDate, setWeekDays } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
+      setWeekDays: state.setWeekDays,
     }))
   );
 
@@ -59,8 +60,11 @@ export default function WeekScheduleCalendar({
   // }
 
   useEffect(() => {
+    const calendarPeriod = CalendarService.generateWeekDays(initCalendarDate);
+    setWeekDays(calendarPeriod);
     loadFullMonthSchedule();
   }, [initCalendarDate]);
+  // console.log(initCalendarDate, initWeekDate);
 
   if (error) {
     return (

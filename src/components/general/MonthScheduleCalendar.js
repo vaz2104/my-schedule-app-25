@@ -10,12 +10,15 @@ import formatDate from "@/lib/formatDate";
 import Calendar from "../ui/calendar/Calendar";
 import CalendarService from "../ui/calendar/CalendarService";
 import { getScheduleDays } from "@/lib/schedule-helpers";
+import { useCalendarStore } from "../ui/calendar/useCalendarStore";
+import { useShallow } from "zustand/shallow";
 
-export default function MonthScheduleCalendar({
-  selectedDate,
-  setSelectedDate,
-  initCalendarDate,
-}) {
+export default function MonthScheduleCalendar() {
+  const { initCalendarDate } = useCalendarStore(
+    useShallow((state) => ({
+      initCalendarDate: state.initCalendarDate,
+    }))
+  );
   const [schedule, setSchedule] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -72,8 +75,6 @@ export default function MonthScheduleCalendar({
             schedule,
             "daysWithNoAppointments"
           ),
-          customStateValue: selectedDate,
-          setCustomStateValue: setSelectedDate,
           theme: "client",
         }}
       />

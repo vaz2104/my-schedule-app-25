@@ -43,8 +43,8 @@ class CalendarService {
   }
 
   generateWeekDays(initDate) {
-    let initDateObject = new Date(initDate);
-    let currentDay = new Date(initDate);
+    let initDateObject = initDate;
+    let currentDay = initDate;
     let weekdayOfFirstDay = currentDay.getDay();
     let currentDays = [];
 

@@ -13,14 +13,10 @@ import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import { getScheduleDays } from "@/lib/schedule-helpers";
 
-export default function WeekScheduleCalendar({
-  selectedDate,
-  setSelectedDate,
-}) {
-  const { initCalendarDate, setWeekDays } = useCalendarStore(
+export default function WeekScheduleCalendar() {
+  const { initWeekDate } = useCalendarStore(
     useShallow((state) => ({
-      initCalendarDate: state.initCalendarDate,
-      setWeekDays: state.setWeekDays,
+      initWeekDate: state.initWeekDate,
     }))
   );
 
@@ -32,9 +28,9 @@ export default function WeekScheduleCalendar({
   async function loadFullMonthSchedule() {
     setIsLoading(true);
     const session = await AuthService.getSession();
-    const calendarPeriod = CalendarService.generateWeekDays(initCalendarDate);
-    const startDate = formatDate(calendarPeriod[0].date);
-    const endDate = formatDate(calendarPeriod[calendarPeriod.length - 1].date);
+    const weekPeriod = CalendarService.generateWeekDays(initWeekDate);
+    const startDate = formatDate(weekPeriod[0].date);
+    const endDate = formatDate(weekPeriod[weekPeriod.length - 1].date);
 
     const response = await ScheduleService.getMany({
       botId: params?.companyID,
@@ -53,10 +49,8 @@ export default function WeekScheduleCalendar({
   }
 
   useEffect(() => {
-    const calendarPeriod = CalendarService.generateWeekDays(initCalendarDate);
-    setWeekDays(calendarPeriod);
     loadFullMonthSchedule();
-  }, [initCalendarDate]);
+  }, []);
 
   if (error) {
     return (
@@ -80,8 +74,6 @@ export default function WeekScheduleCalendar({
             schedule,
             "daysWithNoAppointments"
           ),
-          customStateValue: selectedDate,
-          setCustomStateValue: setSelectedDate,
         }}
       />
     </div>

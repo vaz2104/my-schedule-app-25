@@ -4,26 +4,24 @@ import BookedAppointments from "@/components/client/BookedAppointments";
 import DiscountServices from "@/components/client/DiscountServices";
 import WeekScheduleCalendar from "@/components/general/WeekScheduleCalendar";
 import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function PanelHome() {
-  const { initWeekDate, initCalendarDate } = useCalendarStore(
-    useShallow((state) => ({
-      initCalendarDate: state.initCalendarDate,
-      initWeekDate: state.initWeekDate,
-    }))
-  );
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
-  useEffect(() => {
-    setSelectedDate(initCalendarDate);
-  }, [initCalendarDate]);
+  const { setSelectedDate, setInitCalendarDate, setInitWeekDate } =
+    useCalendarStore(
+      useShallow((state) => ({
+        setInitCalendarDate: state.setInitCalendarDate,
+        setInitWeekDate: state.setInitWeekDate,
+        setSelectedDate: state.setSelectedDate,
+      }))
+    );
 
   useEffect(() => {
-    setSelectedDate(new Date(initWeekDate));
-  }, [initWeekDate]);
+    setInitCalendarDate(new Date());
+    setInitWeekDate(new Date());
+    setSelectedDate(new Date());
+  }, []);
 
   return (
     <div className="p-4">
@@ -31,9 +29,9 @@ export default function PanelHome() {
         <BookedAppointments />
       </div> */}
 
-      <WeekScheduleCalendar setSelectedDate={setSelectedDate} />
+      <WeekScheduleCalendar />
       <div className="mt-8 mb-4">
-        <ActiveWeekDaySchedule selectedDate={selectedDate} />
+        <ActiveWeekDaySchedule />
       </div>
       <div className="mt-8 mb-4">
         <DiscountServices />

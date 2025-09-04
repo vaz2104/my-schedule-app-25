@@ -14,7 +14,7 @@ export default function WeekCalendar({ options }) {
   const markedActiveDays = options?.markedActiveDays || [];
   const markedDisabledDays = options?.markedDisabledDays || [];
 
-  const setCustomStateValue = options?.setCustomStateValue || [];
+  // const setCustomStateValue = options?.setCustomStateValue || [];
   const [isModalCalendar, setIsModalCalendar] = useState(false);
   const {
     initWeekDate,
@@ -40,22 +40,21 @@ export default function WeekCalendar({ options }) {
 
   function setNextWeekOptions(date) {
     const nextDate = CalendarService.nextWeekInitDate(date); // returns a Y-m-d format
-    setInitWeekDate(nextDate);
-    setSelectedDate(nextDate);
+    setInitWeekDate(new Date(nextDate));
+    setSelectedDate(new Date(nextDate));
     setInitCalendarDate(new Date(nextDate)); // convert from format Y-m-d
   }
 
   function setPreviousWeekOptions(date) {
     const nextDate = CalendarService.previousWeekInitDate(date); // returns a Y-m-d format
-    setInitWeekDate(nextDate);
-    setSelectedDate(nextDate);
+    setInitWeekDate(new Date(nextDate));
+    setSelectedDate(new Date(nextDate));
     setInitCalendarDate(new Date(nextDate)); // convert from format Y-m-d
   }
 
   function chooseDateHandler(date) {
     // setInitCalendarDate(date);
     setSelectedDate(date);
-    if (setCustomStateValue) setCustomStateValue(date);
   }
 
   useEffect(() => {
@@ -69,8 +68,12 @@ export default function WeekCalendar({ options }) {
         <div className="flex items-center mb-4 w-full p-2">
           <div className="flex-1">
             <h2 className="text-lg leading-none font-bold text-gray-900">
-              <span className="">{months[initCalendarDate.getMonth()]} </span>
-              <span className=" mt-0.5">{initCalendarDate.getFullYear()}</span>
+              <span className="">
+                {months[new Date(selectedDate).getMonth()]}{" "}
+              </span>
+              <span className=" mt-0.5">
+                {new Date(selectedDate).getFullYear()}
+              </span>
             </h2>
           </div>
           <button

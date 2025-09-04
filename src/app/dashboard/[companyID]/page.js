@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function DashboardHome() {
-  const { initCalendarDate } = useCalendarStore(
+  const { initCalendarDate, initWeekDate } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
+      initWeekDate: state.initWeekDate,
     }))
   );
 
@@ -18,6 +19,10 @@ export default function DashboardHome() {
   useEffect(() => {
     setSelectedDate(initCalendarDate);
   }, [initCalendarDate]);
+
+  useEffect(() => {
+    setSelectedDate(new Date(initWeekDate));
+  }, [initWeekDate]);
 
   return (
     <div className="p-4">

@@ -27,6 +27,10 @@ export default function ScheduleSingle({ isWorkerSchedule = false }) {
   }
 
   useEffect(() => {
+    setInitCalendarDate(new Date());
+  }, []);
+
+  useEffect(() => {
     setSelectedDate(getSelectedDateOnCalendarChange(initCalendarDate));
     setSelectedCalendarDate(new Date());
   }, [initCalendarDate]);

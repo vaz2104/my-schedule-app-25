@@ -10,8 +10,15 @@ import { monthsFullName } from "@/lib/calendar-vars";
 import CalendarService from "../ui/calendar/CalendarService";
 import { cn } from "@/lib/cn";
 import AppointmentForm from "./AppointmentForm";
+import { useCalendarStore } from "../ui/calendar/useCalendarStore";
+import { useShallow } from "zustand/shallow";
 
-export default function ActiveWeekDaySchedule({ selectedDate }) {
+export default function ActiveWeekDaySchedule() {
+  const { selectedDate } = useCalendarStore(
+    useShallow((state) => ({
+      selectedDate: state.selectedDate,
+    }))
+  );
   const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);

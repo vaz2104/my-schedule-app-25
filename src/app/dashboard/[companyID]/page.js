@@ -7,30 +7,28 @@ import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function DashboardHome() {
-  const { initCalendarDate, initWeekDate } = useCalendarStore(
-    useShallow((state) => ({
-      initCalendarDate: state.initCalendarDate,
-      initWeekDate: state.initWeekDate,
-    }))
-  );
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
-  useEffect(() => {
-    setSelectedDate(initCalendarDate);
-  }, [initCalendarDate]);
+  const { setSelectedDate, setInitCalendarDate, setInitWeekDate } =
+    useCalendarStore(
+      useShallow((state) => ({
+        setInitCalendarDate: state.setInitCalendarDate,
+        setInitWeekDate: state.setInitWeekDate,
+        setSelectedDate: state.setSelectedDate,
+      }))
+    );
 
   useEffect(() => {
-    setSelectedDate(new Date(initWeekDate));
-  }, [initWeekDate]);
+    setInitCalendarDate(new Date());
+    setInitWeekDate(new Date());
+    setSelectedDate(new Date());
+  }, []);
 
   return (
     <div className="p-4">
       <WeekScheduleStatistic />
       <div className="mt-6"></div>
-      <WeekScheduleCalendar setSelectedDate={setSelectedDate} />
+      <WeekScheduleCalendar />
       <div className="mt-8 mb-4">
-        <ActiveWeekDaySchedule selectedDate={selectedDate} />
+        <ActiveWeekDaySchedule />
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ export default function WeekScheduleCalendar() {
 
   useEffect(() => {
     loadFullMonthSchedule();
-  }, []);
+  }, [initWeekDate]);
 
   if (error) {
     return (

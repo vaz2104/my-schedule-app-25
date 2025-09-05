@@ -12,8 +12,16 @@ import Link from "next/link";
 import { useBaseURL } from "@/hooks/useBaseURL";
 import { TrashIcon } from "../ui/Icons";
 import { cn } from "@/lib/cn";
+import { useCalendarStore } from "../ui/calendar/useCalendarStore";
+import { useShallow } from "zustand/shallow";
 
-export default function ActiveWeekDaySchedule({ selectedDate }) {
+export default function ActiveWeekDaySchedule() {
+  const { selectedDate } = useCalendarStore(
+    useShallow((state) => ({
+      selectedDate: state.selectedDate,
+    }))
+  );
+
   const [selectedDaySchedule, setSelectedDaySchedule] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);

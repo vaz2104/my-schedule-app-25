@@ -55,6 +55,12 @@ export default function NewServiceForm({ successHandler }) {
       return;
     }
 
+    if (parseInt(priceWithSale) > parseInt(price)) {
+      setError("Ціна зі знижкою не може перевищувати стару ціну");
+      setIsLoading(false);
+      return;
+    }
+
     const query = {
       botId: params?.companyID,
       service: name,

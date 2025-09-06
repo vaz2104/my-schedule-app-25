@@ -67,7 +67,7 @@ export default function EditServiceForm({ mapItem, successHandler }) {
       return;
     }
 
-    if (priceWithSale > price) {
+    if (parseInt(priceWithSale) > parseInt(price)) {
       setError("Ціна зі знижкою не може перевищувати стару ціну");
       setIsLoading(false);
       return;

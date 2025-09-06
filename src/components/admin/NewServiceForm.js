@@ -180,7 +180,10 @@ export default function NewServiceForm({ successHandler }) {
                     </label>
                     <div className="">
                       <Calendar
-                        options={{ setCustomStateValue: setSaleEndDay }}
+                        options={{
+                          setCustomStateValue: setSaleEndDay,
+                          customStateValue: saleEndDay,
+                        }}
                       />
                     </div>
                   </div>

@@ -90,12 +90,19 @@ export default function ActiveWeekDaySchedule() {
       }
     }
 
-    const updateScheduleResponse = await ScheduleService.update(
-      selectedDaySchedule?._id,
-      {
-        schedule: newSchedule,
-      }
-    );
+    let updateScheduleResponse = null;
+    if (!Object.keys(newSchedule).length) {
+      updateScheduleResponse = await ScheduleService.delete(
+        selectedDaySchedule?._id
+      );
+    } else {
+      updateScheduleResponse = await ScheduleService.update(
+        selectedDaySchedule?._id,
+        {
+          schedule: newSchedule,
+        }
+      );
+    }
 
     if (updateScheduleResponse.status !== 200) {
       setError("Сталася помилка при виконанні запиту");

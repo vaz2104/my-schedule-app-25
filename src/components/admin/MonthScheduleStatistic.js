@@ -12,8 +12,16 @@ import { AuthService } from "@/services/AuthService";
 import formatDate from "@/lib/formatDate";
 import { monthsFullName } from "@/lib/calendar-vars";
 import CalendarService from "../ui/calendar/CalendarService";
+import { useCalendarStore } from "../ui/calendar/useCalendarStore";
+import { useShallow } from "zustand/shallow";
 
-export default function MonthScheduleStatistic({ selectedDate }) {
+export default function MonthScheduleStatistic() {
+  const { initCalendarDate } = useCalendarStore(
+    useShallow((state) => ({
+      initCalendarDate: state.initCalendarDate,
+    }))
+  );
+
   const [schedule, setSchedule] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,7 +31,8 @@ export default function MonthScheduleStatistic({ selectedDate }) {
     setIsLoading(true);
     const session = await AuthService.getSession();
 
-    const calendarPeriod = CalendarService.generateCalendarDays(selectedDate);
+    const calendarPeriod =
+      CalendarService.generateCalendarDays(initCalendarDate);
     const startDate = formatDate(calendarPeriod[0].date);
     const endDate = formatDate(calendarPeriod[calendarPeriod.length - 1].date);
 
@@ -59,7 +68,7 @@ export default function MonthScheduleStatistic({ selectedDate }) {
 
   useEffect(() => {
     loadFullMonthSchedule();
-  }, [selectedDate]);
+  }, [initCalendarDate]);
 
   if (error) {
     return (
@@ -79,11 +88,11 @@ export default function MonthScheduleStatistic({ selectedDate }) {
       <div className="mb-4">
         <h2 className="font-bold text-lg">
           Завантаженість{" "}
-          {monthsFullName[new Date(selectedDate).getMonth()].toLowerCase()}
+          {monthsFullName[new Date(initCalendarDate).getMonth()].toLowerCase()}
         </h2>
       </div>
 
-      <StatisticWidget schedule={filterScheduleByMonth(selectedDate)} />
+      <StatisticWidget schedule={filterScheduleByMonth(initCalendarDate)} />
 
       <div className="mt-6">
         <GenerateSchedule

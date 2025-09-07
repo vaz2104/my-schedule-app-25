@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/cn";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ActiveDaySchedule from "./ActiveDaySchedule";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
@@ -10,15 +10,15 @@ import Thumbnail from "../ui/Thumbnail";
 import MonthScheduleCalendar from "../general/MonthScheduleCalendar";
 
 export default function ScheduleSingle({ isWorkerSchedule = false }) {
-  const { initCalendarDate, setSelectedCalendarDate, setInitCalendarDate } =
+  const { initCalendarDate, setSelectedDate, setInitCalendarDate } =
     useCalendarStore(
       useShallow((state) => ({
         initCalendarDate: state.initCalendarDate,
-        setSelectedCalendarDate: state.setSelectedDate,
+        setSelectedDate: state.setSelectedDate,
         setInitCalendarDate: state.setInitCalendarDate,
+        selectedDate: state.selectedDate,
       }))
     );
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
   function getSelectedDateOnCalendarChange(initDate) {
     return new Date(initDate).getMonth() === new Date().getMonth()
@@ -28,11 +28,11 @@ export default function ScheduleSingle({ isWorkerSchedule = false }) {
 
   useEffect(() => {
     setInitCalendarDate(new Date());
+    setSelectedDate(new Date());
   }, []);
 
   useEffect(() => {
     setSelectedDate(getSelectedDateOnCalendarChange(initCalendarDate));
-    setSelectedCalendarDate(new Date());
   }, [initCalendarDate]);
 
   return (
@@ -58,13 +58,9 @@ export default function ScheduleSingle({ isWorkerSchedule = false }) {
         </div>
       )}
 
-      <MonthScheduleStatistic selectedDate={initCalendarDate} />
-      <MonthScheduleCalendar
-        selectedDate={selectedDate}
-        initCalendarDate={initCalendarDate}
-        setSelectedDate={setSelectedDate}
-      />
-      <ActiveDaySchedule selectedDate={selectedDate} />
+      <MonthScheduleStatistic />
+      <MonthScheduleCalendar />
+      <ActiveDaySchedule />
     </div>
   );
 }

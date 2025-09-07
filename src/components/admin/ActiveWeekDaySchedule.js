@@ -14,6 +14,8 @@ import { TrashIcon } from "../ui/Icons";
 import { cn } from "@/lib/cn";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import ConfirmModal from "../ui/ConfirmModal";
+import { AppointmentService } from "@/services/AppointmentService";
 
 export default function ActiveWeekDaySchedule() {
   const { selectedDate } = useCalendarStore(
@@ -22,7 +24,10 @@ export default function ActiveWeekDaySchedule() {
     }))
   );
 
-  const [selectedDaySchedule, setSelectedDaySchedule] = useState();
+  const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
+  const [selectedScheduleItem, setSelectedScheduleItem] = useState(null);
+  const [relationToDelete, setRelationToDelete] = useState(null);
+  const [confirmMessage, setConfirmMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
@@ -49,6 +54,58 @@ export default function ActiveWeekDaySchedule() {
     setIsLoading(false);
   }
 
+  function initDeletingHandler(appointmentKey, relation) {
+    console.log(appointmentKey, relation);
+    setSelectedScheduleItem(appointmentKey);
+    setRelationToDelete(relation);
+    const message = relation
+      ? "Даний час заброньовано клієнтом! Дійсно бажаєте скасувати бронювання та видалити обраний час з Вашого графіку?"
+      : "Дійсно бажаєте видалити даний час з Вашого графіку?";
+    setConfirmMessage(message);
+  }
+
+  function cancelDeleting() {
+    setSelectedScheduleItem(null);
+    setConfirmMessage(null);
+    setRelationToDelete(null);
+  }
+
+  async function deleteHandler() {
+    setIsLoading(true);
+
+    const newSchedule = {};
+    Object.keys(selectedDaySchedule?.schedule).forEach((key) => {
+      if (key !== selectedScheduleItem)
+        newSchedule[key] = selectedDaySchedule?.schedule[key];
+    });
+
+    if (relationToDelete) {
+      const deleteAppointmentResponse = await AppointmentService.delete(
+        relationToDelete?._id
+      );
+
+      if (deleteAppointmentResponse.status !== 200) {
+        setError("Сталася помилка при виконанні запиту");
+        return false;
+      }
+    }
+
+    const updateScheduleResponse = await ScheduleService.update(
+      selectedDaySchedule?._id,
+      {
+        schedule: newSchedule,
+      }
+    );
+
+    if (updateScheduleResponse.status !== 200) {
+      setError("Сталася помилка при виконанні запиту");
+    } else {
+      await loadSelectedDaySchedule(selectedDate);
+      cancelDeleting();
+      setIsLoading(false);
+    }
+  }
+
   useEffect(() => {
     loadSelectedDaySchedule(selectedDate);
   }, [selectedDate]);
@@ -68,14 +125,12 @@ export default function ActiveWeekDaySchedule() {
           <Spinner />
         </div>
       )}
-
       <div className="mb-4">
         <h2 className="font-bold text-lg text-center">
           Записи на {new Date(selectedDate).getDate()}{" "}
           {currentMonth.toLowerCase()}
         </h2>
       </div>
-
       {selectedDaySchedule &&
       Object.keys(selectedDaySchedule?.schedule).length ? (
         <Fragment>
@@ -127,7 +182,12 @@ export default function ActiveWeekDaySchedule() {
                     <div className="text-right">
                       <div className="flex">
                         <div className="flex justify-center">
-                          <button className="button blank !px-2">
+                          <button
+                            className="button blank !px-2"
+                            onClick={() =>
+                              initDeletingHandler(itemKey, bookedAppointment)
+                            }
+                          >
                             <TrashIcon className="w-4 text-red-600" />
                           </button>
                         </div>
@@ -148,6 +208,13 @@ export default function ActiveWeekDaySchedule() {
           </div>
         </Fragment>
       )}
+      <ConfirmModal
+        triger={confirmMessage}
+        title={confirmMessage}
+        cancelFn={cancelDeleting}
+        confirmFn={deleteHandler}
+        loading={isLoading}
+      />
     </div>
   );
 }

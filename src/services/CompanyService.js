@@ -70,6 +70,15 @@ class CompanyServiceClass {
 
     return data;
   }
+
+  async update(id, options) {
+    if (!id) return null;
+
+    const API_URL = `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company/${id}`;
+    const data = await fetchApi(API_URL, options, "PUT");
+
+    return data;
+  }
 }
 
 export const CompanyService = new CompanyServiceClass();

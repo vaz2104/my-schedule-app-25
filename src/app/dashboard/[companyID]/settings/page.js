@@ -79,7 +79,10 @@ export default function SettingsPage() {
         <div className="mb-4">
           <h2 className="font-bold text-lg">Тема вашої панелі</h2>
         </div>
-        <ThemePalette />
+        <ThemePalette
+          activePalette={company?.themePalette || "blue"}
+          successCallback={loadCompanyData}
+        />
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export default function ClientsList({ clients }) {
         return (
           <div key={client._id}>
             <ClientCard
-              id={client._id}
+              id={client?.telegramUserId?._id}
               name={
                 client.telegramUserId?.firstName ||
                 client.telegramUserId?.username

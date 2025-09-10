@@ -1,5 +1,5 @@
 "use client";
-import AppointmentsList from "@/components/admin/AppointmentsList";
+import AppointmentsList from "@/components/client/AppointmentsList";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";

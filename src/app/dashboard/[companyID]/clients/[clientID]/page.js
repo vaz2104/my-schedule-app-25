@@ -3,8 +3,6 @@ import AppointmentsList from "@/components/admin/AppointmentsList";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
-import { cn } from "@/lib/cn";
-import { AuthService } from "@/services/AuthService";
 import { ClientService } from "@/services/ClientService";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,8 +15,8 @@ export default function ClientSingle() {
 
   async function loadClientData() {
     setIsLoading(true);
-    const session = await AuthService.getSession();
-    const clientDataResponse = await ClientService.getSingle(session?.userId);
+
+    const clientDataResponse = await ClientService.getSingle(params?.clientID);
 
     if (clientDataResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

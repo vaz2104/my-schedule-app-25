@@ -3,6 +3,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Alert from "../ui/Alert";
 import Spinner from "../ui/Spinner";
+import { AuthService } from "@/services/AuthService";
+
 import { AppointmentService } from "@/services/AppointmentService";
 import CancelAppointmentForm from "../client/CancelAppointmentForm";
 import CalendarService from "../ui/calendar/CalendarService";
@@ -17,10 +19,13 @@ export default function AppointmentsList() {
 
   async function loadAppointments() {
     setIsLoading(true);
+    const session = await AuthService.getSession();
     const appointmentsResponse = await AppointmentService.getMany({
       botId: params?.companyID,
-      clientId: params?.clientID,
+      clientId: session?.userId,
     });
+
+    // console.log(appointmentsResponse);
 
     if (appointmentsResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

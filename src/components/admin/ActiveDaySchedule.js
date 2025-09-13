@@ -132,12 +132,15 @@ export default function ActiveDaySchedule() {
           <Spinner />
         </div>
       )}
-      <div className="mb-4">
-        <h2 className="font-bold text-lg text-center">
-          Графік на {new Date(selectedDate).getDate()}{" "}
-          {currentMonth.toLowerCase()}
-        </h2>
-      </div>
+
+      {selectedDate && (
+        <div className="mb-4">
+          <h2 className="font-bold text-lg text-center">
+            Графік на {new Date(selectedDate).getDate()}{" "}
+            {currentMonth.toLowerCase()}
+          </h2>
+        </div>
+      )}
 
       {selectedDaySchedule &&
       Object.keys(selectedDaySchedule?.schedule).length ? (

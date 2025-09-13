@@ -6,6 +6,8 @@ import Calendar from "../ui/calendar/Calendar";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import Alert from "../ui/Alert";
+import { AuthService } from "@/services/AuthService";
+import { NotificationService } from "@/services/NotificatoinsServices";
 
 export default function EditServiceForm({ mapItem, successHandler }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -82,16 +84,28 @@ export default function EditServiceForm({ mapItem, successHandler }) {
       saleEndDay: saleEndDay,
     };
 
-    const updatedServiceResponse = await ServicesService.update(mapItem?.id, {
-      query,
-      hasNotification: sentNotification,
-    });
+    const updatedServiceResponse = await ServicesService.update(
+      mapItem?.id,
+      query
+    );
 
     if (updatedServiceResponse.status !== 200) {
       setError("Сталася помилка при оновленні даних");
       setIsLoading(false);
     } else {
       if (successHandler) successHandler();
+      if (sentNotification) {
+        const session = await AuthService.getSession();
+        await NotificationService.createNotification({
+          notification: {
+            botId: params?.companyID,
+            author: session?.userId,
+          },
+          recipientRole: "client",
+          type: "newDiscount",
+          meta: updatedServiceResponse?.data,
+        });
+      }
       closeModal();
     }
   }

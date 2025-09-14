@@ -7,12 +7,20 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import ServicesList from "@/components/admin/ServicesList";
+import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
+import { useShallow } from "zustand/shallow";
 
 export default function Services() {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
+
+  const { setSelectedDate } = useCalendarStore(
+    useShallow((state) => ({
+      setSelectedDate: state.setSelectedDate,
+    }))
+  );
 
   async function loadServices() {
     setIsLoading(true);
@@ -31,6 +39,7 @@ export default function Services() {
 
   useEffect(() => {
     loadServices();
+    setSelectedDate(new Date());
   }, []);
 
   if (isLoading)

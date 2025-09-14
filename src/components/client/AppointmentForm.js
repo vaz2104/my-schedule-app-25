@@ -9,6 +9,7 @@ import { cn } from "@/lib/cn";
 import { AppointmentService } from "@/services/AppointmentService";
 import { AuthService } from "@/services/AuthService";
 import { ThemeContext } from "@/context/ThemeContext";
+import { NotificationService } from "@/services/NotificatoinsServices";
 
 export default function AppointmentForm({
   selectedSchedule,
@@ -63,13 +64,23 @@ export default function AppointmentForm({
     };
 
     const response = await AppointmentService.create(query);
-    console.log(response);
 
     if (response.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
       setIsLoading(false);
     } else {
       closeModal();
+      const session = await AuthService.getSession();
+      await NotificationService.createNotification({
+        notification: {
+          botId: params?.companyID,
+          author: session?.userId,
+        },
+        recipientRole: "admin",
+        type: "clientNewAppointment",
+        meta: response?.data,
+      });
+
       setSuccessMessage("Вітаємо! Даний час успішно зарезервовано за Вами");
       if (successHandler) successHandler();
     }

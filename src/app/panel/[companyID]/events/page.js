@@ -18,7 +18,7 @@ export default function Events() {
     const session = await AuthService.getSession();
     const response = await NotificationService.getMany({
       recipient: session?.userId,
-      recipientRole: "admin",
+      recipientRole: "client",
     });
 
     if (response.status !== 200) {

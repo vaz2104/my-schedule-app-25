@@ -16,6 +16,8 @@ import { cn } from "@/lib/cn";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import ConfirmModal from "../ui/ConfirmModal";
+import { NotificationService } from "@/services/NotificatoinsServices";
+import { AppointmentService } from "@/services/AppointmentService";
 
 export default function ActiveDaySchedule() {
   const { selectedDate } = useCalendarStore(
@@ -80,6 +82,10 @@ export default function ActiveDaySchedule() {
     });
 
     if (relationToDelete) {
+      const appointmentResponse = await AppointmentService.getSingle(
+        relationToDelete?._id
+      );
+
       const deleteAppointmentResponse = await AppointmentService.delete(
         relationToDelete?._id
       );
@@ -87,6 +93,18 @@ export default function ActiveDaySchedule() {
       if (deleteAppointmentResponse.status !== 200) {
         setError("Сталася помилка при виконанні запиту");
         return false;
+      } else {
+        const session = await AuthService.getSession();
+        await NotificationService.createNotification({
+          notification: {
+            botId: params?.companyID,
+            author: session?.userId,
+          },
+          recipient: [appointmentResponse?.data?.clientId?._id],
+          recipientRole: "client",
+          type: "adminCancelAppointment",
+          meta: appointmentResponse?.data,
+        });
       }
     }
 

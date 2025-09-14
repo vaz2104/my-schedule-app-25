@@ -3,21 +3,38 @@ import ConfirmModal from "../ui/ConfirmModal";
 import { ThemeContext } from "@/context/ThemeContext";
 import { CloseIcon } from "../ui/Icons";
 import { AppointmentService } from "@/services/AppointmentService";
+import { NotificationService } from "@/services/NotificatoinsServices";
+import { AuthService } from "@/services/AuthService";
+import { useParams } from "next/navigation";
 
 export default function CancelAppointmentForm({ mapItemId, successHandler }) {
   const [appointmentId, setAppointmentId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { setWarningError } = useContext(ThemeContext);
+  const params = useParams();
 
   async function cancelAppointment() {
     setIsLoading(true);
+    const appointmentResponse = await AppointmentService.getSingle(
+      appointmentId
+    );
     const response = await AppointmentService.delete(appointmentId);
-    console.log(response);
 
     if (response.status !== 200) {
       setAppointmentId(null);
       setWarningError("Сталася помилка при виконанні запиту");
     } else {
+      const session = await AuthService.getSession();
+      await NotificationService.createNotification({
+        notification: {
+          botId: params?.companyID,
+          author: session?.userId,
+        },
+        recipientRole: "admin",
+        type: "clientCancelAppointment",
+        meta: appointmentResponse?.data,
+      });
+
       if (successHandler) successHandler();
     }
 

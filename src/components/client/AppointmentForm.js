@@ -80,9 +80,8 @@ export default function AppointmentForm({
         type: "clientNewAppointment",
         meta: response?.data,
       });
-
-      setSuccessMessage("Вітаємо! Даний час успішно зарезервовано за Вами");
       if (successHandler) successHandler();
+      setSuccessMessage("Вітаємо! Даний час успішно зарезервовано за Вами");
     }
   }
 

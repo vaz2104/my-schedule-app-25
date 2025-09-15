@@ -27,12 +27,13 @@ export default function ServiceAppointmentForm({
 
   const [error, setError] = useState(null);
   const params = useParams();
-  const { initCalendarDate } = useCalendarStore(
+  const { initCalendarDate, selectedDate, setSelectedDate } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
+      selectedDate: state.selectedDate,
+      setSelectedDate: state.setSelectedDate,
     }))
   );
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
   function closeModal() {
     setIsLoading(false);
@@ -41,7 +42,7 @@ export default function ServiceAppointmentForm({
     if (closeHandler) closeHandler();
   }
 
-  async function BookAppointment() {
+  async function bookAppointment() {
     if (!selectedAppointment || !selectedSchedule?._id) {
       setError("Будь ласка, оберіть дату та час прийому!");
       return;
@@ -71,6 +72,12 @@ export default function ServiceAppointmentForm({
     }
   }
 
+  function closeCalendar() {
+    setSelectedAppointment(null);
+    setIsCalendarOpen(false);
+    setSelectedDate(new Date());
+  }
+
   useEffect(() => {
     setSelectedDate(getSelectedDateOnCalendarChange(initCalendarDate));
   }, [initCalendarDate]);
@@ -82,7 +89,7 @@ export default function ServiceAppointmentForm({
       title={"Новий запис на прийом"}
       triger={selectedService}
       cancelFn={closeHandler}
-      confirmFn={BookAppointment}
+      confirmFn={bookAppointment}
       error={error}
       hideErrorFn={() => setError(null)}
       loading={isLoading}
@@ -172,13 +179,9 @@ export default function ServiceAppointmentForm({
             className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 bottom-0 z-50 justify-center items-center w-full h-screen"
           >
             <div className="relative p-4 w-full max-w-md max-h-full">
-              <div className="p-4 py-8 bg-white rounded-lg w-full">
-                <div className="">
-                  <MonthScheduleCalendar
-                    selectedDate={selectedDate}
-                    initCalendarDate={initCalendarDate}
-                    setSelectedDate={setSelectedDate}
-                  />
+              <div className="py-8 bg-white rounded-lg w-full">
+                <div className="px-4">
+                  <MonthScheduleCalendar />
                   <div className="mt-8 mb-4">
                     <ActiveWeekScheduleNoForm
                       selectedDate={selectedDate}
@@ -189,14 +192,21 @@ export default function ServiceAppointmentForm({
                     />
                   </div>
                 </div>
-                <div className="mt-8">
+                <div className="mt-8 flex px-4 -mx-1">
                   <button
                     type="button"
-                    className="min-w-40 button m-auto"
+                    className="button mx-1 w-full"
                     onClick={() => setIsCalendarOpen(false)}
                     // disabled={loading}
                   >
                     OK
+                  </button>
+                  <button
+                    type="button"
+                    className="button mx-1 dark w-full"
+                    onClick={() => closeCalendar()}
+                  >
+                    Відмінити
                   </button>
                 </div>
               </div>

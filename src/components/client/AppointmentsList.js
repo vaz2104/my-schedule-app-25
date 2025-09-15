@@ -10,6 +10,7 @@ import CancelAppointmentForm from "../client/CancelAppointmentForm";
 import CalendarService from "../ui/calendar/CalendarService";
 import { filterAppointments, printDateWithMonth } from "@/lib/schedule-helpers";
 import { cn } from "@/lib/cn";
+import { CalendarIcon, ClockIcon } from "../ui/Icons";
 
 export default function AppointmentsList() {
   const [appointments, setAppointments] = useState([]);
@@ -80,16 +81,20 @@ export default function AppointmentsList() {
             )}
             key={appointment?._id}
           >
-            <div className="flex-1 lowercase">
-              {printDateWithMonth(appointment?.scheduleId?.date)}
+            <div className="flex items-center">
+              <CalendarIcon />
+              <div className="lowercase text-nowrap ml-0.5">
+                {printDateWithMonth(appointment?.scheduleId?.date)}
+              </div>
             </div>
-            <div className="">
-              <div>
+            <div className="flex items-center pl-4">
+              <ClockIcon className={""} />
+              <div className="ml-0.5">
                 {appointment?.scheduleId?.schedule[appointment?.appointmentKey]}
               </div>
             </div>
             {!idDateDisabled && (
-              <div className="ml-4 flex-1 flex justify-end">
+              <div className="ml-2 flex-1 flex justify-end">
                 <CancelAppointmentForm
                   mapItemId={appointment?._id}
                   successHandler={loadAppointments}

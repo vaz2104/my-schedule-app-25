@@ -207,6 +207,7 @@ export default function NewServiceForm({ successHandler }) {
                         options={{
                           setCustomStateValue: setSaleEndDay,
                           customStateValue: saleEndDay,
+                          disabledOldDays: true,
                         }}
                       />
                     </div>

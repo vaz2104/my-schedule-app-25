@@ -2,7 +2,7 @@ import { CheckCircleIcon } from "./Icons";
 
 export default function PlanBase({ activePlan, selectHandler }) {
   return (
-    <div className="bg-gray-50 shadow-sm p-4 rounded-xl h-full">
+    <div className="bg-gray-50 shadow-sm p-4 pb-8 rounded-xl h-full flex flex-col">
       <div className="mb-4 mt-4 text-center">
         <h2 className="font-bold text-2xl text-gray-700">Базовий</h2>
       </div>
@@ -15,12 +15,12 @@ export default function PlanBase({ activePlan, selectHandler }) {
       </div>
       <div className="mt-2 text-center text-gray-400">725 ₴ /місяць</div>
       <div className="mt-4 max-w-xs m-auto">
-        <p className="text-gray-500 text-base text-center">
+        <p className="text-gray-500 text-base text-center min-h-24">
           План підходить для самозайнятих осіб, або бізнесів з одним працівником
         </p>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 flex-1">
         <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
           <li className="flex items-center">
             <CheckCircleIcon className={"w-4 h-4 text-green-600"} />
@@ -44,7 +44,7 @@ export default function PlanBase({ activePlan, selectHandler }) {
           </div>
         ) : (
           <button
-            className="button w-full"
+            className="button w-full mx-auto"
             onClick={selectHandler ? selectHandler : null}
           >
             Обрати план

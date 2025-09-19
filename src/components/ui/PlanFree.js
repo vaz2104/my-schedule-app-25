@@ -2,7 +2,7 @@ import { CheckCircleIcon } from "./Icons";
 
 export default function PlanFree({ activePlan, selectHandler }) {
   return (
-    <div className="bg-gray-50 shadow-sm p-4 rounded-xl h-full">
+    <div className="bg-gray-50 shadow-sm p-4 pb-8 rounded-xl h-full flex flex-col">
       <div className="mb-4 mt-4 text-center">
         <h2 className="font-bold text-2xl text-gray-700">Безкоштовний</h2>
       </div>
@@ -14,10 +14,10 @@ export default function PlanFree({ activePlan, selectHandler }) {
         </span>
       </div>
       <div className="mt-2 text-center text-gray-400">0 ₴ /місяць</div>
-      <div className="mt-4 max-w-xs m-auto">
+      <div className="mt-4 max-w-xs m-auto min-h-24">
         <p className="text-gray-500 text-base text-center">
-          План дозволить Вам зекономити кошти, зможете освоїти платформу та
-          дізнатися, чи дійсно вона підійде Вашій компанії
+          План дозволить освоїти платформу та дізнатися, чи дійсно вона підійде
+          Вашій компанії
         </p>
       </div>
 
@@ -51,7 +51,7 @@ export default function PlanFree({ activePlan, selectHandler }) {
           </div>
         ) : (
           <button
-            className="button w-full"
+            className="button w-full mx-auto"
             onClick={selectHandler ? selectHandler : null}
           >
             Обрати план

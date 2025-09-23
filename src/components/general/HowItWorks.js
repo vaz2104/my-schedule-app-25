@@ -54,7 +54,7 @@ export default function HowItWorks() {
             <div className="">
               <div className="text-center mx-2">
                 <div className="flex justify-center">
-                  <CirclePlusIcon className={"size-12 text-mainBlue"} />
+                  <CirclePlusIcon className={"size-16 text-mainBlue"} />
                 </div>
                 <div className="font-bold text-lg mt-4 mb-2 text-gray-900">
                   Крок 1
@@ -71,7 +71,7 @@ export default function HowItWorks() {
             <div className="">
               <div className="text-center mx-2">
                 <div className="flex justify-center">
-                  <LinkPlusIcon className={"size-12 text-mainBlue"} />
+                  <LinkPlusIcon className={"size-16 text-mainBlue"} />
                 </div>
                 <div className="font-bold text-lg mt-4 mb-2 text-gray-900">
                   Крок 2
@@ -86,7 +86,7 @@ export default function HowItWorks() {
             <div className="">
               <div className="text-center mx-2">
                 <div className="flex justify-center">
-                  <CalendarPlusIcon className={"size-12 text-mainBlue"} />
+                  <CalendarPlusIcon className={"size-16 text-mainBlue"} />
                 </div>
                 <div className="font-bold text-lg mt-4 mb-2 text-gray-900">
                   Крок 3
@@ -102,7 +102,7 @@ export default function HowItWorks() {
             <div className="">
               <div className="text-center mx-2">
                 <div className="flex justify-center">
-                  <ResultIcon className={"size-12 text-mainBlue"} />
+                  <ResultIcon className={"size-16 text-mainBlue"} />
                 </div>
                 <div className="font-bold text-lg mt-4 mb-2 text-gray-900">
                   Крок 4

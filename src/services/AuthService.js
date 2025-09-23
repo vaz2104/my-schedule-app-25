@@ -42,6 +42,18 @@ class AuthServiceClass {
     if (session) redirect("/login");
   }
 
+  async login(username, pass) {
+    const authData = await fetchApi(
+      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/auth/login`,
+      {
+        username,
+        key: pass,
+      }
+    );
+
+    return authData;
+  }
+
   async getInviteLink(options) {
     const authData = await fetchApi(
       `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/auth/invite-link`,

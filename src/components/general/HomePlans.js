@@ -7,8 +7,14 @@ import PlanFree from "../ui/PlanFree";
 import PlanBase from "../ui/PlanBase";
 import PlanBusiness from "../ui/PlanBusiness";
 import PlanBusinessPlus from "../ui/PlanBusinessPlus";
+import { redirect } from "next/navigation";
 
 export default function HomePlans() {
+  function selectPlanHandler(plan) {
+    localStorage.setItem("plan", plan);
+    redirect("/login");
+  }
+
   return (
     <div className="relative -mx-4 md:mx-0">
       <Swiper
@@ -53,29 +59,23 @@ export default function HomePlans() {
       >
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
-            <PlanFree
-            // selectHandler={() => selectPlanHandler("free")}
-            />
+            <PlanFree selectHandler={() => selectPlanHandler("free")} />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
-            <PlanBase
-            // selectHandler={() => selectPlanHandler("basic")}
-            />
+            <PlanBase selectHandler={() => selectPlanHandler("basic")} />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
-            <PlanBusiness
-            // selectHandler={() => selectPlanHandler("business")}
-            />
+            <PlanBusiness selectHandler={() => selectPlanHandler("business")} />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanBusinessPlus
-            // selectHandler={() => selectPlanHandler("businessPlus")}
+              selectHandler={() => selectPlanHandler("businessPlus")}
             />
           </div>
         </SwiperSlide>

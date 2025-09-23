@@ -58,7 +58,9 @@ export default function BotWidget() {
               Вашим ботом.
             </p>
           </div>
-          <CopyToClipboard text={`https://t.me/${botData?.username}`} />
+          <div className="flex justify-center">
+            <CopyToClipboard text={`https://t.me/${botData?.username}`} />
+          </div>
         </div>
       )}
     </div>

@@ -69,8 +69,11 @@ export default function SettingsPage() {
           <PlanBusinessPlus activePlan={company?.plan} />
         )}
 
-        <div className="mt-4">
-          <Link href={`${baseDashboardLink}/pricing`} className="button w-full">
+        <div className="mt-4 flex justify-center">
+          <Link
+            href={`${baseDashboardLink}/pricing`}
+            className="button w-full max-w-64"
+          >
             Переглянути інші плани
           </Link>
         </div>

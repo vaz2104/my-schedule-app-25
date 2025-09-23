@@ -243,7 +243,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
                 }}
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex justify-center">
               <button
                 className={cn(
                   "button w-full",

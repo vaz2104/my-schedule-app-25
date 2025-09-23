@@ -57,7 +57,7 @@ export default function Footer() {
 
   return (
     <div className="fixed bottom-0 left-0 z-20 w-full px-4 py-4 bg-white ">
-      <div className="footer-nav">
+      <div className="footer-nav max-w-3xl mx-auto">
         <Link href={`${baseDashboardLink}/`} className="footer-nav-item">
           <div className="footer-nav-item__icon">
             <HomeIcon className={"size-8"} />
@@ -121,24 +121,6 @@ export default function Footer() {
           <div className="footer-nav-item__label">Профіль</div>
         </Link>
       </div>
-      {/* <div className="flex">
-        <div className="">
-          <div className=""></div>
-          <div className="">Головна</div>
-        </div>
-        <div className="">
-          <div className=""></div>
-          <div className="">Графік</div>
-        </div>
-        <div className="">
-          <div className=""></div>
-          <div className="">Події</div>
-        </div>
-        <div className="">
-          <div className=""></div>
-          <div className="">Профіль</div>
-        </div>
-      </div> */}
     </div>
   );
 }

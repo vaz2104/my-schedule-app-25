@@ -246,7 +246,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
             <div className="mt-4 flex justify-center">
               <button
                 className={cn(
-                  "button w-full",
+                  "button w-full min-w-48",
                   selectedDays.length === 0 ? "disabled" : "dark"
                 )}
                 onClick={() => setActiveStep(activeStep + 1)}

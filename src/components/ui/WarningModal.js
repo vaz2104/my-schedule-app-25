@@ -42,7 +42,7 @@ export default function WarningModal({
               )}
             </div>
 
-            <button className="button dark m-auto" onClick={confirmFn}>
+            <button className="button dark m-auto min-w-48" onClick={confirmFn}>
               Ok
             </button>
           </div>

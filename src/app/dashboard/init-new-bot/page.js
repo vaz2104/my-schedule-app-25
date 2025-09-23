@@ -124,7 +124,7 @@ export default function InitNewBot() {
           {activeStep < 4 && (
             <div className="mx-1">
               <button
-                className={`button`}
+                className={`button min-w-48`}
                 onClick={() => nextStep(activeStep + 1)}
                 disabled={loading}
               >

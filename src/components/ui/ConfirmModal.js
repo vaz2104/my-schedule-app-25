@@ -51,7 +51,7 @@ export default function ConfirmModal({
               <div className="mx-1 flex-1">
                 <button
                   type="button"
-                  className="button red w-full"
+                  className="button red w-full min-w-48"
                   onClick={confirmFn}
                   disabled={loading}
                 >

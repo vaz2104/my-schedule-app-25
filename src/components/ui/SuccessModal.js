@@ -51,7 +51,7 @@ export default function SuccessModal({
               <div className="flex-1">
                 <button
                   type="button"
-                  className="button w-full"
+                  className="button w-full min-w-48"
                   onClick={confirmFn}
                   disabled={loading}
                 >

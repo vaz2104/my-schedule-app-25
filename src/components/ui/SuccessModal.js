@@ -47,11 +47,11 @@ export default function SuccessModal({
               )}
             </div>
 
-            <div className="flex items-center mt-8">
+            <div className="flex items-center justify-center mt-8">
               <div className="flex-1">
                 <button
                   type="button"
-                  className="button w-full min-w-48"
+                  className="button w-full min-w-48 m-auto"
                   onClick={confirmFn}
                   disabled={loading}
                 >

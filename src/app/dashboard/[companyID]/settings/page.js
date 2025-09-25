@@ -72,7 +72,7 @@ export default function SettingsPage() {
         <div className="mt-4 flex justify-center">
           <Link
             href={`${baseDashboardLink}/pricing`}
-            className="button w-full max-w-64"
+            className="button w-full !max-w-62"
           >
             Переглянути інші плани
           </Link>

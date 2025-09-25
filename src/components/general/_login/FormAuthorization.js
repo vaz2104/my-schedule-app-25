@@ -20,7 +20,7 @@ export default function FormAuthorization() {
           </div>
           <div className="mt-8">
             <Link
-              href={`https://t.me/${process.env.NEXT_PUBLIC_BOT_USERNAME}?start=getAuthData`}
+              href={`https://t.me/${process.env.NEXT_PUBLIC_BOT_USERNAME}?start=generateAuthData`}
               className="button"
               target="_blunk"
             >

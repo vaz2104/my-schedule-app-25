@@ -1,12 +1,13 @@
 import Script from "next/script";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
 
 export const metadata = {
   title: "",
   description: "",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
     <html
       className=""
@@ -15,9 +16,12 @@ export default function RootLayout({ children }) {
         "--tg-viewport-height": "100vh",
         "--tg-viewport-stable-height": "100vh",
       }}
+      suppressHydrationWarning
     >
       <body>
-        {children}
+        <ThemeProvider attribute="data-theme" defaultTheme="blue" enableSystem>
+          {children}
+        </ThemeProvider>
 
         <Script
           src="https://telegram.org/js/telegram-web-app.js"

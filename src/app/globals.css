@@ -31,8 +31,8 @@
 }
 
 [data-theme=pink] {
-  --main: #F782B4;
-  --mainDark: #F955A0;
+  --main: #F955A0;
+  --mainDark: #F782B4;
   --mainLight: #FBCADD; 
   --mainLightDark: #F9A6C5;
 }
@@ -98,7 +98,7 @@ body {
 }
 
 .button {
-  @apply flex items-center justify-center md:max-w-48 text-white bg-main hover:bg-mainDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center
+  @apply flex items-center justify-center md:max-w-48 text-white bg-main hover:bg-mainDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer
 }
 
 .button.yellow {
@@ -157,7 +157,7 @@ body {
   @apply w-1/5 
 }
 .footer-nav-item__icon {
-  @apply flex justify-center items-center text-mainLightDark size-11 rounded-full mx-auto transition-all
+  @apply flex justify-center items-center text-white size-11 rounded-full mx-auto transition-all
 }
 .footer-nav-item__icon.active {
   @apply bg-mainLightDark text-mainDark

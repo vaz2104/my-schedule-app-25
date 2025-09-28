@@ -104,7 +104,7 @@ export default function BaseModal({
             {!hideControls && (
               <>
                 {!toggleControls || (toggleControls && controlsTriger) ? (
-                  <div className="flex mt-6 -mx-2">
+                  <div className="flex justify-center mt-6 -mx-2">
                     {confirmFn && (
                       <button
                         type="submit"

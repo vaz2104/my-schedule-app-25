@@ -77,7 +77,7 @@ export default function WeekCalendar({ options }) {
             </h2>
           </div>
           <button
-            className="mr-4 flex items-center justify-center md:max-w-48 font-medium rounded-lg text-sm px-5 py-2 text-center bg-black"
+            className="mr-4 flex items-center justify-center md:max-w-48 font-medium rounded-lg text-sm px-5 py-2 text-center bg-main hover:bg-mainDark cursor-pointer"
             onClick={() => setIsModalCalendar(true)}
           >
             <CalendarIcon className={"text-white"} />
@@ -85,13 +85,13 @@ export default function WeekCalendar({ options }) {
           </button>
           <button
             onClick={() => setPreviousWeekOptions(initWeekDate)}
-            className="flex justify-center items-center w-10 h-10 bg-main rounded-full p-1 mx-1"
+            className="flex justify-center items-center w-10 h-10 bg-main hover:bg-mainDark cursor-pointer rounded-full p-1 mx-1 "
           >
             <AngleLeftIcon className={"text-white"} />
           </button>
           <button
             onClick={() => setNextWeekOptions(initWeekDate)}
-            className="flex justify-center items-center w-10 h-10 bg-main rounded-full p-1 mx-1"
+            className="flex justify-center items-center w-10 h-10 bg-main hover:bg-mainDark cursor-pointer rounded-full p-1 mx-1"
           >
             <AngleRightIcon className={"text-white"} />
           </button>

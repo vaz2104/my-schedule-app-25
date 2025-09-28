@@ -44,7 +44,10 @@ export default function InviteWorker() {
   return (
     <div>
       <div>
-        <button className="button w-full" onClick={() => openModalHandler()}>
+        <button
+          className="button w-full md:!max-w-56"
+          onClick={() => openModalHandler()}
+        >
           <AddUserIcon className={"w-6 h-6 me-1"} />
           Запросити працівника
         </button>
@@ -86,7 +89,9 @@ export default function InviteWorker() {
                     одноразове!
                   </p>
                 </div>
-                <CopyToClipboard text={`https://t.me/${key}`} />
+                <div className="flex justify-center">
+                  <CopyToClipboard text={`https://t.me/${key}`} />
+                </div>
               </div>
             )}
           </div>

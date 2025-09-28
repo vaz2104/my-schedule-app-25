@@ -34,7 +34,6 @@ export default function DashboardHome() {
         ""
       )}
 
-      <div className="mt-6"></div>
       <WeekScheduleCalendar />
       {companyPlan === "free" || companyPlan === "basic" ? (
         <div className="mt-8 mb-4">

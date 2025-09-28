@@ -44,7 +44,7 @@ export default function PlanFree({ activePlan, selectHandler }) {
       <div className="mt-8">
         {activePlan === "free" ? (
           <div className="flex items-center justify-center">
-            <CheckCircleIcon className={"w-8 h-8 text-mainBlue"} />
+            <CheckCircleIcon className={"w-8 h-8 text-main"} />
             <span className="text-gray-700 font-bold ml-2">
               Ваш поточний план
             </span>

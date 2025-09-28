@@ -7,13 +7,13 @@ export default function FooterDashboard() {
   return (
     <footer className="p-4 bg-white md:p-8 dark:bg-gray-800">
       <div className="max-w-3xl mx-auto text-center ">
-        <ul className="flex flex-wrap justify-center items-center my-4 text-mainBlue dark:text-white">
+        <ul className="flex flex-wrap justify-center items-center my-4 text-main dark:text-white">
           <li>
             <Link
               href="tel:0987766155"
               className="mr-4 hover:underline md:mr-6 flex items-center"
             >
-              <PhoneIcon className={"mr-1 text-mainBlue size-6"} />
+              <PhoneIcon className={"mr-1 text-main size-6"} />
               <span>0987766155</span>
             </Link>
           </li>
@@ -22,7 +22,7 @@ export default function FooterDashboard() {
               href="mailto:myschedule@gmail.com"
               className="mr-4 hover:underline md:mr-6 flex items-center"
             >
-              <EnvelopeIcon className={"mr-1 text-mainBlue size-6"} />
+              <EnvelopeIcon className={"mr-1 text-main size-6"} />
               <span>myschedule@gmail.com</span>
             </Link>
           </li>

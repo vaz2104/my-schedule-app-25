@@ -117,7 +117,7 @@ export default function Home() {
                 <a
                   href="https://t.me/MySchedule24DevBot"
                   target="_blunk"
-                  className="text-mainBlue hover:underline"
+                  className="text-main hover:underline"
                 >
                   @MySchedule24DevBot
                 </a>
@@ -136,7 +136,7 @@ export default function Home() {
                 <a
                   href="https://t.me/MySchedule24DevBot"
                   target="_blunk"
-                  className="text-mainBlue hover:underline"
+                  className="text-main hover:underline"
                 >
                   @MySchedule24DevBot
                 </a>
@@ -166,7 +166,7 @@ export default function Home() {
               <a
                 href="https://t.me/MySchedule24DevBot"
                 target="_blunk"
-                className="text-mainBlue hover:underline"
+                className="text-main hover:underline"
               >
                 @MySchedule24DevBot
               </a>

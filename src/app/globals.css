@@ -3,28 +3,68 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-
-  --mainBlue: #2A8BDF;
-  --mainBlueDark: #326fa5;
-  --mainBlueLight: #E8F3FC;
-  --mainBlueLightDark: #E1F1FE;
+  --main: #AEB7B9;
+  --mainDark: #8E9C9B;
+  --mainLight: #F3F2F0;
+  --mainLightDark: #BFC8C8;
 }
 
-@theme inline {
+[data-theme=lime] {
+  --main: #A3CE39;
+  --mainDark: #8BBE1C;
+  --mainLight: #F9FFBC;
+  --mainLightDark: #CAE00F;
+}
+
+[data-theme=blue] {
+  --main: #2A8BDF;
+  --mainDark: #326fa5;
+  --mainLight: #E8F3FC; 
+  --mainLightDark: #E1F1FE;
+}
+
+[data-theme=honey] {
+  --main: #F2B13F;
+  --mainDark: #D98338;
+  --mainLight: #f5e9c5; 
+  --mainLightDark: #f6d89c;
+}
+
+[data-theme=pink] {
+  --main: #F782B4;
+  --mainDark: #F955A0;
+  --mainLight: #FBCADD; 
+  --mainLightDark: #F9A6C5;
+}
+
+[data-theme=woodland] {
+  --main: #50654D;
+  --mainDark: #525d3a;
+  --mainLight: #A6A57A; 
+  --mainLightDark: #79803C;
+}
+[data-theme=dark] {
+  --main: #363434;
+  --mainDark: #292828;
+  --mainLight: #D4D7D4; 
+  --mainLightDark: #BABDBA;
+} 
+
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-
-  --color-mainBlue: var(--mainBlue);
-  --color-mainBlueDark: var(--mainBlueDark);
-  --color-mainBlueLight: var(--mainBlueLight);
-  --color-mainBlueLightDark: var(--mainBlueLightDark);
+  --color-main: var(--main);
+  --color-mainDark: var(--mainDark);
+  --color-mainLight: var(--mainLight);
+  --color-mainLightDark: var(--mainLightDark);
 }
 
-/* @custom-variant gray (&:where(.gray, .gray *)); */
-@custom-variant green (&:where(.green, .green *));
-@custom-variant pink (&:where(.pink, .pink *));
-@custom-variant yellow (&:where(.yellow, .yellow *));
-@custom-variant blue (&:where(.blue, .blue *));
+@custom-variant honey (&:where([data-theme=honey], [data-theme=honey] *));
+@custom-variant lime (&:where([data-theme=lime], [data-theme=lime] *));
+@custom-variant pink (&:where([data-theme=pink], [data-theme=pink] *));
+@custom-variant blue (&:where([data-theme=blue], [data-theme=blue] *));
+@custom-variant woodland (&:where([data-theme=woodland], [data-theme=woodland] *));
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 body {
   background: var(--background);
@@ -58,7 +98,7 @@ body {
 }
 
 .button {
-  @apply flex items-center justify-center md:max-w-48 text-white bg-mainBlue hover:bg-mainBlueDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center
+  @apply flex items-center justify-center md:max-w-48 text-white bg-main hover:bg-mainDark focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center
 }
 
 .button.yellow {
@@ -90,16 +130,16 @@ body {
   @apply h-10 w-10 bg-gray-200 border border-gray-200 flex items-center justify-center rounded-full text-gray-400
 }
 .stepActive {
-  @apply bg-mainBlue border border-mainBlueDark text-white
+  @apply bg-main border border-mainDark text-white
 }
 .stepFinished {
-  @apply bg-mainBlue border border-mainBlueDark text-white
+  @apply bg-main border border-mainDark text-white
 }
 .stepSeparator {
   @apply flex-1 bg-gray-200 h-2 w-2
 }
 .stepSeparatorFinished {
-  @apply bg-mainBlue
+  @apply bg-main
 }
 
 
@@ -111,16 +151,16 @@ body {
 }
 
 .footer-nav {
-  @apply flex bg-mainBlue h-14 items-center rounded-2xl
+  @apply flex bg-main h-14 items-center rounded-2xl 
 }
 .footer-nav-item {
   @apply w-1/5 
 }
 .footer-nav-item__icon {
-  @apply flex justify-center items-center text-mainBlueLightDark size-11 rounded-full mx-auto transition-all
+  @apply flex justify-center items-center text-mainLightDark size-11 rounded-full mx-auto transition-all
 }
 .footer-nav-item__icon.active {
-  @apply bg-mainBlueLightDark text-mainBlueDark
+  @apply bg-mainLightDark text-mainDark
 }
 .footer-nav-item__label{
   @apply text-xs font-bold text-center hidden

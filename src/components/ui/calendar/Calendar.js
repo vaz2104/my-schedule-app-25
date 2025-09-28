@@ -34,7 +34,7 @@ export default function Calendar({ options = {} }) {
         <div className="calendarHeader text-center flex justify-between items-center">
           <button
             onClick={() => prevMonth(initCalendarDate)}
-            className="flex justify-center items-center w-10 h-10 bg-mainBlue rounded-full p-1 mx-1"
+            className="flex justify-center items-center w-10 h-10 bg-main rounded-full p-1 mx-1"
           >
             <AngleLeftIcon className={"text-white"} />
           </button>
@@ -45,7 +45,7 @@ export default function Calendar({ options = {} }) {
 
           <button
             onClick={() => nextMonth(initCalendarDate)}
-            className="flex justify-center items-center w-10 h-10 bg-mainBlue rounded-full p-1 mx-1"
+            className="flex justify-center items-center w-10 h-10 bg-main rounded-full p-1 mx-1"
           >
             <AngleRightIcon className={"text-white"} />
           </button>

@@ -15,7 +15,7 @@ export default function Step1({ toket, setToken }) {
               <a
                 target="_blunk"
                 href="https://t.me/botfather"
-                className="text-mainBlue font-bold underline mx-1"
+                className="text-main font-bold underline mx-1"
               >
                 @BotFather
               </a>

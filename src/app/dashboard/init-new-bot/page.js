@@ -129,10 +129,7 @@ export default function InitNewBot() {
                 disabled={loading}
               >
                 {loading ? (
-                  <Spinner
-                    size="sm"
-                    className={"text-mainBlueDark fill-white"}
-                  />
+                  <Spinner size="sm" className={"text-mainDark fill-white"} />
                 ) : (
                   "Далі"
                 )}

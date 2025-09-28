@@ -32,7 +32,7 @@ export default function Step3({ botData }) {
                 <a
                   target="_blunk"
                   href="https://t.me/botfather"
-                  className="text-mainBlueDark font-bold underline mx-1"
+                  className="text-mainDark font-bold underline mx-1"
                 >
                   @BotFather
                 </a>

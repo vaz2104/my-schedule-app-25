@@ -15,7 +15,7 @@ export default function Header() {
               alt="Flowbite Logo"
             /> */}
             <CalendarPlusIcon
-              className={"mr-2 size-6 sm:size-9 text-mainBlue mb-0.5"}
+              className={"mr-2 size-6 sm:size-9 text-main mb-0.5"}
             />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
               MYSCHEDULE
@@ -27,7 +27,7 @@ export default function Header() {
               className="flex items-center text-gray-800 dark:text-white bg-gray-50 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               Увійти
-              <LockIcon className={"text-mainBlue ml-1"} />
+              <LockIcon className={"text-main ml-1"} />
             </a>
           </div>
         </div>

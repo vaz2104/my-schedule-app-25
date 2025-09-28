@@ -101,8 +101,7 @@ export default function ActiveWeekDaySchedule() {
                   selectedDaySchedule?.schedule[itemKey]
                 );
 
-                let activeStateClasses =
-                  "border-mainBlue bg-mainBlue text-white";
+                let activeStateClasses = "border-main bg-main text-white";
                 let disabledStateClasses =
                   "border-gray-200 bg-gray-100 text-gray-300";
 

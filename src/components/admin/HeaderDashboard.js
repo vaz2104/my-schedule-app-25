@@ -24,7 +24,7 @@ export default function HeaderDashboard() {
               alt="Flowbite Logo"
             /> */}
             <CalendarPlusIcon
-              className={"mr-2 size-6 sm:size-9 text-mainBlue mb-0.5"}
+              className={"mr-2 size-6 sm:size-9 text-main mb-0.5"}
             />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
               MYSCHEDULE

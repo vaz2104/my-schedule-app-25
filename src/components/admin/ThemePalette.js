@@ -119,7 +119,7 @@ export default function ThemePalette({ activePalette }) {
             onClick={() => selectPaletteHandler("blue")}
           >
             <div>
-              <div className="w-12 h-12 rounded-full m-auto bg-mainBlue flex justify-center items-center">
+              <div className="w-12 h-12 rounded-full m-auto bg-main flex justify-center items-center">
                 {activePalette === "blue" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}

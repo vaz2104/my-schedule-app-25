@@ -85,13 +85,13 @@ export default function WeekCalendar({ options }) {
           </button>
           <button
             onClick={() => setPreviousWeekOptions(initWeekDate)}
-            className="flex justify-center items-center w-10 h-10 bg-mainBlue rounded-full p-1 mx-1"
+            className="flex justify-center items-center w-10 h-10 bg-main rounded-full p-1 mx-1"
           >
             <AngleLeftIcon className={"text-white"} />
           </button>
           <button
             onClick={() => setNextWeekOptions(initWeekDate)}
-            className="flex justify-center items-center w-10 h-10 bg-mainBlue rounded-full p-1 mx-1"
+            className="flex justify-center items-center w-10 h-10 bg-main rounded-full p-1 mx-1"
           >
             <AngleRightIcon className={"text-white"} />
           </button>

@@ -39,7 +39,7 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     loadCompanyData();
-  }, []);
+  }, [params?.companyID]);
 
   if (isLoading)
     return (

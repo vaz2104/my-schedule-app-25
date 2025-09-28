@@ -13,11 +13,13 @@ import { useEffect, useState } from "react";
 export default function DashboardLayout({ children }) {
   const { setCompanyPlan, setbBotName, setThemePalette } = useAppStore();
   const { setTheme } = useTheme();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
 
   async function loadCompanyData() {
+    if (!params?.companyID) return false;
+
     setIsLoading(true);
     const companyDataResponse = await CompanyService.getBot(params?.companyID);
 

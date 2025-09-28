@@ -4,10 +4,16 @@ import { useParams } from "next/navigation";
 import { useContext, useState } from "react";
 import { ThemeContext } from "@/context/ThemeContext";
 import { CompanyService } from "@/services/CompanyService";
+import { useAppStore } from "@/store/useAppStore";
+import { useTheme } from "next-themes";
+import Alert from "../ui/Alert";
 
-export default function ThemePalette({ activePalette, successCallback }) {
+export default function ThemePalette({ activePalette }) {
   const { setSuccessMessage, setWarningError } = useContext(ThemeContext);
+  const { setThemePalette } = useAppStore();
+  const { setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const params = useParams();
 
   async function selectPaletteHandler(palette) {
@@ -19,14 +25,37 @@ export default function ThemePalette({ activePalette, successCallback }) {
     if (response.status !== 200) {
       setWarningError("Сталася помилка при виконанні запиту");
     } else {
-      if (successCallback) await successCallback();
+      await loadCompanyData();
       setSuccessMessage(`Вітаємо! Тема шаблону для Вашого боту змінена`);
     }
 
     setIsLoading(false);
   }
+
+  async function loadCompanyData() {
+    setIsLoading(true);
+    const companyDataResponse = await CompanyService.getBot(params?.companyID);
+
+    if (companyDataResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      setTheme(companyDataResponse.data?.themePalette);
+      setThemePalette(companyDataResponse.data?.themePalette);
+    }
+
+    setIsLoading(false);
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <Alert className={"w-full"}>{error}</Alert>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="relative">
       {isLoading && (
         <div className="bg-white/50 backdrop-blur-xs p-4 flex justify-center items-center absolute -top-1 -right-1 -bottom-1 -left-1 rounded-xl z-20">
           <Spinner />

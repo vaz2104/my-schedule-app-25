@@ -5,8 +5,10 @@ import { BadgeCheckIcon, LogOutIcon } from "../ui/Icons";
 import Thumbnail from "../ui/Thumbnail";
 import { useBaseURL } from "@/hooks/useBaseURL";
 import Link from "next/link";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function Header() {
+  const { botName, companyPlan } = useAppStore();
   const { baseDashboardLink } = useBaseURL();
   function logout() {
     localStorage.removeItem("activePanel");
@@ -18,13 +20,18 @@ export default function Header() {
       <div className="max-w-3xl mx-auto flex justify-between items-center py-3">
         <Link href={baseDashboardLink} className="flex items-center">
           <div className="relative">
-            <div className="absolute -top-2 -right-2">
-              <BadgeCheckIcon className={"size-6 text-yellow-500"} />
-            </div>
+            {companyPlan !== "free" ? (
+              <div className="absolute -top-2 -right-2">
+                <BadgeCheckIcon className={"size-6 text-yellow-500"} />
+              </div>
+            ) : (
+              ""
+            )}
+
             <Thumbnail size="xs" theme="light" />
           </div>
 
-          <div className="ml-2 text-md font-bold">BotName</div>
+          <div className="ml-2 text-md font-bold">{botName}</div>
         </Link>
         {/* <div className="flex items-center">
           <BadgeCheckIcon className={"size-9 text-yellow-400"} />

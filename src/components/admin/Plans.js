@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import { CompanyService } from "@/services/CompanyService";
 import { useParams } from "next/navigation";
 import formatDate from "@/lib/formatDate";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Spinner from "../ui/Spinner";
 import { ThemeContext } from "@/context/ThemeContext";
 import { printDateWithMonth } from "@/lib/schedule-helpers";
@@ -14,16 +14,16 @@ import PlanFree from "../ui/PlanFree";
 import PlanBase from "../ui/PlanBase";
 import PlanBusiness from "../ui/PlanBusiness";
 import PlanBusinessPlus from "../ui/PlanBusinessPlus";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function Plans() {
-  const { setSuccessMessage, setCriticallError, setWarningError } =
-    useContext(ThemeContext);
+  const { setCompanyPlan, companyPlan } = useAppStore();
+  const { setSuccessMessage, setWarningError } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
-  const [company, setCompany] = useState(null);
   const params = useParams();
 
   async function selectPlanHandler(type) {
+    setIsLoading(true);
     const currentDate = new Date();
     const nextMonthDate = new Date(currentDate);
     nextMonthDate.setMonth(currentDate.getMonth() + 1);
@@ -36,7 +36,7 @@ export default function Plans() {
     if (response.status !== 200) {
       setWarningError("Сталася помилка при виконанні запиту");
     } else {
-      await loadCompanyData();
+      setCompanyPlan(type);
       setSuccessMessage(
         `Вітаємо! Ваш план оновлено та діятиме до <span className="font-bold">${printDateWithMonth(
           nextMonthDate
@@ -48,30 +48,6 @@ export default function Plans() {
   }
 
   // free | basic | business | businessPlus
-
-  async function loadCompanyData() {
-    setPageLoading(true);
-    const companyDataResponse = await CompanyService.getBot(params?.companyID);
-
-    if (companyDataResponse.status !== 200) {
-      setCriticallError("Сталася помилка при завантаженні даних");
-    } else {
-      setCompany(companyDataResponse.data);
-    }
-
-    setPageLoading(false);
-  }
-
-  useEffect(() => {
-    loadCompanyData();
-  }, []);
-
-  if (pageLoading)
-    return (
-      <div className="py-4 flex justify-center items-center h-[calc(100vh-9rem)]">
-        <Spinner />
-      </div>
-    );
 
   return (
     <div className="relative -mx-4">
@@ -91,7 +67,7 @@ export default function Plans() {
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanFree
-              activePlan={company?.plan}
+              activePlan={companyPlan}
               selectHandler={() => selectPlanHandler("free")}
             />
           </div>
@@ -99,7 +75,7 @@ export default function Plans() {
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanBase
-              activePlan={company?.plan}
+              activePlan={companyPlan}
               selectHandler={() => selectPlanHandler("basic")}
             />
           </div>
@@ -107,7 +83,7 @@ export default function Plans() {
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanBusiness
-              activePlan={company?.plan}
+              activePlan={companyPlan}
               selectHandler={() => selectPlanHandler("business")}
             />
           </div>
@@ -115,7 +91,7 @@ export default function Plans() {
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanBusinessPlus
-              activePlan={company?.plan}
+              activePlan={companyPlan}
               selectHandler={() => selectPlanHandler("businessPlus")}
             />
           </div>

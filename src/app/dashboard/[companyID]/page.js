@@ -3,10 +3,12 @@ import ActiveWeekDaySchedule from "@/components/admin/ActiveWeekDaySchedule";
 import WeekScheduleCalendar from "@/components/general/WeekScheduleCalendar";
 import WeekScheduleStatistic from "@/components/admin/WeekScheduleStatistic";
 import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function DashboardHome() {
+  const { companyPlan } = useAppStore();
   const { setSelectedDate, setInitCalendarDate, setInitWeekDate } =
     useCalendarStore(
       useShallow((state) => ({
@@ -24,12 +26,23 @@ export default function DashboardHome() {
 
   return (
     <div className="p-4">
-      <WeekScheduleStatistic />
+      {companyPlan === "free" || companyPlan === "basic" ? (
+        <div className="mt-8 mb-4">
+          <WeekScheduleStatistic />
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="mt-6"></div>
       <WeekScheduleCalendar />
-      <div className="mt-8 mb-4">
-        <ActiveWeekDaySchedule />
-      </div>
+      {companyPlan === "free" || companyPlan === "basic" ? (
+        <div className="mt-8 mb-4">
+          <ActiveWeekDaySchedule />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

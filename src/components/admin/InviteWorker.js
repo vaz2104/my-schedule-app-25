@@ -76,7 +76,7 @@ export default function InviteWorker() {
                 <div className="flex justify-center items-center">
                   <LinkIcon className={`h-4`} />
                   <div className="text-md font-bold ml-0.5 overflow-hidden text-ellipsis">
-                    t.me/{key}
+                    {`https://t.me/${process.env.NEXT_PUBLIC_BOT_USERNAME}?start=inviteWorker_${key}`}
                   </div>
                 </div>
                 <div className="text-sm mt-2 text-center">
@@ -90,7 +90,9 @@ export default function InviteWorker() {
                   </p>
                 </div>
                 <div className="flex justify-center">
-                  <CopyToClipboard text={`https://t.me/${key}`} />
+                  <CopyToClipboard
+                    text={`https://t.me/${process.env.NEXT_PUBLIC_BOT_USERNAME}?start=inviteWorker_${key}`}
+                  />
                 </div>
               </div>
             )}

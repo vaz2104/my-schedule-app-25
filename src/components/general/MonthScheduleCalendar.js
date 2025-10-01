@@ -35,7 +35,7 @@ export default function MonthScheduleCalendar() {
 
     const response = await ScheduleService.getMany({
       botId: params?.companyID,
-      workerId: session?.userId,
+      workerId: params?.specialistID ? params?.specialistID : session?.userId,
       startDate,
       endDate,
     });

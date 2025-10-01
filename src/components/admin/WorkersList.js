@@ -20,7 +20,7 @@ export default function WorkersList({ workers }) {
         return (
           <div key={worker?._id}>
             <Link
-              href={`${baseDashboardLink}/specialists/${worker?._id}`}
+              href={`${baseDashboardLink}/specialists/${worker?.workerId?._id}`}
               className="w-full mb-4 p-4 py-3 text-gray-900 rounded-lg shadow-sm bg-white border border-gray-50 flex items-center"
             >
               <Thumbnail url={worker?.workerId?.photoUrl} />

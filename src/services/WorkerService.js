@@ -31,6 +31,19 @@ class WorkerServiceClass {
 
     return data;
   }
+  async getRelatedBots(id, options) {
+    let sp = new URLSearchParams(options);
+    const queryString = sp.toString();
+
+    const bots = await fetchApi(
+      `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/worker/bots/${id}${
+        queryString ? `?${queryString}` : ``
+      }`,
+      {},
+      "GET"
+    );
+    return bots;
+  }
 }
 
 export const WorkerService = new WorkerServiceClass();

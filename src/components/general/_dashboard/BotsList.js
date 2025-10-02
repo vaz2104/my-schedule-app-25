@@ -7,9 +7,11 @@ import { CompanyService } from "@/services/CompanyService";
 import { AuthService } from "@/services/AuthService";
 import { redirect } from "next/navigation";
 import Alert from "@/components/ui/Alert";
+import { WorkerService } from "@/services/WorkerService";
 
 export default function BotsList() {
   const [bots, setBots] = useState([]);
+  const [relatedBots, setRelatedBots] = useState([]);
   const [isLoader, setIsLoader] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,11 +28,21 @@ export default function BotsList() {
       adminId: session.userId,
     });
 
-    if (botsListResponse.status !== 200) {
+    const relatedBotsResponse = await WorkerService.getRelatedBots(
+      session.userId
+    );
+    console.log(session.userId);
+
+    // console.log(relatedBotsResponse.data);
+
+    if (botsListResponse.status !== 200 || relatedBotsResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     }
 
     setBots(botsListResponse.data);
+    setRelatedBots(relatedBotsResponse.data);
+    console.log(botsListResponse.data);
+    console.log(relatedBotsResponse.data);
     setIsLoader(false);
   }
 
@@ -49,7 +61,7 @@ export default function BotsList() {
     return <Alert className={"mt-4"}>{error}</Alert>;
   }
 
-  if (!bots?.length)
+  if (!bots?.length && !relatedBots?.length)
     return (
       <div className="text-center text-gray-400 mt-4">
         <p>У Вас поки немає жодного бота доданого до системи</p>
@@ -58,21 +70,48 @@ export default function BotsList() {
 
   return (
     <div className="max-w-80 mx-auto">
-      {bots.map((bot) => {
-        return (
-          <div className="my-4" key={bot._id}>
-            <div className="my-4">
-              <button
-                className="w-full flex items-center border border-gray-100 rounded-md bg-gray-50 hover:bg-gray-100 px-4 py-2 lg:max-w-80 mx-auto transition-all"
-                onClick={() => goToBotDashboard(bot._id)}
-              >
-                <Thumbnail url={bot.avatar} size={"xs"} />
-                <span className="ml-4 font-bold">{bot.first_name}</span>
-              </button>
-            </div>
+      {bots?.length > 0 && (
+        <div>
+          {bots.map((bot) => {
+            return (
+              <div className="my-4" key={bot._id}>
+                <div className="my-4">
+                  <button
+                    className="w-full flex items-center border border-gray-100 rounded-md bg-gray-50 hover:bg-gray-100 px-4 py-2 lg:max-w-80 mx-auto transition-all"
+                    onClick={() => goToBotDashboard(bot._id)}
+                  >
+                    <Thumbnail url={bot.avatar} size={"xs"} />
+                    <span className="ml-4 font-bold">{bot.first_name}</span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {relatedBots?.length > 0 && (
+        <div>
+          <div className=" text-gray-400 mt-4">
+            <p>Боти де Ви є працівником</p>
           </div>
-        );
-      })}
+          {relatedBots.map((bot) => {
+            return (
+              <div className="my-4" key={bot._id}>
+                <div className="my-4">
+                  <button
+                    className="w-full flex items-center border border-gray-100 rounded-md bg-gray-50 hover:bg-gray-100 px-4 py-2 lg:max-w-80 mx-auto transition-all"
+                    onClick={() => goToBotDashboard(bot._id)}
+                  >
+                    <Thumbnail url={bot.avatar} size={"xs"} />
+                    <span className="ml-4 font-bold">{bot.first_name}</span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

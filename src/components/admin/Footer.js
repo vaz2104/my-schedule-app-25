@@ -11,10 +11,22 @@ import {
 } from "../ui/Icons";
 import { useBaseURL } from "@/hooks/useBaseURL";
 import { useAppStore } from "@/store/useAppStore";
+import { AuthService } from "@/services/AuthService";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
-  const { companyPlan } = useAppStore();
+  const [role, setRole] = useState(null);
+  const { companyPlan, adminId } = useAppStore();
   const { baseDashboardLink } = useBaseURL();
+
+  async function getRole() {
+    const userId = await AuthService.getSession()?.userId;
+    setRole(userId === adminId ? "admin" : "employee");
+  }
+
+  useEffect(() => {
+    getRole();
+  }, []);
 
   return (
     <div className="fixed bottom-0 left-0 z-20 w-full px-4 py-4 bg-white ">
@@ -26,7 +38,7 @@ export default function Footer() {
           <div className="footer-nav-item__label">Головна</div>
         </Link>
 
-        {companyPlan === "free" ? (
+        {companyPlan === "free" || role === "employee" ? (
           <Link
             href={`${baseDashboardLink}/schedule`}
             className="footer-nav-item"
@@ -72,15 +84,17 @@ export default function Footer() {
           </div>
           <div className="footer-nav-item__label">Події</div>
         </Link>
-        <Link
-          href={`${baseDashboardLink}/settings`}
-          className="footer-nav-item"
-        >
-          <div className="footer-nav-item__icon">
-            <UserSettingsIcon className={"size-8"} />
-          </div>
-          <div className="footer-nav-item__label">Профіль</div>
-        </Link>
+        {role !== "employee" && (
+          <Link
+            href={`${baseDashboardLink}/settings`}
+            className="footer-nav-item"
+          >
+            <div className="footer-nav-item__icon">
+              <UserSettingsIcon className={"size-8"} />
+            </div>
+            <div className="footer-nav-item__label">Профіль</div>
+          </Link>
+        )}
       </div>
     </div>
   );

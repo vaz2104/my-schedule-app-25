@@ -2,8 +2,10 @@ import Link from "next/link";
 import Thumbnail from "../ui/Thumbnail";
 
 import { useBaseURL } from "@/hooks/useBaseURL";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function WorkersList({ workers }) {
+  const { adminId } = useAppStore();
   const { baseDashboardLink } = useBaseURL();
   if (!workers?.length)
     return (
@@ -26,7 +28,14 @@ export default function WorkersList({ workers }) {
               <Thumbnail url={worker?.workerId?.photoUrl} />
               <div className="ms-3 text-sm font-normal">
                 <div className="text-base font-semibold text-gray-900 dark:text-white">
-                  {worker?.workerId?.firstName || worker?.workerId?.username}
+                  {adminId === worker?.workerId?._id ? (
+                    <>Ви</>
+                  ) : (
+                    <>
+                      {worker?.workerId?.firstName ||
+                        worker?.workerId?.username}
+                    </>
+                  )}
                 </div>
               </div>
             </Link>

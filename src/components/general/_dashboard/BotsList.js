@@ -72,6 +72,11 @@ export default function BotsList() {
     <div className="max-w-80 mx-auto">
       {bots?.length > 0 && (
         <div>
+          {relatedBots?.length > 0 && (
+            <div className=" text-gray-400 mt-4">
+              <p>Боти створені вами</p>
+            </div>
+          )}
           {bots.map((bot) => {
             return (
               <div className="my-4" key={bot._id}>

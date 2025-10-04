@@ -20,8 +20,10 @@ export default function Footer() {
   const { baseDashboardLink } = useBaseURL();
 
   async function getRole() {
-    const userId = await AuthService.getSession()?.userId;
+    const { userId } = await AuthService.getSession();
     setRole(userId === adminId ? "admin" : "employee");
+
+    // console.log(userId, adminId);
   }
 
   useEffect(() => {

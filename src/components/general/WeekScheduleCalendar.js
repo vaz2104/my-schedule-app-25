@@ -12,8 +12,10 @@ import CalendarService from "../ui/calendar/CalendarService";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import { getScheduleDays } from "@/lib/schedule-helpers";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function WeekScheduleCalendar() {
+  const { companyPlan } = useAppStore();
   const { initWeekDate } = useCalendarStore(
     useShallow((state) => ({
       initWeekDate: state.initWeekDate,
@@ -21,7 +23,7 @@ export default function WeekScheduleCalendar() {
   );
 
   const [schedule, setSchedule] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
 
@@ -31,13 +33,21 @@ export default function WeekScheduleCalendar() {
     const weekPeriod = CalendarService.generateWeekDays(initWeekDate);
     const startDate = formatDate(weekPeriod[0].date);
     const endDate = formatDate(weekPeriod[weekPeriod.length - 1].date);
-
-    const response = await ScheduleService.getMany({
+    const query = {
       botId: params?.companyID,
-      workerId: session?.userId,
       startDate,
       endDate,
-    });
+    };
+
+    if (
+      companyPlan !== null &&
+      companyPlan !== "business" &&
+      companyPlan !== "businessPlus"
+    ) {
+      query.workerId = session?.userId;
+    }
+
+    const response = await ScheduleService.getMany(query);
 
     if (response.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

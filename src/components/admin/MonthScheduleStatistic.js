@@ -14,8 +14,11 @@ import { monthsFullName } from "@/lib/calendar-vars";
 import CalendarService from "../ui/calendar/CalendarService";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function MonthScheduleStatistic() {
+  const { adminId } = useAppStore();
+
   const { initCalendarDate } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
@@ -94,12 +97,14 @@ export default function MonthScheduleStatistic() {
 
       <StatisticWidget schedule={filterScheduleByMonth(initCalendarDate)} />
 
-      <div className="mt-6">
-        <GenerateSchedule
-          successHandler={loadFullMonthSchedule}
-          disabledDays={getScheduleDays(schedule)}
-        />
-      </div>
+      {adminId === params?.specialistID && (
+        <div className="mt-6">
+          <GenerateSchedule
+            successHandler={loadFullMonthSchedule}
+            disabledDays={getScheduleDays(schedule)}
+          />
+        </div>
+      )}
     </div>
   );
 }

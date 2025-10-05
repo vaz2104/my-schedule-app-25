@@ -6,6 +6,7 @@ import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
 import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 import { useAppStore } from "@/store/useAppStore";
+import AvailableWorkers from "@/components/admin/AvailableWorkers";
 
 export default function DashboardHome() {
   const { companyPlan } = useAppStore();
@@ -35,6 +36,12 @@ export default function DashboardHome() {
       )}
 
       <WeekScheduleCalendar />
+      {(companyPlan === "business" || companyPlan === "businessPlus") && (
+        <div className="mt-8 mb-4">
+          <AvailableWorkers />
+        </div>
+      )}
+
       {companyPlan === "free" || companyPlan === "basic" ? (
         <div className="mt-8 mb-4">
           <ActiveWeekDaySchedule />

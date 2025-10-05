@@ -18,8 +18,10 @@ import { useShallow } from "zustand/shallow";
 import ConfirmModal from "../ui/ConfirmModal";
 import { NotificationService } from "@/services/NotificatoinsServices";
 import { AppointmentService } from "@/services/AppointmentService";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function ActiveDaySchedule() {
+  const { adminId } = useAppStore();
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
@@ -170,21 +172,23 @@ export default function ActiveDaySchedule() {
                 Object.keys(selectedDaySchedule?.schedule).length - 1
               ]
             ]
-          ) && (
-            <DayScheduleModalForm
-              activeSchedule={selectedDaySchedule}
-              selectedDate={selectedDate}
-            />
-          )}
+          ) &&
+            adminId === params?.specialistID && (
+              <DayScheduleModalForm
+                activeSchedule={selectedDaySchedule}
+                selectedDate={selectedDate}
+              />
+            )}
         </>
       ) : (
         <>
-          {!CalendarService.isOldDay(selectedDate) && (
-            <DayScheduleModalForm
-              activeSchedule={selectedDaySchedule}
-              selectedDate={selectedDate}
-            />
-          )}
+          {!CalendarService.isOldDay(selectedDate) &&
+            adminId === params?.specialistID && (
+              <DayScheduleModalForm
+                activeSchedule={selectedDaySchedule}
+                selectedDate={selectedDate}
+              />
+            )}
         </>
       )}
 
@@ -234,7 +238,7 @@ export default function ActiveDaySchedule() {
                     </div>
                   )}
 
-                  {!isOldDate && (
+                  {!isOldDate && adminId === params?.specialistID && (
                     <div className="text-right">
                       <div className="flex">
                         <div className="flex justify-center">

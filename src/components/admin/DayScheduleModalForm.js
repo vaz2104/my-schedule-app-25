@@ -227,7 +227,7 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
     <div>
       <div className="mt-4 flex justify-center">
         <button
-          className="button dark w-full"
+          className="button dark w-full min-w-58"
           onClick={() =>
             activeSchedule ? initFormState() : setIsModalVisible(true)
           }

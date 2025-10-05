@@ -4,10 +4,10 @@ import { NoImageIcon } from "./Icons";
 export default function Thumbnail({ url, size = "sm", theme = "dark" }) {
   let sizeStyles = "";
   let iconSizeStyles = "";
-  let themeStyles = "border-gray-800 bg-gray-600";
+  let themeStyles = "border-gray-200  bg-gray-100";
 
-  if ((theme = "light")) {
-    themeStyles = "border-gray-200  bg-gray-100";
+  if (theme == "light") {
+    themeStyles = "border-gray-200 bg-white";
   }
 
   switch (size) {

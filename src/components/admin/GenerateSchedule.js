@@ -392,7 +392,10 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
               </p>
             </div>
             <div className="mt-8">
-              <button className="button w-full" onClick={() => closeModal()}>
+              <button
+                className="button w-full m-auto"
+                onClick={() => closeModal()}
+              >
                 Закрити
               </button>
             </div>

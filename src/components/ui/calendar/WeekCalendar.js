@@ -100,7 +100,7 @@ export default function WeekCalendar({ options }) {
           {weekDays.map((day, index) => {
             return (
               <div
-                className={`flex-1 relative text-center p-1 py-2 mx-0.5 rounded week-calendar-day ${
+                className={`flex-1 relative text-center p-1 py-2 mx-0.5 rounded week-calendar-day cursor-pointer ${
                   day.weekDay == 6 || day.weekDay == 0 ? "weekend" : ""
                 } ${day.currentMonth ? "default" : "disabled"}`}
                 onClick={() => chooseDateHandler(day.date)}

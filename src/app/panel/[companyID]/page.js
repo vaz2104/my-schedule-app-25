@@ -1,13 +1,16 @@
 "use client";
 import ActiveWeekDaySchedule from "@/components/client/ActiveWeekDaySchedule";
+import AvailableWorkers from "@/components/client/AvailableWorkers";
 import BookedAppointments from "@/components/client/BookedAppointments";
 import DiscountServices from "@/components/client/DiscountServices";
 import WeekScheduleCalendar from "@/components/general/WeekScheduleCalendar";
 import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
+import { useAppStore } from "@/store/useAppStore";
 import { useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function PanelHome() {
+  const { companyPlan } = useAppStore();
   const { setSelectedDate, setInitCalendarDate, setInitWeekDate } =
     useCalendarStore(
       useShallow((state) => ({
@@ -31,8 +34,13 @@ export default function PanelHome() {
 
       <WeekScheduleCalendar />
       <div className="mt-8 mb-4">
-        <ActiveWeekDaySchedule />
+        {companyPlan === "free" || companyPlan === "basic" ? (
+          <ActiveWeekDaySchedule />
+        ) : (
+          <AvailableWorkers />
+        )}
       </div>
+
       <div className="mt-8 mb-4">
         <DiscountServices />
       </div>

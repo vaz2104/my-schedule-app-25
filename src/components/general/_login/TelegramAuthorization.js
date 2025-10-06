@@ -18,7 +18,7 @@ export default function TelegramAuthorization({ telegramUserID }) {
 
     if (
       platformUserResponse.status !== 200 ||
-      !platformUserResponse?.data?.length
+      platformUserResponse?.data?.length === 0
     ) {
       setCriticallError("При завантаженні даних сталася помилка!");
       return;
@@ -36,6 +36,10 @@ export default function TelegramAuthorization({ telegramUserID }) {
     });
 
     if (newSession) {
+      if (role === "client") {
+        localStorage.removeItem("activePanel");
+        localStorage.setItem("activePanel", panelID);
+      }
       redirect(
         role === "client" ? `/panel/${panelID}` : "/dashboard/presentation"
       );

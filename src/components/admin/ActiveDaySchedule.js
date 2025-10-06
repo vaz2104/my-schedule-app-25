@@ -33,6 +33,7 @@ export default function ActiveDaySchedule() {
   const [relationToDelete, setRelationToDelete] = useState(null);
   const [confirmMessage, setConfirmMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditingAllowed, setIsEditingAllowed] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
   const { baseDashboardLink } = useBaseURL();
@@ -133,8 +134,20 @@ export default function ActiveDaySchedule() {
     }
   }
 
+  async function checkIsEditingAllowed() {
+    const session = await AuthService.getSession();
+
+    let status = true;
+    if (adminId === session?.userId && adminId !== params?.specialistID) {
+      status = false;
+    }
+
+    setIsEditingAllowed(status);
+  }
+
   useEffect(() => {
     loadSelectedDaySchedule(selectedDate);
+    checkIsEditingAllowed();
   }, [selectedDate]);
 
   if (error) {
@@ -173,7 +186,7 @@ export default function ActiveDaySchedule() {
               ]
             ]
           ) &&
-            adminId === params?.specialistID && (
+            isEditingAllowed && (
               <DayScheduleModalForm
                 activeSchedule={selectedDaySchedule}
                 selectedDate={selectedDate}
@@ -182,13 +195,12 @@ export default function ActiveDaySchedule() {
         </>
       ) : (
         <>
-          {!CalendarService.isOldDay(selectedDate) &&
-            adminId === params?.specialistID && (
-              <DayScheduleModalForm
-                activeSchedule={selectedDaySchedule}
-                selectedDate={selectedDate}
-              />
-            )}
+          {!CalendarService.isOldDay(selectedDate) && isEditingAllowed && (
+            <DayScheduleModalForm
+              activeSchedule={selectedDaySchedule}
+              selectedDate={selectedDate}
+            />
+          )}
         </>
       )}
 
@@ -238,7 +250,7 @@ export default function ActiveDaySchedule() {
                     </div>
                   )}
 
-                  {!isOldDate && adminId === params?.specialistID && (
+                  {!isOldDate && isEditingAllowed && (
                     <div className="text-right">
                       <div className="flex">
                         <div className="flex justify-center">

@@ -28,6 +28,7 @@ export default function MonthScheduleStatistic() {
   const [schedule, setSchedule] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEditingAllowed, setIsEditingAllowed] = useState(false);
   const params = useParams();
 
   async function loadFullMonthSchedule() {
@@ -55,6 +56,16 @@ export default function MonthScheduleStatistic() {
     setIsLoading(false);
   }
 
+  async function checkIsEditingAllowed() {
+    const session = await AuthService.getSession();
+    let status = true;
+    if (adminId === session?.userId && adminId !== params?.specialistID) {
+      status = false;
+    }
+
+    setIsEditingAllowed(status);
+  }
+
   function getScheduleDays(schedule) {
     const days = [];
     schedule.forEach((el) => days.push(formatDate(el?.date)));
@@ -71,6 +82,7 @@ export default function MonthScheduleStatistic() {
 
   useEffect(() => {
     loadFullMonthSchedule();
+    checkIsEditingAllowed();
   }, [initCalendarDate]);
 
   if (error) {
@@ -97,7 +109,7 @@ export default function MonthScheduleStatistic() {
 
       <StatisticWidget schedule={filterScheduleByMonth(initCalendarDate)} />
 
-      {adminId === params?.specialistID && (
+      {isEditingAllowed && (
         <div className="mt-6">
           <GenerateSchedule
             successHandler={loadFullMonthSchedule}

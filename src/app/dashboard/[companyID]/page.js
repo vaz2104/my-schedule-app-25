@@ -9,7 +9,7 @@ import { useAppStore } from "@/store/useAppStore";
 import AvailableWorkers from "@/components/admin/AvailableWorkers";
 
 export default function DashboardHome() {
-  const { companyPlan } = useAppStore();
+  const { companyPlan, role } = useAppStore();
   const { setSelectedDate, setInitCalendarDate, setInitWeekDate } =
     useCalendarStore(
       useShallow((state) => ({
@@ -27,7 +27,9 @@ export default function DashboardHome() {
 
   return (
     <div className="p-4">
-      {companyPlan === "free" || companyPlan === "basic" ? (
+      {companyPlan === "free" ||
+      companyPlan === "basic" ||
+      role === "worker" ? (
         <div className="mt-8 mb-4">
           <WeekScheduleStatistic />
         </div>
@@ -36,18 +38,19 @@ export default function DashboardHome() {
       )}
 
       <WeekScheduleCalendar />
-      {(companyPlan === "business" || companyPlan === "businessPlus") && (
-        <div className="mt-8 mb-4">
-          <AvailableWorkers />
-        </div>
-      )}
+      {(companyPlan === "business" || companyPlan === "businessPlus") &&
+        role === "admin" && (
+          <div className="mt-8 mb-4">
+            <AvailableWorkers />
+          </div>
+        )}
 
-      {companyPlan === "free" || companyPlan === "basic" ? (
+      {(companyPlan === "free" ||
+        companyPlan === "basic" ||
+        role === "worker") && (
         <div className="mt-8 mb-4">
           <ActiveWeekDaySchedule />
         </div>
-      ) : (
-        ""
       )}
     </div>
   );

@@ -31,9 +31,6 @@ export default function BotsList() {
     const relatedBotsResponse = await WorkerService.getRelatedBots(
       session.userId
     );
-    console.log(session.userId);
-
-    // console.log(relatedBotsResponse.data);
 
     if (botsListResponse.status !== 200 || relatedBotsResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
@@ -41,8 +38,6 @@ export default function BotsList() {
 
     setBots(botsListResponse.data);
     setRelatedBots(relatedBotsResponse.data);
-    console.log(botsListResponse.data);
-    console.log(relatedBotsResponse.data);
     setIsLoader(false);
   }
 

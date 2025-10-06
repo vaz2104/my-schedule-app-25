@@ -3,6 +3,7 @@ import Footer from "@/components/admin/Footer";
 import Header from "@/components/admin/Header";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
+import { AuthService } from "@/services/AuthService";
 import { CompanyService } from "@/services/CompanyService";
 import { useAppStore } from "@/store/useAppStore";
 import { useTheme } from "next-themes";
@@ -10,7 +11,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DashboardCompanyLayout({ children }) {
-  const { setCompanyPlan, setbBotName, setThemePalette, setAdminId } =
+  const { setCompanyPlan, setbBotName, setThemePalette, setAdminId, setRole } =
     useAppStore();
   const { setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +22,7 @@ export default function DashboardCompanyLayout({ children }) {
     if (!params?.companyID) return false;
 
     setIsLoading(true);
+    const session = await AuthService.getSession();
     const companyDataResponse = await CompanyService.getBot(params?.companyID);
 
     if (companyDataResponse.status !== 200) {
@@ -33,6 +35,11 @@ export default function DashboardCompanyLayout({ children }) {
       setCompanyPlan(companyDataResponse.data?.plan);
       setbBotName(companyDataResponse.data?.username);
       setAdminId(companyDataResponse.data?.adminId);
+      setRole(
+        companyDataResponse.data?.adminId === session?.userId
+          ? "admin"
+          : "worker"
+      );
     }
 
     setIsLoading(false);

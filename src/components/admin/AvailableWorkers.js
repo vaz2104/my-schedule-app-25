@@ -50,16 +50,6 @@ export default function AvailableWorkers() {
     setIsLoading(false);
   }
 
-  function initDeletingHandler(appointmentKey, relation) {
-    console.log(appointmentKey, relation);
-    setSelectedScheduleItem(appointmentKey);
-    setRelationToDelete(relation);
-    const message = relation
-      ? "Даний час заброньовано клієнтом! Дійсно бажаєте скасувати бронювання та видалити обраний час з Вашого графіку?"
-      : "Дійсно бажаєте видалити даний час з Вашого графіку?";
-    setConfirmMessage(message);
-  }
-
   useEffect(() => {
     loadSelectedDaySchedule(selectedDate);
   }, [selectedDate]);
@@ -118,6 +108,7 @@ export default function AvailableWorkers() {
                   </Link>
                   <div>
                     <Link
+                      className="text-sm text-gray-900 underline"
                       href={`${baseDashboardLink}/specialists/${worker?.workerId?._id}`}
                     >
                       Графік на місяць

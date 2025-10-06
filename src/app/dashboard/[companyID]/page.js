@@ -30,7 +30,7 @@ export default function DashboardHome() {
       {companyPlan === "free" ||
       companyPlan === "basic" ||
       role === "worker" ? (
-        <div className="mt-8 mb-4">
+        <div className="mt-4 mb-4">
           <WeekScheduleStatistic />
         </div>
       ) : (

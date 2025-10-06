@@ -56,7 +56,11 @@ export default function Events() {
       </div>
       <div>
         {!events?.length ? (
-          <p>Події відсутні</p>
+          <div className="mt-8">
+            <p className="text-center text-md font-medium my-12 text-gray-400">
+              Події відсутні
+            </p>
+          </div>
         ) : (
           <>
             {events.map((event, index) => {

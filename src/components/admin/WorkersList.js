@@ -1,12 +1,9 @@
 import Link from "next/link";
 import Thumbnail from "../ui/Thumbnail";
-
-import { useBaseURL } from "@/hooks/useBaseURL";
 import { useAppStore } from "@/store/useAppStore";
 
-export default function WorkersList({ workers }) {
+export default function WorkersList({ workers, baseURL }) {
   const { adminId } = useAppStore();
-  const { baseDashboardLink } = useBaseURL();
   if (!workers?.length)
     return (
       <div className="p-4">
@@ -22,7 +19,7 @@ export default function WorkersList({ workers }) {
         return (
           <div key={worker?._id}>
             <Link
-              href={`${baseDashboardLink}/specialists/${worker?.workerId?._id}`}
+              href={`${baseURL}/specialists/${worker?.workerId?._id}`}
               className="w-full mb-4 p-4 py-3 text-gray-900 rounded-lg shadow-sm bg-white border border-gray-50 flex items-center"
             >
               <Thumbnail url={worker?.workerId?.photoUrl} />

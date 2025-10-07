@@ -3,6 +3,7 @@ import InviteWorker from "@/components/admin/InviteWorker";
 import WorkersList from "@/components/admin/WorkersList";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
+import { useBaseURL } from "@/hooks/useBaseURL";
 import { CompanyService } from "@/services/CompanyService";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ export default function Specialists() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
+  const { baseDashboardLink } = useBaseURL();
 
   async function loadWorkers() {
     setIsLoading(true);
@@ -55,7 +57,7 @@ export default function Specialists() {
         <InviteWorker />
       </div>
       <div>
-        <WorkersList workers={workers} />
+        <WorkersList workers={workers} baseURL={baseDashboardLink} />
       </div>
     </div>
   );

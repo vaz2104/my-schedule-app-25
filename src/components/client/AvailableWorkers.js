@@ -27,7 +27,7 @@ export default function AvailableWorkers() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
-  const { baseDashboardLink } = useBaseURL();
+  const { basePlatformLink } = useBaseURL();
 
   const currentMonth = monthsFullName[new Date(selectedDate).getMonth()];
 
@@ -87,7 +87,7 @@ export default function AvailableWorkers() {
               >
                 <div className="flex items-center justify-between">
                   <Link
-                    href={`${baseDashboardLink}/specialists/${worker?.workerId?._id}`}
+                    href={`${basePlatformLink}/specialists/${worker?.workerId?._id}`}
                     className="flex items-center"
                   >
                     <Thumbnail url={worker?.workerId?.photoUrl} theme="light" />
@@ -107,7 +107,7 @@ export default function AvailableWorkers() {
                   <div>
                     <Link
                       className="text-sm text-gray-900 underline"
-                      href={`${baseDashboardLink}/specialists/${worker?.workerId?._id}`}
+                      href={`${basePlatformLink}/specialists/${worker?.workerId?._id}`}
                     >
                       Графік на місяць
                     </Link>

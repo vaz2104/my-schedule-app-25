@@ -5,6 +5,7 @@ import formatDate from "@/lib/formatDate";
 import Alert from "../ui/Alert";
 import DeleteServiceForm from "./DeleteServiceForm";
 import EditServiceForm from "./EditServiceForm";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function ServiceCard({
   id,
@@ -14,6 +15,8 @@ export default function ServiceCard({
   saleEndDay,
   updateListHandler,
 }) {
+  const { role } = useAppStore();
+
   if (!service)
     return (
       <div className="my-4">
@@ -49,18 +52,22 @@ export default function ServiceCard({
         </div>
       </div>
       <div className="flex">
-        <div className="mr-4">
-          <EditServiceForm
-            mapItem={{ id, service, price, priceWithSale, saleEndDay }}
-            successHandler={updateListHandler}
-          />
-        </div>
-        <div className="">
-          <DeleteServiceForm
-            mapItemId={id}
-            successHandler={updateListHandler}
-          />
-        </div>
+        {role === "admin" && (
+          <>
+            <div className="mr-4">
+              <EditServiceForm
+                mapItem={{ id, service, price, priceWithSale, saleEndDay }}
+                successHandler={updateListHandler}
+              />
+            </div>
+            <div className="">
+              <DeleteServiceForm
+                mapItemId={id}
+                successHandler={updateListHandler}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

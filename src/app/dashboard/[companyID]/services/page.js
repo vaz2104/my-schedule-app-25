@@ -9,8 +9,10 @@ import { ServicesService } from "@/services/ServicesService";
 import ServicesList from "@/components/admin/ServicesList";
 import { useCalendarStore } from "@/components/ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function Services() {
+  const { role } = useAppStore();
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -59,11 +61,14 @@ export default function Services() {
   return (
     <div className="p-4">
       <div className="mb-8 mt-4 text-center">
-        <h2 className="font-bold text-xl">Мої послуги</h2>
+        <h2 className="font-bold text-xl">Послуги</h2>
       </div>
-      <div className="mb-6">
-        <NewServiceForm successHandler={loadServices} />
-      </div>
+      {role === "admin" && (
+        <div className="mb-6">
+          <NewServiceForm successHandler={loadServices} />
+        </div>
+      )}
+
       <div className="">
         <ServicesList updateListHandler={loadServices} services={services} />
       </div>

@@ -65,7 +65,17 @@ export function getScheduleDays(schedule, key) {
       let availableHours = 0;
 
       Object.keys(el.schedule).forEach((key) => {
-        if (!CalendarService.isOldDate(new Date(el?.date), el.schedule[key])) {
+        let hasRelation = false;
+        el.relations.forEach((relation) => {
+          if (key === relation.appointmentKey) {
+            hasRelation = true;
+          }
+        });
+
+        if (
+          !CalendarService.isOldDate(new Date(el?.date), el.schedule[key]) &&
+          !hasRelation
+        ) {
           availableHours++;
         }
       });

@@ -58,6 +58,7 @@ export default function AppointmentForm({
       botId: params?.companyID,
       clientId: session?.userId,
       scheduleId: selectedSchedule?._id,
+      workerId: selectedSchedule?.workerId?._id,
       appointmentKey: selectedAppointment,
       serviceId: selectedService,
       timestamp: Date.now(),
@@ -77,6 +78,7 @@ export default function AppointmentForm({
           author: session?.userId,
         },
         recipientRole: "admin",
+        recipient: [selectedSchedule?.workerId?._id],
         type: "clientNewAppointment",
         meta: response?.data,
       });

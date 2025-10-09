@@ -15,7 +15,6 @@ export default function BotWidget() {
 
   async function loadBotInfo() {
     const botDataResponse = await CompanyService.getBot(params?.companyID);
-    console.log(botDataResponse);
 
     if (botDataResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

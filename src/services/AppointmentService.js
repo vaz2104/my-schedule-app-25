@@ -18,6 +18,20 @@ class AppointmentServiceClass {
 
     return data;
   }
+  async getClients(query) {
+    let sp = new URLSearchParams(query);
+    const queryString = sp.toString();
+
+    const API_URL = `${
+      process.env.NEXT_PUBLIC_BOT_BACKEND_URL
+    }/api/appointment/relations/clients/${
+      queryString ? `?${queryString}` : ``
+    }`;
+    const data = await fetchApi(API_URL, {}, "GET");
+
+    return data;
+  }
+
   async getSingle(id) {
     if (!id) return null;
 

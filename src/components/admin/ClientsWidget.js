@@ -1,6 +1,6 @@
 import BotWidget from "./BotWidget";
 
-export default function ClientsWidget({ totalNumber }) {
+export default function ClientsWidget({ totalNumber, label }) {
   return (
     <div className="mb-6">
       <div className="flex -mx-1">
@@ -12,7 +12,7 @@ export default function ClientsWidget({ totalNumber }) {
           <div className="h-full rounded-xl bg-gray-100 p-4 text-center">
             <div className="flex flex-col items-center justify-center h-full">
               <div className="text-4xl font-bold">{totalNumber}</div>
-              <div className="text-xs mt-2">Клієнти, що користуються ботом</div>
+              <div className="text-xs mt-2">{label}</div>
             </div>
           </div>
         </div>

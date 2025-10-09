@@ -1,9 +1,15 @@
+import Spinner from "../ui/Spinner";
 import ClientCard from "./ClientCard";
 
-export default function ClientsList({ clients }) {
+export default function ClientsList({ isLoading, clients }) {
   if (!clients?.length)
     return (
-      <div className="p-4">
+      <div className="relative p-4">
+        {isLoading && (
+          <div className="bg-white/50 backdrop-blur-xs p-4 flex justify-center items-center absolute -top-1 -right-1 -bottom-1 -left-1 rounded-xl z-20">
+            <Spinner />
+          </div>
+        )}
         <div className="text-center text-gray-400 mt-4">
           <p>У Вас поки немає клієнтів, що користуються Вашим ботом</p>
         </div>
@@ -11,17 +17,19 @@ export default function ClientsList({ clients }) {
     );
 
   return (
-    <div>
+    <div className="relative">
+      {isLoading && (
+        <div className="bg-white/50 backdrop-blur-xs p-4 flex justify-center items-center absolute -top-1 -right-1 -bottom-1 -left-1 rounded-xl z-20">
+          <Spinner />
+        </div>
+      )}
       {clients.map((client) => {
         return (
-          <div key={client._id}>
+          <div key={client?.clientId?._id}>
             <ClientCard
-              id={client?.telegramUserId?._id}
-              name={
-                client.telegramUserId?.firstName ||
-                client.telegramUserId?.username
-              }
-              thumbnail={client.telegramUserId?.photoUrl}
+              id={client?.clientId?._id}
+              name={client.clientId?.firstName || client.clientId?.username}
+              thumbnail={client.clientId?.photoUrl}
             />
           </div>
         );

@@ -159,7 +159,7 @@ export default function ActiveDaySchedule() {
   }
 
   return (
-    <div className="relative mt-6 min-h-84">
+    <div className="relative mt-6 min-h-54">
       {isLoading && (
         <div className="bg-white/50 backdrop-blur-xs p-4 flex justify-center items-center absolute -top-1 -right-1 -bottom-1 -left-1 rounded-xl z-20">
           <Spinner />
@@ -273,8 +273,8 @@ export default function ActiveDaySchedule() {
         </Fragment>
       ) : (
         <Fragment>
-          <div className="mt-8">
-            <p className="text-center text-md font-medium my-12 text-gray-400">
+          <div className="min-h-42 flex items-center">
+            <p className="w-full text-center text-md font-medium text-gray-400">
               Часи прийому не вказані
             </p>
           </div>

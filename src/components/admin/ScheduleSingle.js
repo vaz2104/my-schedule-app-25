@@ -1,15 +1,22 @@
 "use client";
 
 import { cn } from "@/lib/cn";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ActiveDaySchedule from "./ActiveDaySchedule";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import MonthScheduleStatistic from "./MonthScheduleStatistic";
 import Thumbnail from "../ui/Thumbnail";
 import MonthScheduleCalendar from "../general/MonthScheduleCalendar";
+import { useParams } from "next/navigation";
+import { useAppStore } from "@/store/useAppStore";
+import { UserService } from "@/services/UserService";
 
-export default function ScheduleSingle({ isWorkerSchedule = false }) {
+export default function ScheduleSingle() {
+  const [profile, setProfile] = useState(null);
+  const { role } = useAppStore();
+  const params = useParams();
+
   const { initCalendarDate, setSelectedDate, setInitCalendarDate } =
     useCalendarStore(
       useShallow((state) => ({
@@ -26,9 +33,26 @@ export default function ScheduleSingle({ isWorkerSchedule = false }) {
       : initDate;
   }
 
+  async function getProfileData() {
+    if (!params?.specialistID) return false;
+
+    const response = await UserService.getTelegramUser({
+      _id: params?.specialistID,
+    });
+
+    if (response.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      if (response?.data?.length) {
+        setProfile(response?.data[0]);
+      }
+    }
+  }
+
   useEffect(() => {
     setInitCalendarDate(new Date());
     setSelectedDate(new Date());
+    getProfileData();
   }, []);
 
   useEffect(() => {
@@ -37,22 +61,14 @@ export default function ScheduleSingle({ isWorkerSchedule = false }) {
 
   return (
     <div className="p-4">
-      {isWorkerSchedule && (
+      {(params?.companyID || role === "worker") && profile && (
         <div className="mt-1.5 mb-4">
-          <div
-            className={cn(
-              "m-auto w-16 h-16  border-2 border-gray-200 rounded-full"
-            )}
-          >
-            <Thumbnail
-              url={
-                "https://doodleipsum.com/700x700/avatar?i=310c74837ffe0803164ed110256826e1"
-              }
-            />
+          <div className={cn("m-auto size-16 border-gray-200 rounded-full")}>
+            <Thumbnail url={profile?.photoUrl} size="lg" />
           </div>
-          <div className="ms-3 text-sm font-normal text-center mt-2">
+          <div className="text-sm font-normal text-center mt-2">
             <div className="font-bold text-xl text-gray-900 dark:text-white">
-              Bonnie Green
+              {profile?.firstName || profile?.username}
             </div>
           </div>
         </div>

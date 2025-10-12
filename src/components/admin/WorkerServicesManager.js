@@ -29,8 +29,6 @@ export default function WorkerServicesManager() {
     if (servicesResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      console.log(servicesResponse.data);
-
       setSelectedServices(servicesResponse.data?.services);
       setDisabledServices(servicesResponse.data?.disabledServices);
     }

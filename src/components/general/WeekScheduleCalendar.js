@@ -15,7 +15,7 @@ import { getScheduleDays } from "@/lib/schedule-helpers";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function WeekScheduleCalendar() {
-  const { companyPlan } = useAppStore();
+  const { companyPlan, role } = useAppStore();
   const { initWeekDate } = useCalendarStore(
     useShallow((state) => ({
       initWeekDate: state.initWeekDate,
@@ -40,9 +40,10 @@ export default function WeekScheduleCalendar() {
     };
 
     if (
-      companyPlan !== null &&
-      companyPlan !== "business" &&
-      companyPlan !== "businessPlus"
+      role === "worker" ||
+      (companyPlan !== null &&
+        companyPlan !== "business" &&
+        companyPlan !== "businessPlus")
     ) {
       query.workerId = session?.userId;
     }

@@ -8,7 +8,7 @@ export default function Presentation({ toggleHint }) {
           src={"/init-new-bot-poster.png"}
           width={650}
           height={500}
-          className="animate__animated animate__fadeIn max-w-md mx-auto"
+          className="animate__animated animate__fadeIn max-w-md mx-auto w-full"
           alt=""
         />
         <div className="mt-8 font-light text-gray-500 sm:text-xl dark:text-gray-400 px-8 text-center animate__animated animate__fadeIn">

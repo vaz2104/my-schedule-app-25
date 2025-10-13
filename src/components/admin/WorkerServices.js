@@ -9,12 +9,15 @@ import { CheckCircleIcon, MinusCircleIcon } from "../ui/Icons";
 import { cn } from "@/lib/cn";
 import { WorkerService } from "@/services/WorkerService";
 import { AuthService } from "@/services/AuthService";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function WorkerServices() {
+  const { adminId } = useAppStore();
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
+  const [isEditingAllowed, setIsEditingAllowed] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
 
@@ -84,9 +87,20 @@ export default function WorkerServices() {
     setIsUpdating(false);
   }
 
+  async function checkIsEditingAllowed() {
+    const session = await AuthService.getSession();
+    let status = true;
+    if (adminId === session?.userId && adminId !== params?.specialistID) {
+      status = false;
+    }
+
+    setIsEditingAllowed(status);
+  }
+
   useEffect(() => {
     loadServices();
     loadWorkerServices();
+    checkIsEditingAllowed();
   }, []);
 
   if (isLoading)
@@ -125,7 +139,9 @@ export default function WorkerServices() {
                 <div
                   className="flex justify-between items-center p-4 border-b border-gray-200"
                   key={service?._id}
-                  onClick={() => assignService(service?._id)}
+                  onClick={() =>
+                    isEditingAllowed ? assignService(service?._id) : null
+                  }
                 >
                   <div
                     className={cn(

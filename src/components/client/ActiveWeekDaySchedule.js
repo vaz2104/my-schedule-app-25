@@ -66,7 +66,7 @@ export default function ActiveWeekDaySchedule() {
   }
 
   return (
-    <div className="relative mt-6">
+    <div className="relative mt-6 mb-16">
       {isLoading && (
         <div className="bg-white/50 backdrop-blur-xs p-4 flex justify-center items-center absolute -top-1 -right-1 -bottom-1 -left-1 rounded-xl z-20">
           <Spinner />

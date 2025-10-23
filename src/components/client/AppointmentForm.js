@@ -10,6 +10,7 @@ import { AppointmentService } from "@/services/AppointmentService";
 import { AuthService } from "@/services/AuthService";
 import { ThemeContext } from "@/context/ThemeContext";
 import { NotificationService } from "@/services/NotificatoinsServices";
+import { WorkerService } from "@/services/WorkerService";
 
 export default function AppointmentForm({
   selectedSchedule,
@@ -33,18 +34,55 @@ export default function AppointmentForm({
     if (closeHandler) closeHandler();
   }
 
+  // async function loadServices() {
+  //   setIsLoading(true);
+  //   const servicesResponse = await ServicesService.getMany({
+  //     botId: params?.companyID,
+  //   });
+
+  //   // console.log(servicesResponse);
+
+  //   if (servicesResponse.status !== 200) {
+  //     setError("Сталася помилка при завантаженні даних");
+  //   } else {
+  //     setServices(servicesResponse.data);
+  //   }
+
+  //   setIsLoading(false);
+  // }
+
+  console.log(selectedSchedule);
+
   async function loadServices() {
     setIsLoading(true);
-    const servicesResponse = await ServicesService.getMany({
+    const session = await AuthService.getSession();
+    const query = {
       botId: params?.companyID,
-    });
+    };
 
-    // console.log(servicesResponse);
+    //   workerId: params?.specialistID ? params?.specialistID : session?.userId,
+
+    query.workerId = selectedSchedule?.workerId?._id;
+    console.log(query);
+
+    const servicesResponse = await WorkerService.getServices(query);
 
     if (servicesResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      setServices(servicesResponse.data);
+      let filteredServices = [];
+
+      const { disabledServices } = servicesResponse.data;
+      servicesResponse.data?.services.forEach((object) => {
+        if (
+          Array.isArray(disabledServices) &&
+          !disabledServices.includes(object?._id)
+        ) {
+          filteredServices.push(object);
+        }
+      });
+
+      setServices(filteredServices);
     }
 
     setIsLoading(false);

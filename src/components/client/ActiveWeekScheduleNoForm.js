@@ -17,6 +17,7 @@ export default function ActiveWeekScheduleNoForm({
   setSelectedAppointment,
   selectedSchedule,
   selectedAppointment,
+  selectedWorker,
 }) {
   const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
 
@@ -28,11 +29,17 @@ export default function ActiveWeekScheduleNoForm({
 
   async function loadSelectedDaySchedule(date) {
     setIsLoading(true);
+    let workerId = null;
+    if (selectedWorker) {
+      workerId = selectedWorker;
+    } else {
+      workerId = params?.specialistID ? params?.specialistID : session?.userId;
+    }
 
     const session = await AuthService.getSession();
     const response = await ScheduleService.getMany({
       botId: params?.companyID,
-      workerId: session?.userId,
+      workerId,
       date: formatDate(date),
     });
 

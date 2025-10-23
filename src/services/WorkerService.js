@@ -62,6 +62,18 @@ class WorkerServiceClass {
 
     return data;
   }
+  async getByService(options) {
+    let sp = new URLSearchParams(options);
+    const queryString = sp.toString();
+
+    const API_URL = `${
+      process.env.NEXT_PUBLIC_BOT_BACKEND_URL
+    }/api/worker/get-by-service${queryString ? `?${queryString}` : ``}`;
+
+    const data = await fetchApi(API_URL, {}, "GET");
+
+    return data;
+  }
 }
 
 export const WorkerService = new WorkerServiceClass();

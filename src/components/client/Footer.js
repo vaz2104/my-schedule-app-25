@@ -56,7 +56,7 @@ export default function Footer() {
 
   return (
     <div className="fixed bottom-0 left-0 z-20 w-full px-4 py-4 bg-white">
-      <div className="footer-nav">
+      <div className="footer-nav client-nav">
         <Link href={`${basePlatformLink}/`} className="footer-nav-item">
           <div className="footer-nav-item__icon">
             <HomeIcon className={"size-8"} />

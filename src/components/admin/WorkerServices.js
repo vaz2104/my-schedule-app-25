@@ -140,7 +140,8 @@ export default function WorkerServices() {
                   className="flex justify-between items-center p-4 border-b border-gray-200"
                   key={service?._id}
                   onClick={() =>
-                    isEditingAllowed ? assignService(service?._id) : null
+                    // isEditingAllowed ? assignService(service?._id) : null
+                    assignService(service?._id)
                   }
                 >
                   <div

@@ -9,12 +9,16 @@ import { cn } from "@/lib/cn";
 import { WorkerService } from "@/services/WorkerService";
 import { AuthService } from "@/services/AuthService";
 import { useAppStore } from "@/store/useAppStore";
+import { FireIcon } from "../ui/Icons";
+import formatDate from "@/lib/formatDate";
+import ServiceAppointmentForm from "./ServiceAppointmentForm";
 
 export default function WorkerServices() {
   const { adminId } = useAppStore();
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedService, setSelectedService] = useState(null);
 
   const [error, setError] = useState(null);
   const params = useParams();
@@ -45,19 +49,25 @@ export default function WorkerServices() {
     if (servicesResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      let servicesIds = [];
-      servicesResponse.data?.services.forEach((object) =>
-        servicesIds.push(object?._id)
-      );
+      let filteredServices = [];
 
-      setSelectedServices(servicesIds);
+      const { disabledServices } = servicesResponse.data;
+      servicesResponse.data?.services.forEach((object) => {
+        if (
+          Array.isArray(disabledServices) &&
+          !disabledServices.includes(object?._id)
+        ) {
+          filteredServices.push(object);
+        }
+      });
+
+      setServices(filteredServices);
     }
 
     setIsLoading(false);
   }
 
   useEffect(() => {
-    loadServices();
     loadWorkerServices();
   }, []);
 
@@ -76,25 +86,64 @@ export default function WorkerServices() {
     );
   }
 
+  if (!services?.length) return <></>;
+
   return (
-    <div className="relative">
+    <div className="relative bg-gray-50 rounded-xl p-4 pb-8">
       <div className="mb-4">
-        <h2 className="font-bold text-lg">Послуги</h2>
-        <p className="text-sm text-gray-400">
-          Послуги, які працівник може надавати
+        <h2 className="font-bold text-lg text-center">Послуги</h2>
+        <p className="text-xs text-gray-400 text-center">
+          *Послуги, які працівник може надавати
         </p>
       </div>
       {services?.length > 0 ? (
         <>
-          <div className="bg-gray-100">
+          <div className="">
             {services.map((service) => {
               return (
                 <div
-                  className="flex justify-between items-center p-4 border-b border-gray-200"
+                  className="flex justify-between items-center py-4 border-b border-gray-200"
                   key={service?._id}
                 >
-                  <div className={cn("text-gray-900")}>{service?.service}</div>
-                  <div className="ml-2">за</div>
+                  <div>
+                    <div className="font-bold">{service?.service}</div>
+                    {service?.saleEndDay && (
+                      <div>
+                        <span className="mr-1 translate-y-1 inline-block">
+                          <FireIcon className={"text-red-500"} />
+                        </span>
+                        <span className="text-red-500 text-sm">
+                          знижка діє до {formatDate(service?.saleEndDay, "ui")}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="text-gray-500">
+                      {service?.priceWithSale && (
+                        <span className="text-red-600">
+                          {service?.priceWithSale} грн.
+                        </span>
+                      )}
+
+                      {service?.price && (
+                        <span
+                          className={cn(
+                            service?.priceWithSale && "ml-2 line-through"
+                          )}
+                        >
+                          {service?.price} грн.
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="ml-2">
+                    <button
+                      className="button"
+                      onClick={() => setSelectedService(service)}
+                    >
+                      Записатися
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -107,6 +156,12 @@ export default function WorkerServices() {
           </div>
         </>
       )}
+
+      <ServiceAppointmentForm
+        selectedService={selectedService}
+        successHandler={loadWorkerServices}
+        closeHandler={() => setSelectedService(null)}
+      />
     </div>
   );
 }

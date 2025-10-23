@@ -50,7 +50,7 @@ export default function Services() {
   return (
     <div className="p-4">
       <div className="mb-8 mt-4 text-center">
-        <h2 className="font-bold text-xl">Послуги</h2>
+        <h2 className="font-bold text-xl">Всі послуги</h2>
       </div>
       <div className="">
         <ServicesList updateListHandler={loadServices} services={services} />

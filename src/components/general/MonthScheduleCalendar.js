@@ -13,7 +13,7 @@ import { getScheduleDays } from "@/lib/schedule-helpers";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 
-export default function MonthScheduleCalendar() {
+export default function MonthScheduleCalendar({ selectedWorker }) {
   const { initCalendarDate } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
@@ -33,9 +33,16 @@ export default function MonthScheduleCalendar() {
     const startDate = formatDate(calendarPeriod[0].date);
     const endDate = formatDate(calendarPeriod[calendarPeriod.length - 1].date);
 
+    let workerId = null;
+    if (selectedWorker) {
+      workerId = selectedWorker;
+    } else {
+      workerId = params?.specialistID ? params?.specialistID : session?.userId;
+    }
+
     const response = await ScheduleService.getMany({
       botId: params?.companyID,
-      workerId: params?.specialistID ? params?.specialistID : session?.userId,
+      workerId,
       startDate,
       endDate,
     });

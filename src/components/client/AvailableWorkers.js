@@ -82,7 +82,7 @@ export default function AvailableWorkers() {
           {workers.map((worker) => {
             return (
               <div
-                className=" bg-gray-100 rounded-xl p-4 mb-4"
+                className=" bg-gray-50 rounded-xl p-4 mb-4"
                 key={`schedule${worker?._id}`}
               >
                 <div className="flex items-center justify-between">

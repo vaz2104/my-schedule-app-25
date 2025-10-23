@@ -1,5 +1,5 @@
 "use client";
-import { TrashIcon } from "../ui/Icons";
+import { CheckCircleIcon, MinusCircleIcon, TrashIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
@@ -13,6 +13,9 @@ import { useShallow } from "zustand/shallow";
 import MonthScheduleCalendar from "../general/MonthScheduleCalendar";
 import ActiveWeekScheduleNoForm from "./ActiveWeekScheduleNoForm";
 import { getSelectedDateOnCalendarChange } from "@/lib/schedule-helpers";
+import { WorkerService } from "@/services/WorkerService";
+import Thumbnail from "../ui/Thumbnail";
+import { useBaseURL } from "@/hooks/useBaseURL";
 
 export default function ServiceAppointmentForm({
   selectedService,
@@ -20,10 +23,13 @@ export default function ServiceAppointmentForm({
   closeHandler,
 }) {
   const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [workers, setWorkers] = useState([]);
+  const [selectedWorker, setSelectedWorker] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const { setSuccessMessage } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
+  const { basePlatformLink } = useBaseURL();
 
   const [error, setError] = useState(null);
   const params = useParams();
@@ -49,7 +55,6 @@ export default function ServiceAppointmentForm({
     }
     setIsLoading(true);
     const session = await AuthService.getSession();
-
     const query = {
       botId: params?.companyID,
       clientId: session?.userId,
@@ -57,6 +62,9 @@ export default function ServiceAppointmentForm({
       appointmentKey: selectedAppointment,
       serviceId: selectedService?._id,
       timestamp: Date.now(),
+      workerId: selectedWorker
+        ? selectedWorker
+        : selectedSchedule?.workerId?._id,
     };
 
     const response = await AppointmentService.create(query);
@@ -72,6 +80,31 @@ export default function ServiceAppointmentForm({
     }
   }
 
+  async function loadServiceWorkers() {
+    if (!selectedService?._id) return;
+    setIsLoading(true);
+
+    const servicesResponse = await WorkerService.getByService({
+      botId: params?.companyID,
+      serviceId: [selectedService?._id],
+    });
+
+    console.log(servicesResponse);
+
+    if (servicesResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      console.log("servicesResponse", servicesResponse);
+
+      if (servicesResponse?.data?.length === 1) {
+        setSelectedWorker(servicesResponse?.data[0]?.workerId?._id);
+      }
+      setWorkers(servicesResponse?.data);
+    }
+
+    setIsLoading(false);
+  }
+
   function closeCalendar() {
     setSelectedAppointment(null);
     setIsCalendarOpen(false);
@@ -81,6 +114,10 @@ export default function ServiceAppointmentForm({
   useEffect(() => {
     setSelectedDate(getSelectedDateOnCalendarChange(initCalendarDate));
   }, [initCalendarDate]);
+
+  useEffect(() => {
+    loadServiceWorkers();
+  }, [selectedService]);
 
   if (!selectedService) return <></>;
 
@@ -102,7 +139,7 @@ export default function ServiceAppointmentForm({
                 1
               </span>
               <div className="pt-0.5">
-                <div className="text-lg text-gray-500">Обрана ослуга</div>
+                <div className="text-lg text-gray-500">Обрана послуга</div>
                 <div className="mt-2">
                   <div className="text-gray-500 font-bold">
                     {selectedService?.service}
@@ -127,9 +164,62 @@ export default function ServiceAppointmentForm({
                 </div>
               </div>
             </li>
-            <li className="mb-10 ms-6">
+            {workers?.length >= 2 && (
+              <li className="mb-10 ms-6">
+                <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                  2
+                </span>
+                <div className="pt-0.5">
+                  <div className="text-lg text-gray-500">
+                    Оберіть працівника
+                  </div>
+                  <div className="mt-4">
+                    {workers.map((worker) => {
+                      return (
+                        <div key={worker?._id}>
+                          <div
+                            href={`${basePlatformLink}/specialists/${worker?.workerId?._id}`}
+                            className="w-full mb-4 p-4 py-3 text-gray-900 rounded-lg shadow-sm bg-white border border-gray-50 flex items-center"
+                            onClick={() =>
+                              setSelectedWorker(worker?.workerId?._id)
+                            }
+                          >
+                            <Thumbnail url={worker?.workerId?.photoUrl} />
+                            <div className="ms-3 text-sm font-normal flex-1 ">
+                              <div className="text-base font-semibold text-gray-900 dark:text-white">
+                                <>
+                                  {worker?.workerId?.firstName ||
+                                    worker?.workerId?.username}
+                                </>
+                              </div>
+                            </div>
+                            <div className="ml-2">
+                              <span className="relative w-6 h-6 block">
+                                {selectedWorker === worker?.workerId?._id ? (
+                                  <CheckCircleIcon
+                                    className={cn(
+                                      "w-6 h-6 text-green-600",
+                                      true &&
+                                        "animate__animated animate__bounceIn"
+                                    )}
+                                  />
+                                ) : (
+                                  <div className="w-5.5 h-5.5 rounded-full border-2 border-gray-400"></div>
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </li>
+            )}
+
+            <li className={cn("mb-10 ms-6")}>
               <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                2
+                {workers?.length >= 2 ? 3 : 2}
               </span>
               <div className="pt-0.5">
                 <div className="text-lg text-gray-500">Обрана дата та час</div>
@@ -161,8 +251,12 @@ export default function ServiceAppointmentForm({
                     </div>
                   ) : (
                     <button
-                      className="button gray w-full"
+                      className={cn(
+                        "button w-full",
+                        workers?.length >= 2 && !selectedWorker && "gray"
+                      )}
                       onClick={() => setIsCalendarOpen(true)}
+                      disabled={workers?.length >= 2 && !selectedWorker}
                     >
                       Обрати
                     </button>
@@ -181,7 +275,7 @@ export default function ServiceAppointmentForm({
             <div className="relative p-4 w-full max-w-md max-h-full">
               <div className="py-8 bg-white rounded-lg w-full">
                 <div className="px-4">
-                  <MonthScheduleCalendar />
+                  <MonthScheduleCalendar selectedWorker={selectedWorker} />
                   <div className="mt-8 mb-4">
                     <ActiveWeekScheduleNoForm
                       selectedDate={selectedDate}
@@ -189,6 +283,7 @@ export default function ServiceAppointmentForm({
                       setSelectedAppointment={setSelectedAppointment}
                       selectedSchedule={selectedSchedule}
                       selectedAppointment={selectedAppointment}
+                      selectedWorker={selectedWorker}
                     />
                   </div>
                 </div>

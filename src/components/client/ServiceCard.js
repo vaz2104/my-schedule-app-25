@@ -25,7 +25,7 @@ export default function ServiceCard({
     );
 
   return (
-    <div className="md:flex justify-between items-start py-4 text-gray-900 border-b border-gray-200">
+    <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
       <div>
         <div className="font-bold">{service}</div>
         {saleEndDay && (
@@ -51,9 +51,9 @@ export default function ServiceCard({
           )}
         </div>
       </div>
-      <div className="mt-4">
+      <div className="ml-3">
         <button
-          className="button w-full gray"
+          className="button w-full"
           onClick={() => setSelectedService(mapItem)}
         >
           Записатися

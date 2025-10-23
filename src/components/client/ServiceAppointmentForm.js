@@ -16,12 +16,14 @@ import { getSelectedDateOnCalendarChange } from "@/lib/schedule-helpers";
 import { WorkerService } from "@/services/WorkerService";
 import Thumbnail from "../ui/Thumbnail";
 import { useBaseURL } from "@/hooks/useBaseURL";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function ServiceAppointmentForm({
   selectedService,
   successHandler,
   closeHandler,
 }) {
+  const { companyPlan } = useAppStore();
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [workers, setWorkers] = useState([]);
   const [selectedWorker, setSelectedWorker] = useState(null);
@@ -81,7 +83,13 @@ export default function ServiceAppointmentForm({
   }
 
   async function loadServiceWorkers() {
-    if (!selectedService?._id) return;
+    if (
+      params?.specialistID ||
+      !selectedService?._id ||
+      companyPlan === "free" ||
+      companyPlan === "basic"
+    )
+      return;
     setIsLoading(true);
 
     const servicesResponse = await WorkerService.getByService({
@@ -164,62 +172,70 @@ export default function ServiceAppointmentForm({
                 </div>
               </div>
             </li>
-            {workers?.length >= 2 && (
-              <li className="mb-10 ms-6">
-                <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                  2
-                </span>
-                <div className="pt-0.5">
-                  <div className="text-lg text-gray-500">
-                    Оберіть працівника
-                  </div>
-                  <div className="mt-4">
-                    {workers.map((worker) => {
-                      return (
-                        <div key={worker?._id}>
-                          <div
-                            href={`${basePlatformLink}/specialists/${worker?.workerId?._id}`}
-                            className="w-full mb-4 p-4 py-3 text-gray-900 rounded-lg shadow-sm bg-white border border-gray-50 flex items-center"
-                            onClick={() =>
-                              setSelectedWorker(worker?.workerId?._id)
-                            }
-                          >
-                            <Thumbnail url={worker?.workerId?.photoUrl} />
-                            <div className="ms-3 text-sm font-normal flex-1 ">
-                              <div className="text-base font-semibold text-gray-900 dark:text-white">
-                                <>
-                                  {worker?.workerId?.firstName ||
-                                    worker?.workerId?.username}
-                                </>
+            {!params?.specialistID &&
+              companyPlan !== "free" &&
+              companyPlan !== "basic" &&
+              workers?.length >= 2 && (
+                <li className="mb-10 ms-6">
+                  <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                    2
+                  </span>
+                  <div className="pt-0.5">
+                    <div className="text-lg text-gray-500">
+                      Оберіть працівника
+                    </div>
+                    <div className="mt-4">
+                      {workers.map((worker) => {
+                        return (
+                          <div key={worker?._id}>
+                            <div
+                              href={`${basePlatformLink}/specialists/${worker?.workerId?._id}`}
+                              className="w-full mb-4 p-4 py-3 text-gray-900 rounded-lg shadow-sm bg-white border border-gray-50 flex items-center"
+                              onClick={() =>
+                                setSelectedWorker(worker?.workerId?._id)
+                              }
+                            >
+                              <Thumbnail url={worker?.workerId?.photoUrl} />
+                              <div className="ms-3 text-sm font-normal flex-1 ">
+                                <div className="text-base font-semibold text-gray-900 dark:text-white">
+                                  <>
+                                    {worker?.workerId?.firstName ||
+                                      worker?.workerId?.username}
+                                  </>
+                                </div>
+                              </div>
+                              <div className="ml-2">
+                                <span className="relative w-6 h-6 block">
+                                  {selectedWorker === worker?.workerId?._id ? (
+                                    <CheckCircleIcon
+                                      className={cn(
+                                        "w-6 h-6 text-green-600",
+                                        true &&
+                                          "animate__animated animate__bounceIn"
+                                      )}
+                                    />
+                                  ) : (
+                                    <div className="w-5.5 h-5.5 rounded-full border-2 border-gray-400"></div>
+                                  )}
+                                </span>
                               </div>
                             </div>
-                            <div className="ml-2">
-                              <span className="relative w-6 h-6 block">
-                                {selectedWorker === worker?.workerId?._id ? (
-                                  <CheckCircleIcon
-                                    className={cn(
-                                      "w-6 h-6 text-green-600",
-                                      true &&
-                                        "animate__animated animate__bounceIn"
-                                    )}
-                                  />
-                                ) : (
-                                  <div className="w-5.5 h-5.5 rounded-full border-2 border-gray-400"></div>
-                                )}
-                              </span>
-                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              </li>
-            )}
+                </li>
+              )}
 
             <li className={cn("mb-10 ms-6")}>
               <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                {workers?.length >= 2 ? 3 : 2}
+                {!params?.specialistID &&
+                companyPlan !== "free" &&
+                companyPlan !== "basic" &&
+                workers?.length >= 2
+                  ? 3
+                  : 2}
               </span>
               <div className="pt-0.5">
                 <div className="text-lg text-gray-500">Обрана дата та час</div>

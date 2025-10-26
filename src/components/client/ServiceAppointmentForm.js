@@ -97,13 +97,9 @@ export default function ServiceAppointmentForm({
       serviceId: [selectedService?._id],
     });
 
-    console.log(servicesResponse);
-
     if (servicesResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      console.log("servicesResponse", servicesResponse);
-
       if (servicesResponse?.data?.length === 1) {
         setSelectedWorker(servicesResponse?.data[0]?.workerId?._id);
       }

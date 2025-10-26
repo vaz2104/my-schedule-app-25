@@ -1,5 +1,4 @@
 "use client";
-import NewServiceForm from "@/components/admin/NewServiceForm";
 
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
@@ -7,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import ServicesList from "@/components/client/ServicesList";
+import { WorkerService } from "@/services/WorkerService";
 
 export default function Services() {
   const [services, setServices] = useState([]);
@@ -20,10 +20,28 @@ export default function Services() {
       botId: params?.companyID,
     });
 
+    let allServices = [];
+    let filteredServices = [];
     if (servicesResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      setServices(servicesResponse.data);
+      allServices = [...servicesResponse.data];
+    }
+
+    try {
+      await Promise.all(
+        allServices.map(async (service) => {
+          const workersResponse = await WorkerService.getByService({
+            botId: params?.companyID,
+            serviceId: [service?._id],
+          });
+          if (workersResponse?.data?.length) filteredServices.push(service);
+        })
+      ).then(() => {
+        setServices(filteredServices);
+      });
+    } catch (error) {
+      setError("Сталася помилка при завантаженні даних");
     }
 
     setIsLoading(false);

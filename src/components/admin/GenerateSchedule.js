@@ -127,7 +127,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
     console.log(selectedDays);
 
     try {
-      Promise.all(
+      await Promise.all(
         selectedDays.map(async (day) => {
           await ScheduleService.create({
             botId: params?.companyID,

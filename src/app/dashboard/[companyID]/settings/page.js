@@ -22,7 +22,7 @@ export default function SettingsPage() {
           <h2 className="font-bold text-lg">Ваш тарифний план</h2>
         </div>
         {companyPlan === "free" && <PlanFree activePlan={companyPlan} />}
-        {companyPlan === "base" && <PlanBase activePlan={companyPlan} />}
+        {companyPlan === "basic" && <PlanBase activePlan={companyPlan} />}
         {companyPlan === "business" && (
           <PlanBusiness activePlan={companyPlan} />
         )}

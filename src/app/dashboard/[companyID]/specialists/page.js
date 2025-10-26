@@ -72,7 +72,7 @@ export default function Specialists() {
       <div className="mb-8 mt-4 text-center">
         <h2 className="font-bold text-xl">Працівники</h2>
       </div>
-      {
+      {checkLimits() && (
         <div className="my-4">
           <Alert type="default">
             <div className="">
@@ -90,7 +90,7 @@ export default function Specialists() {
             </div>
           </Alert>
         </div>
-      }
+      )}
       <div className="mb-6">
         <InviteWorker isButtonDisabled={checkLimits()} />
       </div>

@@ -17,7 +17,7 @@ export default function ClientCard({ id, name, thumbnail }) {
           {name}
         </div>
       </div>
-      <BlockStatus />
+      {/* <BlockStatus /> */}
     </Link>
   );
 }

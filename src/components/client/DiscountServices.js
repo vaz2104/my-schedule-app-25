@@ -72,7 +72,10 @@ export default function DiscountServices() {
         <ServicesList updateListHandler={loadServices} services={services} />
       </div>
       <div className="mt-8">
-        <Link href={`${basePlatformLink}/services`} className="button dark">
+        <Link
+          href={`${basePlatformLink}/services`}
+          className="button dark min-w-54 m-auto"
+        >
           Переглянути всі послуги
         </Link>
       </div>

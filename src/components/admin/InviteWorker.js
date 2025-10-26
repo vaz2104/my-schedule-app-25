@@ -5,8 +5,9 @@ import CopyToClipboard from "../ui/CopyToClipboard";
 import { AuthService } from "@/services/AuthService";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { cn } from "@/lib/cn";
 
-export default function InviteWorker() {
+export default function InviteWorker({ isButtonDisabled = false }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [key, setKey] = useState("");
@@ -45,11 +46,19 @@ export default function InviteWorker() {
     <div>
       <div>
         <button
-          className="button w-full md:!max-w-56"
+          className={cn(
+            "button w-full md:!max-w-56",
+            isButtonDisabled && "gray"
+          )}
           onClick={() => openModalHandler()}
+          disabled={isButtonDisabled}
         >
-          <AddUserIcon className={"w-6 h-6 me-1"} />
-          Запросити працівника
+          <AddUserIcon
+            className={cn("w-6 h-6 me-1", isButtonDisabled && "text-gray-400")}
+          />
+          <span className={cn(isButtonDisabled && "text-gray-400")}>
+            Запросити працівника
+          </span>
         </button>
       </div>
       {isModalVisible && (

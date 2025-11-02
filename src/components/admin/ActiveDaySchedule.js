@@ -170,7 +170,7 @@ export default function ActiveDaySchedule() {
         <div className="mb-4">
           <h2 className="font-bold text-lg text-center">
             Графік на {new Date(selectedDate).getDate()}{" "}
-            {currentMonth.toLowerCase()}
+            {currentMonth ? currentMonth.toLowerCase() : ""}
           </h2>
         </div>
       )}

@@ -76,7 +76,7 @@ export default function ActiveWeekDaySchedule() {
       <div className="mb-4">
         <h2 className="font-bold text-lg text-center">
           Розклад на {new Date(selectedDate).getDate()}{" "}
-          {currentMonth.toLowerCase()}
+          {currentMonth ? currentMonth.toLowerCase() : ""}
         </h2>
         <p className="text-gray-400 text-xs text-center">
           *Для запису натисніть на бажаний час

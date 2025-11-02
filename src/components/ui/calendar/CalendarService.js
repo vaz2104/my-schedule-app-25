@@ -96,7 +96,7 @@ class CalendarService {
       newDate = startDay - daysInMonth(currentMonth, currentYear);
     }
 
-    return `${newYear}-${newMonth}-${newDate}`;
+    return `${newYear}-${newMonth}-${newDate < 10 ? "0" + newDate : newDate}`;
   }
 
   previousWeekInitDate(day) {

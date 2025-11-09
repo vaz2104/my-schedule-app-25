@@ -78,14 +78,15 @@ export default function Specialists() {
             <div className="">
               <p>Ви більше не можете додавати працівників!</p>
               <p>
-                Ваш тарифний план <span className="font-bold">"Business"</span>,
+                Ваш тарифний план{" "}
+                <span className="font-bold">&quot;Business&quot;</span>,
                 максимальна кількість працівників в цьому плані -{" "}
                 <span className="font-bold">3</span>
               </p>
               <p>
                 Аби додати більше працівників заблокуйте, чи видаліть наявних,
                 або змініть тарифний план на{" "}
-                <span className="font-bold">"Business Plus"</span>
+                <span className="font-bold">&quot;Business Plus&quot;</span>
               </p>
             </div>
           </Alert>

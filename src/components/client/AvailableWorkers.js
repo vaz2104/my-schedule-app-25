@@ -14,6 +14,7 @@ import { useShallow } from "zustand/shallow";
 import Thumbnail from "../ui/Thumbnail";
 import { useAppStore } from "@/store/useAppStore";
 import WorkerActiveWeekDaySchedule from "./WorkerActiveWeekDaySchedule";
+import Image from "next/image";
 
 export default function AvailableWorkers() {
   const { adminId } = useAppStore();
@@ -126,7 +127,16 @@ export default function AvailableWorkers() {
         </div>
       ) : (
         <div className="text-center text-gray-400 mt-16">
-          <p>Жодних доступних місць для запису</p>
+          <div className="flex justify-center">
+            <Image
+              src={"/no-day-schedule.png"}
+              width={320}
+              height={222}
+              alt=""
+            />
+          </div>
+
+          <p>Жодних доступних місць для запису!</p>
         </div>
       )}
     </div>

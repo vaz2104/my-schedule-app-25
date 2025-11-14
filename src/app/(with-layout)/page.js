@@ -162,15 +162,17 @@ export default function Home() {
               className="m-auto w-32 mt-8"
               alt="qr code"
             />
-            <p className="mt-4">
-              <a
-                href="https://t.me/MySchedule24DevBot"
-                target="_blunk"
-                className="text-main hover:underline"
-              >
-                @MySchedule24DevBot
-              </a>
-            </p>
+            {process.env.NEXT_PUBLIC_BOT_USERNAME && (
+              <p className="mt-4">
+                <a
+                  href={`https://t.me/${process.env.NEXT_PUBLIC_BOT_USERNAME}`}
+                  target="_blunk"
+                  className="text-main hover:underline"
+                >
+                  {`@${process.env.NEXT_PUBLIC_BOT_USERNAME}`}
+                </a>
+              </p>
+            )}
           </div>
         </div>
       </div>

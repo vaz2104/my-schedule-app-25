@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DashboardCompanyLayout({ children }) {
-  const { setCompanyPlan, setbBotName, setThemePalette, setAdminId, setRole } =
+  const { setCompanyPlan, setBotName, setThemePalette, setAdminId, setRole } =
     useAppStore();
   const { setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,12 +28,12 @@ export default function DashboardCompanyLayout({ children }) {
     if (companyDataResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      // console.log(companyDataResponse.data);
+      console.log(companyDataResponse.data);
 
       setTheme(companyDataResponse.data?.themePalette);
       setThemePalette(companyDataResponse.data?.themePalette);
       setCompanyPlan(companyDataResponse.data?.plan);
-      setbBotName(companyDataResponse.data?.username);
+      setBotName(companyDataResponse.data?.first_name);
       setAdminId(companyDataResponse.data?.adminId);
       setRole(
         companyDataResponse.data?.adminId === session?.userId

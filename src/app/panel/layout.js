@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PanelLayout({ children }) {
-  const { setCompanyPlan, setbBotName, setThemePalette } = useAppStore();
+  const { setCompanyPlan, setBotName, setThemePalette } = useAppStore();
   const { setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +25,7 @@ export default function PanelLayout({ children }) {
       setTheme(companyDataResponse.data?.themePalette);
       setThemePalette(companyDataResponse.data?.themePalette);
       setCompanyPlan(companyDataResponse.data?.plan);
-      setbBotName(companyDataResponse.data?.username);
+      setBotName(companyDataResponse.data?.first_name);
     }
 
     setIsLoading(false);

@@ -28,7 +28,7 @@ export default function DashboardCompanyLayout({ children }) {
     if (companyDataResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      console.log(companyDataResponse.data);
+      // console.log(companyDataResponse.data);
 
       setTheme(companyDataResponse.data?.themePalette);
       setThemePalette(companyDataResponse.data?.themePalette);

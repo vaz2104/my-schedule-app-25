@@ -22,8 +22,6 @@ export default function Footer() {
   async function getRole() {
     const { userId } = await AuthService.getSession();
     setRole(userId === adminId ? "admin" : "employee");
-
-    // console.log(userId, adminId);
   }
 
   useEffect(() => {

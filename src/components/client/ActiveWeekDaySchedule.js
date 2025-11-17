@@ -12,6 +12,7 @@ import { cn } from "@/lib/cn";
 import AppointmentForm from "./AppointmentForm";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import Image from "next/image";
 
 export default function ActiveWeekDaySchedule() {
   const { selectedDate } = useCalendarStore(
@@ -147,10 +148,23 @@ export default function ActiveWeekDaySchedule() {
         </Fragment>
       ) : (
         <Fragment>
-          <div className="mt-16 mb-24">
+          {/* <div className="mt-16 mb-24">
             <p className="text-center text-md font-medium my-12 text-gray-400">
               Часи прийому не вказані
             </p>
+          </div> */}
+
+          <div className="text-center text-gray-400 mt-16">
+            <div className="flex justify-center">
+              <Image
+                src={"/no-sappointments.png"}
+                width={320}
+                height={222}
+                alt=""
+              />
+            </div>
+
+            <p className="mt-6">Часи прийому не вказані</p>
           </div>
         </Fragment>
       )}

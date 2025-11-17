@@ -17,7 +17,7 @@ import { useShallow } from "zustand/shallow";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function MonthScheduleStatistic() {
-  const { adminId } = useAppStore();
+  const { adminId, companyPlan } = useAppStore();
 
   const { initCalendarDate } = useCalendarStore(
     useShallow((state) => ({
@@ -59,7 +59,11 @@ export default function MonthScheduleStatistic() {
   async function checkIsEditingAllowed() {
     const session = await AuthService.getSession();
     let status = true;
-    if (adminId === session?.userId && adminId !== params?.specialistID) {
+    if (
+      companyPlan !== "free" &&
+      adminId === session?.userId &&
+      adminId !== params?.specialistID
+    ) {
       status = false;
     }
 

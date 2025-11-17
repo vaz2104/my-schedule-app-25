@@ -21,7 +21,7 @@ import { AppointmentService } from "@/services/AppointmentService";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function ActiveDaySchedule() {
-  const { adminId } = useAppStore();
+  const { adminId, companyPlan } = useAppStore();
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
@@ -138,7 +138,11 @@ export default function ActiveDaySchedule() {
     const session = await AuthService.getSession();
 
     let status = true;
-    if (adminId === session?.userId && adminId !== params?.specialistID) {
+    if (
+      companyPlan !== "free" &&
+      adminId === session?.userId &&
+      adminId !== params?.specialistID
+    ) {
       status = false;
     }
 

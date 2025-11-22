@@ -47,8 +47,8 @@ export default function BotWidget() {
         <div>
           <div className="flex justify-center items-center">
             <LinkIcon className={`h-4`} />
-            <div className="text-md font-bold ml-0.5 overflow-hidden text-ellipsis">
-              t.me/{botData?.username}
+            <div className="max-w-44  text-md font-bold ml-0.5 overflow-hidden text-ellipsis">
+              t.me/{botData?.username}asdfasdfasfd
             </div>
           </div>
           <div className="text-xs mt-2">

@@ -32,7 +32,7 @@ export default function HeaderDashboard() {
           </Link>
           <div className="flex items-center lg:order-2">
             <button
-              className="ml-3 group flex items-center rounded-lg px-2 pr-1 py-1 text-sm font-medium text-red-600 bg-red-100 cursor-pointer"
+              className="ml-3 group flex items-center rounded-lg px-2 pr-1 py-1 text-sm font-medium text-red-600 cursor-pointer"
               onClick={logout}
             >
               <span className="mr-1 flex-1 whitespace-nowrap">Вийти</span>

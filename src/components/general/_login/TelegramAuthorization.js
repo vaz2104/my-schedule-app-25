@@ -40,9 +40,7 @@ export default function TelegramAuthorization({ telegramUserID }) {
         localStorage.removeItem("activePanel");
         localStorage.setItem("activePanel", panelID);
       }
-      redirect(
-        role === "client" ? `/panel/${panelID}` : "/dashboard/presentation"
-      );
+      redirect(role === "client" ? `/panel/${panelID}` : "/dashboard");
     }
   }
 

@@ -38,16 +38,17 @@ export default function BotsList() {
 
     setBots(botsListResponse.data);
 
-    let filteredRelated = [];
-    relatedBotsResponse.data.map((relatedBotItem) => {
-      botsListResponse.data.map((botItem) => {
-        let isAdminBot = false;
-        if (relatedBotItem?._id === botItem?._id) {
-          isAdminBot = true;
-        }
+    const botsIDs = [];
+    botsListResponse.data.map((botItem) => {
+      botsIDs.push(botItem?._id);
+    });
 
-        if (!isAdminBot) filteredRelated.push(relatedBotItem);
-      });
+    let filteredRelated = [];
+
+    relatedBotsResponse.data.map((relatedBotItem) => {
+      if (!botsIDs.includes(relatedBotItem?._id)) {
+        filteredRelated.push(relatedBotItem);
+      }
     });
 
     setRelatedBots(filteredRelated);

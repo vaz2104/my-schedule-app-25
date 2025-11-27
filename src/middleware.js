@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { decrypt } from "./lib/session";
+import { decrypt, deleteSession } from "./lib/session";
 import { cookies } from "next/headers";
 
 // 1. Specify protected and public routes
@@ -30,7 +30,18 @@ export default async function middleware(req) {
   const session = await decrypt(cookie);
 
   // 5. Redirect to /login if the user is not authenticated
-  if (isProtectedRoute && !session?.userId) {
+  // 6. Redirect to /dashboard if the user is authenticated
+  if (
+    (isProtectedRoute &&
+      session?.userId &&
+      session?.role === "admin" &&
+      !req.nextUrl.pathname.startsWith("/dashboard")) ||
+    (isProtectedRoute &&
+      session?.userId &&
+      session?.role === "client" &&
+      !req.nextUrl.pathname.startsWith("/panel")) ||
+    (isProtectedRoute && !session?.userId)
+  ) {
     const pathParts = path.slice(1).split("/");
     console.log(pathParts);
     let query = "";
@@ -38,17 +49,9 @@ export default async function middleware(req) {
       query = `?panelID=${pathParts[1] || ""}&role=client`;
     if (pathParts[0] === "dashboard") query = `?role=admin`;
 
-    return NextResponse.redirect(new URL(`/login${query}`, req.nextUrl));
-  }
+    await deleteSession();
 
-  // 6. Redirect to /dashboard if the user is authenticated
-  if (
-    isPublicRoute &&
-    session?.userId &&
-    session?.role === "admin" &&
-    !req.nextUrl.pathname.startsWith("/dashboard")
-  ) {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+    return NextResponse.redirect(new URL(`/login${query}`, req.nextUrl));
   }
 
   if (
@@ -75,6 +78,16 @@ export default async function middleware(req) {
     !req.nextUrl.pathname.startsWith("/panel")
   ) {
     return NextResponse.redirect(new URL("/panel", req.nextUrl));
+  }
+
+  // 6. Redirect to /platform if the user is authenticated
+  if (
+    isPublicRoute &&
+    session?.userId &&
+    session?.role === "admin" &&
+    !req.nextUrl.pathname.startsWith("/dashboard")
+  ) {
+    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
   }
 
   return NextResponse.next();

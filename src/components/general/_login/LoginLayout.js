@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import TelegramAuthorization from "./TelegramAuthorization";
 import FormAuthorization from "./FormAuthorization";
 import FullScreenLoader from "../../ui/FullScreenLoader";
-import { AuthService } from "@/services/AuthService";
+// import { AuthService } from "@/services/AuthService";
 
 export default function LoginLayout() {
   const [telegramUserID, setTelegramUserID] = useState(null);
@@ -13,10 +13,10 @@ export default function LoginLayout() {
     if (typeof window !== "undefined") {
       const userID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
 
-      if (userID) {
-        await AuthService.destroySession();
-        localStorage.removeItem("activePanel");
-      }
+      // if (userID) {
+      //   await AuthService.destroySession();
+      //   localStorage.removeItem("activePanel");
+      // }
 
       setTelegramUserID(userID);
       setIsLoader(false);

@@ -15,6 +15,19 @@ export default function PanelLayout({ children }) {
   const [error, setError] = useState(null);
   const params = useParams();
 
+  async function miniAppEvents() {
+    if (typeof window !== "undefined") {
+      window.addEventListener("beforeunload", function () {
+        // localStorage.removeItem("your_key");
+        // Or clear all local storage: localStorage.clear();
+        console.log("app closed");
+        // localStorage.removeItem("activePanel");
+        // localStorage.addItem("activePanel");
+        localStorage.setItem("activePanel2", "botId");
+      });
+    }
+  }
+
   async function loadCompanyData() {
     setIsLoading(true);
     const companyDataResponse = await CompanyService.getBot(params?.companyID);
@@ -33,6 +46,7 @@ export default function PanelLayout({ children }) {
 
   useEffect(() => {
     loadCompanyData();
+    miniAppEvents();
   }, []);
 
   if (isLoading)

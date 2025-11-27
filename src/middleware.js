@@ -30,7 +30,7 @@ export default async function middleware(req) {
   const session = await decrypt(cookie);
 
   // 5. Redirect to /login if the user is not authenticated
-  // 6. Redirect to /dashboard if the user is authenticated
+  //    or the role from the session is not equal to the role of the URL
   if (
     (isProtectedRoute &&
       session?.userId &&

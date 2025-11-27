@@ -72,5 +72,6 @@ export async function updateSession(role) {
 }
 
 export async function deleteSession() {
-  await cookies().set("session", "", { expires: new Date(0) });
+  const cookieStore = await cookies();
+  cookieStore.set("session", "", { expires: new Date(0) });
 }

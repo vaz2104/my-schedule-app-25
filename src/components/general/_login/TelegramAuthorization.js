@@ -11,6 +11,9 @@ export default function TelegramAuthorization({ telegramUserID }) {
   const panelID = searchParams.get("panelID");
   const role = searchParams.get("role");
 
+  console.log(panelID);
+  console.log(role);
+
   async function loadUserInfo() {
     const platformUserResponse = await UserService.getTelegramUser({
       userId: telegramUserID,

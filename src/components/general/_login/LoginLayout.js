@@ -13,7 +13,7 @@ export default function LoginLayout() {
 
   async function checkTelegramUser() {
     if (typeof window !== "undefined") {
-      const userID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+      const userID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id; // 6683083958; //
 
       setTelegramUserID(userID);
       setIsLoader(false);

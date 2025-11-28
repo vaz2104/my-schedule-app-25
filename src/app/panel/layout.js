@@ -2,6 +2,7 @@
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { updateUserSessionID } from "@/lib/updateUserSessionID";
 import { CompanyService } from "@/services/CompanyService";
 import { useAppStore } from "@/store/useAppStore";
 import { useTheme } from "next-themes";
@@ -16,7 +17,6 @@ export default function PanelLayout({ children }) {
   const params = useParams();
 
   async function loadCompanyData() {
-    setIsLoading(true);
     const companyDataResponse = await CompanyService.getBot(params?.companyID);
 
     if (companyDataResponse.status !== 200) {
@@ -27,12 +27,17 @@ export default function PanelLayout({ children }) {
       setCompanyPlan(companyDataResponse.data?.plan);
       setBotName(companyDataResponse.data?.first_name);
     }
+  }
 
+  async function pageRendering() {
+    setIsLoading(true);
+    await updateUserSessionID();
+    await loadCompanyData();
     setIsLoading(false);
   }
 
   useEffect(() => {
-    loadCompanyData();
+    pageRendering();
   }, []);
 
   if (isLoading)

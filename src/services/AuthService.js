@@ -16,6 +16,22 @@ class AuthServiceClass {
     return session;
   }
 
+  async updateSessionUserId(userId) {
+    const sessionResponse = await fetch("/api/session", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId,
+      }),
+    });
+
+    if (sessionResponse.status !== 200) return null;
+
+    const session = await sessionResponse.json();
+
+    return session;
+  }
+
   async updateSessionRole(role) {
     const sessionResponse = await fetch("/api/session", {
       method: "PUT",

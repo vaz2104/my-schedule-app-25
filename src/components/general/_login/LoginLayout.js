@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
+import Header from "@/components/general/Header";
+import Footer from "@/components/general/Footer";
+
 import TelegramAuthorization from "./TelegramAuthorization";
 import FormAuthorization from "./FormAuthorization";
 import FullScreenLoader from "../../ui/FullScreenLoader";
-// import { AuthService } from "@/services/AuthService";
 
 export default function LoginLayout() {
   const [telegramUserID, setTelegramUserID] = useState(null);
@@ -12,11 +14,6 @@ export default function LoginLayout() {
   async function checkTelegramUser() {
     if (typeof window !== "undefined") {
       const userID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
-
-      // if (userID) {
-      //   await AuthService.destroySession();
-      //   localStorage.removeItem("activePanel");
-      // }
 
       setTelegramUserID(userID);
       setIsLoader(false);
@@ -30,8 +27,18 @@ export default function LoginLayout() {
   if (isLoader) return <FullScreenLoader />;
 
   return telegramUserID ? (
-    <TelegramAuthorization telegramUserID={telegramUserID} />
+    <div className="ms-full-creen p-4">
+      <div className="flex-1">
+        <TelegramAuthorization telegramUserID={telegramUserID} />
+      </div>
+    </div>
   ) : (
-    <FormAuthorization />
+    <div className="ms-full-creen p-4">
+      <Header />
+      <div className="flex-1">
+        <FormAuthorization />
+      </div>
+      <Footer />
+    </div>
   );
 }

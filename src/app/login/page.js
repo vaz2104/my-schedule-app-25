@@ -1,5 +1,5 @@
 "use client";
-import LoginLayout from "../../../components/general/_login/LoginLayout";
+import LoginLayout from "../../components/general/_login/LoginLayout";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 export default function LoginPage() {

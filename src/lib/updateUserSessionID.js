@@ -6,11 +6,11 @@ export async function updateUserSessionID() {
     const telegramUserID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id; // 6683083958; //
     if (!telegramUserID) return false;
 
-    console.log(telegramUserID);
+    console.log("telegramUserID", telegramUserID);
 
     const session = await AuthService.getSession();
 
-    console.log(session);
+    console.log("session", session);
 
     if (!session) return false;
 
@@ -18,7 +18,7 @@ export async function updateUserSessionID() {
       userId: telegramUserID,
     });
 
-    console.log(platformUserResponse);
+    console.log("platformUserResponse", platformUserResponse);
 
     if (
       platformUserResponse.status !== 200 ||
@@ -30,6 +30,7 @@ export async function updateUserSessionID() {
     }
 
     const platformUser = platformUserResponse?.data[0];
+    console.log("platformUser", platformUser);
 
     const updatedSession = await AuthService.updateSessionUserId(
       platformUser?._id

@@ -6,11 +6,11 @@ export async function updateUserSessionID() {
     const telegramUserID = window.Telegram?.WebApp?.initDataUnsafe?.user?.id; // 6683083958; //
     if (!telegramUserID) return false;
 
-    console.log("telegramUserID", telegramUserID);
+    // console.log("telegramUserID", telegramUserID);
 
     const session = await AuthService.getSession();
 
-    console.log("session", session);
+    // console.log("session", session);
 
     if (!session) return false;
 
@@ -18,24 +18,24 @@ export async function updateUserSessionID() {
       userId: telegramUserID,
     });
 
-    console.log("platformUserResponse", platformUserResponse);
+    // console.log("platformUserResponse", platformUserResponse);
 
     if (
       platformUserResponse.status !== 200 ||
       platformUserResponse?.data?.length === 0
     ) {
       // setCriticallError("При завантаженні даних сталася помилка!");
-      console.log("session updating error");
+      // console.log("session updating error");
       return;
     }
 
     const platformUser = platformUserResponse?.data[0];
-    console.log("platformUser", platformUser);
+    // console.log("platformUser", platformUser);
 
     const updatedSession = await AuthService.updateSessionUserId(
       platformUser?._id
     );
-    console.log("session updated", updatedSession);
+    // console.log("session updated", updatedSession);
   }
 
   // return { baseDashboardLink, basePlatformLink, activePanel };

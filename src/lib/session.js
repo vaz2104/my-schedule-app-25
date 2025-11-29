@@ -39,7 +39,7 @@ export async function createSession(userId, role) {
   });
 }
 
-export async function updateSession(role) {
+export async function updateSession(options) {
   const session = (await cookies()).get("session")?.value;
   const payload = await decrypt(session);
 
@@ -48,7 +48,11 @@ export async function updateSession(role) {
   }
 
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const newSession = await encrypt({ userId: payload.userId, role, expiresAt });
+  const newSession = await encrypt({
+    userId: options?.userId || payload.userId,
+    role: options?.role || payload.role,
+    expiresAt,
+  });
   const cookieStore = await cookies();
 
   cookieStore.set("session", newSession, {

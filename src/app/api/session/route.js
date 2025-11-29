@@ -34,8 +34,8 @@ export async function DELETE(req) {
 }
 
 export async function PUT(req) {
-  const { role } = await req.json();
-  await updateSession(role);
+  const { role, userId } = await req.json();
+  await updateSession({ role, userId });
 
   const cookieStore = await cookies();
   const cookieSession = cookieStore.get("session");

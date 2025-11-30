@@ -78,47 +78,61 @@ class CalendarService {
 
   nextWeekInitDate(day) {
     const currentDay = new Date(day);
-    let currentMonth =
-      currentDay.getMonth() == 0 ? 1 : currentDay.getMonth() + 1;
-    const dayNumber = currentDay.getDay() == 0 ? 6 : currentDay.getDay() - 1;
-    let currentYear = currentDay.getFullYear();
+    const currentMonth = currentDay.getMonth() + 1;
+    const currentDayNumber = currentDay.getDay() == 0 ? 7 : currentDay.getDay();
+    const currentDate = currentDay.getDate();
+    const currentYear = currentDay.getFullYear();
 
-    const startDay = currentDay.getDate() + (7 - dayNumber);
+    const CURRENT_MONTH_DAYS = daysInMonth(currentMonth, currentYear);
+    const startDay = currentDate + (7 - currentDayNumber) + 1;
 
     let newYear = currentYear;
-    let newMonth = currentMonth < 10 ? "0" + currentMonth : currentMonth;
+    let newMonth = currentMonth;
     let newDate = startDay;
 
-    if (startDay > 31) {
-      newMonth = currentMonth == 12 ? 1 : currentMonth + 1;
-      newMonth = newMonth < 10 ? "0" + newMonth : newMonth;
-      newYear = currentMonth == 12 ? currentYear + 1 : currentYear;
-      newDate = startDay - daysInMonth(currentMonth, currentYear);
+    if (startDay > CURRENT_MONTH_DAYS) {
+      if (currentMonth == 12) {
+        newYear++;
+        newMonth = 1;
+      } else {
+        newMonth++;
+      }
+
+      newDate = startDay - CURRENT_MONTH_DAYS;
     }
 
-    return `${newYear}-${newMonth}-${newDate < 10 ? "0" + newDate : newDate}`;
+    if (newMonth < 10) newMonth = "0" + newMonth;
+    if (newDate < 10) newDate = "0" + newDate;
+
+    return `${newYear}-${newMonth}-${newDate}`;
   }
 
   previousWeekInitDate(day) {
     const currentDay = new Date(day);
-    let currentMonth =
-      currentDay.getMonth() == 0 ? 1 : currentDay.getMonth() + 1;
-    const dayNumber = currentDay.getDay() == 0 ? 6 : currentDay.getDay() - 1;
-    let currentYear = currentDay.getFullYear();
+    const currentMonth = currentDay.getMonth() + 1;
+    const currentDayNumber = currentDay.getDay() == 0 ? 7 : currentDay.getDay();
+    const currentDate = currentDay.getDate();
+    const currentYear = currentDay.getFullYear();
 
-    const startDay = currentDay.getDate() - 7 - dayNumber;
+    const startDay = currentDate - currentDayNumber - 6;
 
     let newYear = currentYear;
-    let newMonth = currentMonth < 10 ? "0" + currentMonth : currentMonth;
+    let newMonth = currentMonth;
     let newDate = startDay;
 
     if (startDay <= 0) {
-      newMonth = currentMonth == 1 ? 12 : currentMonth - 1;
-      newYear = currentMonth == 1 ? currentYear - 1 : currentYear;
-      newDate = daysInMonth(newMonth, newYear) + startDay;
-      newMonth = newMonth < 10 ? "0" + newMonth : newMonth;
+      if (currentMonth == 1) {
+        newYear--;
+        newMonth = 12;
+      } else {
+        newMonth--;
+      }
+      const NEW_MONTH_DAYS = daysInMonth(newMonth, currentYear);
+      newDate = NEW_MONTH_DAYS - Math.abs(startDay);
     }
 
+    if (newMonth < 10) newMonth = "0" + newMonth;
+    if (newDate < 10) newDate = "0" + newDate;
     return `${newYear}-${newMonth}-${newDate}`;
   }
   isOldDay(activeDay) {

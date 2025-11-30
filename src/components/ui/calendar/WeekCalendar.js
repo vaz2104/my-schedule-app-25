@@ -46,10 +46,10 @@ export default function WeekCalendar({ options }) {
   }
 
   function setPreviousWeekOptions(date) {
-    const nextDate = CalendarService.previousWeekInitDate(date); // returns a Y-m-d format
-    setInitWeekDate(new Date(nextDate));
-    setSelectedDate(new Date(nextDate));
-    setInitCalendarDate(new Date(nextDate)); // convert from format Y-m-d
+    const prevDate = CalendarService.previousWeekInitDate(date); // returns a Y-m-d format
+    setInitWeekDate(new Date(prevDate));
+    setSelectedDate(new Date(prevDate));
+    setInitCalendarDate(new Date(prevDate)); // convert from format Y-m-d
   }
 
   function chooseDateHandler(date) {

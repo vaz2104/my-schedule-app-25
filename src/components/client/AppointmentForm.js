@@ -72,15 +72,17 @@ export default function AppointmentForm({
     } else {
       let filteredServices = [];
 
-      const { disabledServices } = servicesResponse.data;
-      servicesResponse.data?.services.forEach((object) => {
-        if (
-          Array.isArray(disabledServices) &&
-          !disabledServices.includes(object?._id)
-        ) {
-          filteredServices.push(object);
-        }
-      });
+      if (servicesResponse.data?.services?.length > 0) {
+        const { disabledServices } = servicesResponse.data;
+        servicesResponse.data?.services.forEach((object) => {
+          if (
+            Array.isArray(disabledServices) &&
+            !disabledServices.includes(object?._id)
+          ) {
+            filteredServices.push(object);
+          }
+        });
+      }
 
       setServices(filteredServices);
     }
@@ -185,7 +187,7 @@ export default function AppointmentForm({
             </span>
           </label>
 
-          {isService && services?.length > 0 && (
+          {isService && services?.length > 0 ? (
             <div className="mt-4">
               {services.map((service) => {
                 return (
@@ -228,6 +230,12 @@ export default function AppointmentForm({
                 );
               })}
               <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400"></ul>
+            </div>
+          ) : (
+            <div className="p-4">
+              <div className="text-center text-gray-400 mt-16">
+                <p>Відсутня інформація про послуги</p>
+              </div>
             </div>
           )}
         </div>

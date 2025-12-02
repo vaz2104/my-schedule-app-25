@@ -1,7 +1,7 @@
 "use client";
 import { CheckCircleIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import { monthsFullName } from "../ui/calendar/calendar-vars";
@@ -187,56 +187,60 @@ export default function AppointmentForm({
             </span>
           </label>
 
-          {isService && services?.length > 0 ? (
-            <div className="mt-4">
-              {services.map((service) => {
-                return (
-                  <li
-                    className="flex items-center py-4 border-b border-gray-200"
-                    key={service?._id}
-                    onClick={() => setSelectedService(service?._id)}
-                  >
-                    {selectedService === service?._id ? (
-                      <CheckCircleIcon
-                        className={
-                          "w-4 h-4 text-green-500 animate__animated animate__bounceIn"
-                        }
-                      />
-                    ) : (
-                      <div className="w-4 h-4 rounded-full border-2 border-gray-400"></div>
-                    )}
-
-                    <div className="flex-1 ml-4">
-                      <div>{service.service}</div>
-                      <div className="text-gray-500">
-                        {service?.priceWithSale && (
-                          <span className="text-red-600">
-                            {service?.priceWithSale} грн.
-                          </span>
+          {isService && (
+            <Fragment>
+              {services?.length > 0 ? (
+                <div className="mt-4">
+                  {services.map((service) => {
+                    return (
+                      <li
+                        className="flex items-center py-4 border-b border-gray-200"
+                        key={service?._id}
+                        onClick={() => setSelectedService(service?._id)}
+                      >
+                        {selectedService === service?._id ? (
+                          <CheckCircleIcon
+                            className={
+                              "w-4 h-4 text-green-500 animate__animated animate__bounceIn"
+                            }
+                          />
+                        ) : (
+                          <div className="w-4 h-4 rounded-full border-2 border-gray-400"></div>
                         )}
 
-                        {service?.price && (
-                          <span
-                            className={cn(
-                              service?.priceWithSale && "ml-2 line-through"
+                        <div className="flex-1 ml-4">
+                          <div>{service.service}</div>
+                          <div className="text-gray-500">
+                            {service?.priceWithSale && (
+                              <span className="text-red-600">
+                                {service?.priceWithSale} грн.
+                              </span>
                             )}
-                          >
-                            {service?.price} грн.
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-              <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400"></ul>
-            </div>
-          ) : (
-            <div className="p-4">
-              <div className="text-center text-gray-400 mt-16">
-                <p>Відсутня інформація про послуги</p>
-              </div>
-            </div>
+
+                            {service?.price && (
+                              <span
+                                className={cn(
+                                  service?.priceWithSale && "ml-2 line-through"
+                                )}
+                              >
+                                {service?.price} грн.
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                  <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400"></ul>
+                </div>
+              ) : (
+                <div className="p-4">
+                  <div className="text-center text-gray-400 mt-16">
+                    <p>Відсутня інформація про послуги</p>
+                  </div>
+                </div>
+              )}
+            </Fragment>
           )}
         </div>
       </div>

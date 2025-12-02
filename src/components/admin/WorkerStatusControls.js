@@ -125,6 +125,8 @@ export default function WorkerStatusControls() {
     getProfileData();
   }, []);
 
+  if (companyPlan === "free") return <></>;
+
   if (isLoading)
     return (
       <div className="py-4 flex justify-center items-center h-[calc(100vh-9rem)]">
@@ -148,7 +150,7 @@ export default function WorkerStatusControls() {
         </div>
       )}
 
-      {role !== "worker" && (
+      {role !== "worker" && profile && (
         <div className="flex justify-between pb-4">
           {relation?.isBlocked ? (
             <>

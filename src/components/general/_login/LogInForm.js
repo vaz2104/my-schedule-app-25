@@ -28,17 +28,23 @@ export default function LogInForm() {
     if (authData?.status === 200) {
       // setTelegramBotData(botInfoResponse?.data);
 
-      const newSession = await fetch("/api/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: authData?.data?._id,
-          role: "admin",
-        }),
-      });
+      if (authData?.data) {
+        const newSession = await fetch("/api/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: authData?.data?._id,
+            role: "admin",
+          }),
+        });
 
-      if (newSession) {
-        redirect("/dashboard");
+        if (newSession) {
+          redirect("/dashboard");
+        }
+      } else {
+        setWarningError(
+          "Помилка авторизації! Перевірте свої дані та спробуйте ще раз!"
+        );
       }
     } else {
       setWarningError(

@@ -1,6 +1,11 @@
 import { CheckCircleIcon } from "./Icons";
 
-export default function PlanFree({ activePlan, selectHandler }) {
+export default function PlanFree({
+  activePlan,
+  selectHandler,
+  exchange,
+  price,
+}) {
   return (
     <div className="bg-gray-50 shadow-sm p-4 pb-8 rounded-xl h-full flex flex-col">
       <div className="mb-4 mt-4 text-center">
@@ -8,12 +13,14 @@ export default function PlanFree({ activePlan, selectHandler }) {
       </div>
       <div className="flex justify-center items-baseline text-gray-900 dark:text-white">
         <span className="text-3xl font-semibold">€</span>
-        <span className="text-5xl font-extrabold tracking-tight">0</span>
+        <span className="text-5xl font-extrabold tracking-tight">{price}</span>
         <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
           /міс
         </span>
       </div>
-      <div className="mt-2 text-center text-gray-400">0 ₴ /місяць</div>
+      <div className="mt-2 text-center text-gray-400">
+        {Math.ceil(price * exchange)} ₴ /місяць
+      </div>
       <div className="mt-4 max-w-xs m-auto min-h-24">
         <p className="text-gray-500 text-base text-center">
           План дозволить освоїти платформу та дізнатися, чи дійсно вона підійде

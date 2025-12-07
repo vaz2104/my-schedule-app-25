@@ -68,7 +68,7 @@ export default function ThemePalette({ activePalette }) {
             onClick={() => selectPaletteHandler("honey")}
           >
             <div>
-              <div className="w-12 h-12 rounded-full m-auto bg-yellow-300 flex justify-center items-center">
+              <div className="w-12 h-12 rounded-full m-auto bg-mainHoney flex justify-center items-center">
                 {activePalette === "honey" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}
@@ -85,7 +85,7 @@ export default function ThemePalette({ activePalette }) {
             onClick={() => selectPaletteHandler("lime")}
           >
             <div>
-              <div className="w-12 h-12 rounded-full m-auto bg-green-300 flex justify-center items-center">
+              <div className="w-12 h-12 rounded-full m-auto bg-mainLime flex justify-center items-center">
                 {activePalette === "lime" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}
@@ -102,7 +102,7 @@ export default function ThemePalette({ activePalette }) {
             onClick={() => selectPaletteHandler("pink")}
           >
             <div>
-              <div className="w-12 h-12 rounded-full m-auto bg-pink-300 flex justify-center items-center">
+              <div className="w-12 h-12 rounded-full m-auto bg-mainPink flex justify-center items-center">
                 {activePalette === "pink" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}
@@ -119,7 +119,7 @@ export default function ThemePalette({ activePalette }) {
             onClick={() => selectPaletteHandler("blue")}
           >
             <div>
-              <div className="w-12 h-12 rounded-full m-auto bg-main flex justify-center items-center">
+              <div className="w-12 h-12 rounded-full m-auto bg-mainBlue flex justify-center items-center">
                 {activePalette === "blue" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}
@@ -136,7 +136,7 @@ export default function ThemePalette({ activePalette }) {
             onClick={() => selectPaletteHandler("woodland")}
           >
             <div>
-              <div className="w-12 h-12 rounded-full m-auto bg-amber-900 flex justify-center items-center">
+              <div className="w-12 h-12 rounded-full m-auto bg-mainWoodland flex justify-center items-center">
                 {activePalette === "woodland" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}
@@ -153,7 +153,7 @@ export default function ThemePalette({ activePalette }) {
             onClick={() => selectPaletteHandler("dark")}
           >
             <div>
-              <div className="w-12 h-12 rounded-full m-auto bg-gray-500 flex justify-center items-center">
+              <div className="w-12 h-12 rounded-full m-auto bg-mainDark flex justify-center items-center">
                 {activePalette === "dark" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}

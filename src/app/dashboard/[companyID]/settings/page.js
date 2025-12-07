@@ -17,7 +17,7 @@ export default function SettingsPage() {
       <div className="mb-8 mt-4 text-center">
         <h2 className="font-bold text-xl">Мої налаштування</h2>
       </div>
-      <div className="mb-8">
+      <div className="mb-12">
         <div className="mb-2">
           <h2 className="font-bold text-lg">Ваш тарифний план</h2>
         </div>
@@ -39,7 +39,14 @@ export default function SettingsPage() {
           </Link>
         </div>
       </div>
-      <div className="mb-8">
+
+      <div className="mb-12">
+        <div className="mb-4">
+          <h2 className="font-bold text-lg">Налаштування видимості</h2>
+        </div>
+      </div>
+
+      <div className="mb-12">
         <div className="mb-4">
           <h2 className="font-bold text-lg">Тема вашої панелі</h2>
         </div>

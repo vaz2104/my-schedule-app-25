@@ -1,5 +1,6 @@
 "use client";
 import AppointmentsList from "@/components/admin/AppointmentsList";
+import ClientSettings from "@/components/admin/ClientSettings";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
@@ -26,6 +27,8 @@ export default function ClientSingle() {
 
     setIsLoading(false);
   }
+
+  console.log(client);
 
   useEffect(() => {
     loadClientData();
@@ -60,6 +63,9 @@ export default function ClientSingle() {
           </div>
         </div>
       </div>
+
+      <ClientSettings />
+
       <div className="mt-4 mb-4">
         <h2 className="font-bold text-lg text-center">Історія записів</h2>
       </div>

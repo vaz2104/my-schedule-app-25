@@ -83,20 +83,19 @@ export default function NewServiceForm({ successHandler }) {
       setIsLoading(false);
     } else {
       if (successHandler) successHandler();
-      // if (sentNotification) {
-      //   console.log("sentNotification");
 
-      //   const session = await AuthService.getSession();
-      //   await NotificationService.createNotification({
-      //     notification: {
-      //       botId: params?.companyID,
-      //       author: session?.userId,
-      //     },
-      //     recipientRole: "client",
-      //     type: "newDiscount",
-      //     meta: newServiceResponse?.data,
-      //   });
-      // }
+      if (newServiceResponse?.data) {
+        const session = await AuthService.getSession();
+        await NotificationService.createNotification({
+          notification: {
+            botId: params?.companyID,
+            author: session?.userId,
+          },
+          recipientRole: "client",
+          type: "newService", //"newDiscount" :
+          meta: newServiceResponse?.data,
+        });
+      }
       closeModal();
     }
   }

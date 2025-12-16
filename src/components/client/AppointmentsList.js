@@ -11,6 +11,7 @@ import CalendarService from "../ui/calendar/CalendarService";
 import { filterAppointments, printDateWithMonth } from "@/lib/schedule-helpers";
 import { cn } from "@/lib/cn";
 import { CalendarIcon, ClockIcon } from "../ui/Icons";
+import Thumbnail from "../ui/Thumbnail";
 
 export default function AppointmentsList() {
   const [appointments, setAppointments] = useState([]);
@@ -68,6 +69,8 @@ export default function AppointmentsList() {
   return (
     <div>
       {appointments.map((appointment) => {
+        console.log(appointment);
+
         const idDateDisabled = CalendarService.isOldDate(
           new Date(appointment?.scheduleId?.date),
           appointment?.scheduleId?.schedule[appointment?.appointmentKey]
@@ -81,16 +84,43 @@ export default function AppointmentsList() {
             )}
             key={appointment?._id}
           >
-            <div className="flex items-center">
-              <CalendarIcon />
-              <div className="lowercase text-nowrap ml-0.5">
-                {printDateWithMonth(appointment?.scheduleId?.date)}
+            <div>
+              <div className="flex items-center">
+                <Thumbnail url={appointment?.workerId?.photoUrl} />
+                <div className="ms-3 text-sm font-normal flex-1">
+                  <div className="text-base font-semibold text-gray-900 dark:text-white">
+                    <>
+                      {appointment?.workerId?.firstName ||
+                        appointment?.workerId?.username}
+                    </>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center pl-4">
-              <ClockIcon className={""} />
-              <div className="ml-0.5">
-                {appointment?.scheduleId?.schedule[appointment?.appointmentKey]}
+
+              <div className="flex items-center">
+                <div className="flex items-center">
+                  <CalendarIcon />
+                  <div className="lowercase text-nowrap ml-0.5">
+                    {printDateWithMonth(appointment?.scheduleId?.date)}
+                  </div>
+                </div>
+                <div className="flex items-center pl-4">
+                  <ClockIcon className={""} />
+                  <div className="ml-0.5">
+                    {
+                      appointment?.scheduleId?.schedule[
+                        appointment?.appointmentKey
+                      ]
+                    }
+                  </div>
+                </div>
+              </div>
+              <div>
+                {appointment?.serviceId?._id && (
+                  <>
+                    <div>{appointment?.serviceId?.service}</div>
+                  </>
+                )}
               </div>
             </div>
             {!idDateDisabled && (

@@ -19,7 +19,7 @@ export default function AppointmentForm({
   closeHandler,
 }) {
   const { setSuccessMessage } = useContext(ThemeContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [services, setServices] = useState([]);
   const [isService, setIsService] = useState(false);

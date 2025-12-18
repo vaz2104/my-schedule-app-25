@@ -5,15 +5,17 @@ import Spinner from "../ui/Spinner";
 import { ScheduleService } from "@/services/ScheduleService";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AuthService } from "@/services/AuthService";
 import formatDate from "@/lib/formatDate";
 import Calendar from "../ui/calendar/Calendar";
 import CalendarService from "../ui/calendar/CalendarService";
 import { getScheduleDays } from "@/lib/schedule-helpers";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
+import { CompanyService } from "@/services/CompanyService";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function MonthScheduleCalendar({ selectedWorker }) {
+  const { companyPlan } = useAppStore();
   const { initCalendarDate } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
@@ -26,7 +28,6 @@ export default function MonthScheduleCalendar({ selectedWorker }) {
 
   async function loadFullMonthSchedule() {
     setIsLoading(true);
-    const session = await AuthService.getSession();
 
     const calendarPeriod =
       CalendarService.generateCalendarDays(initCalendarDate);
@@ -37,7 +38,19 @@ export default function MonthScheduleCalendar({ selectedWorker }) {
     if (selectedWorker) {
       workerId = selectedWorker;
     } else {
-      workerId = params?.specialistID ? params?.specialistID : session?.userId;
+      if (params?.specialistID) {
+        workerId = params?.specialistID;
+      } else {
+        if (companyPlan === "free" || companyPlan === "basic") {
+          const workersResponse = await CompanyService.getWorkers({
+            botId: params?.companyID,
+            isBlocked: false,
+          });
+
+          if (workersResponse?.data?.length)
+            workerId = workersResponse?.data[0]?.workerId?._id;
+        }
+      }
     }
 
     const response = await ScheduleService.getMany({

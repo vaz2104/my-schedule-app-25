@@ -4,7 +4,6 @@ import Spinner from "../ui/Spinner";
 import { ScheduleService } from "@/services/ScheduleService";
 import { useParams } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
-import { AuthService } from "@/services/AuthService";
 import formatDate from "@/lib/formatDate";
 import { monthsFullName } from "@/lib/calendar-vars";
 import CalendarService from "../ui/calendar/CalendarService";
@@ -13,8 +12,11 @@ import AppointmentForm from "./AppointmentForm";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import Image from "next/image";
+import { useAppStore } from "@/store/useAppStore";
+import { CompanyService } from "@/services/CompanyService";
 
 export default function ActiveWeekDaySchedule() {
+  const { companyPlan } = useAppStore();
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
@@ -33,10 +35,24 @@ export default function ActiveWeekDaySchedule() {
   async function loadSelectedDaySchedule(date) {
     setIsLoading(true);
 
-    const session = await AuthService.getSession();
+    let workerId = null;
+    if (params?.specialistID) {
+      workerId = params?.specialistID;
+    } else {
+      if (companyPlan === "free" || companyPlan === "basic") {
+        const workersResponse = await CompanyService.getWorkers({
+          botId: params?.companyID,
+          isBlocked: false,
+        });
+
+        if (workersResponse?.data?.length)
+          workerId = workersResponse?.data[0]?.workerId?._id;
+      }
+    }
+
     const response = await ScheduleService.getMany({
       botId: params?.companyID,
-      workerId: params?.specialistID ? params?.specialistID : session?.userId,
+      workerId,
       date: formatDate(date),
     });
 

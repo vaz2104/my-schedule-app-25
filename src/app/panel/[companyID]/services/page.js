@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import ServicesList from "@/components/client/ServicesList";
 import { WorkerService } from "@/services/WorkerService";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function Services() {
+  const { companyPlan } = useAppStore();
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,20 +30,24 @@ export default function Services() {
       allServices = [...servicesResponse.data];
     }
 
-    try {
-      await Promise.all(
-        allServices.map(async (service) => {
-          const workersResponse = await WorkerService.getByService({
-            botId: params?.companyID,
-            serviceId: [service?._id],
-          });
-          if (workersResponse?.data?.length) filteredServices.push(service);
-        })
-      ).then(() => {
-        setServices(filteredServices);
-      });
-    } catch (error) {
-      setError("Сталася помилка при завантаженні даних");
+    if (companyPlan === "free") {
+      setServices(allServices);
+    } else {
+      try {
+        await Promise.all(
+          allServices.map(async (service) => {
+            const workersResponse = await WorkerService.getByService({
+              botId: params?.companyID,
+              serviceId: [service?._id],
+            });
+            if (workersResponse?.data?.length) filteredServices.push(service);
+          })
+        ).then(() => {
+          setServices(filteredServices);
+        });
+      } catch (error) {
+        setError("Сталася помилка при завантаженні даних");
+      }
     }
 
     setIsLoading(false);

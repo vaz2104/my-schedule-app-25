@@ -11,7 +11,7 @@ import { NotificationService } from "@/services/NotificatoinsServices";
 
 export default function NewServiceForm({ successHandler }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [priceWithSale, setPriceWithSale] = useState("");

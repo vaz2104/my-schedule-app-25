@@ -21,7 +21,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
   );
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [startMinutes, setStartMinutes] = useState("");
   const [startHours, setStartHours] = useState("");
   const [hoursList, setHoursList] = useState([]);

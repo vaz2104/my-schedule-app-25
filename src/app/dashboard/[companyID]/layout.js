@@ -14,7 +14,7 @@ export default function DashboardCompanyLayout({ children }) {
   const { setCompanyPlan, setBotName, setThemePalette, setAdminId, setRole } =
     useAppStore();
   const { setTheme } = useTheme();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
 

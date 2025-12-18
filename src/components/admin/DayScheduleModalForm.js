@@ -23,7 +23,7 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
   );
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [startMinutes, setStartMinutes] = useState("");
   const [startHours, setStartHours] = useState("");
   const [hoursList, setHoursList] = useState({});

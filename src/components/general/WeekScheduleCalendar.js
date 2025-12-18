@@ -23,7 +23,7 @@ export default function WeekScheduleCalendar() {
   );
 
   const [schedule, setSchedule] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
 

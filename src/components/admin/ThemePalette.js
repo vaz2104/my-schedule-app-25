@@ -12,7 +12,7 @@ export default function ThemePalette({ activePalette }) {
   const { setSuccessMessage, setWarningError } = useContext(ThemeContext);
   const { setThemePalette } = useAppStore();
   const { setTheme } = useTheme();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
 

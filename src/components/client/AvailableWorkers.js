@@ -25,7 +25,7 @@ export default function AvailableWorkers() {
   );
 
   const [workers, setWorkers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
   const { basePlatformLink } = useBaseURL();

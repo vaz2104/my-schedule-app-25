@@ -20,7 +20,7 @@ import Alert from "../ui/Alert";
 export default function Plans() {
   const { setCompanyPlan, companyPlan } = useAppStore();
   const { setSuccessMessage, setWarningError } = useContext(ThemeContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [exchange, setExchange] = useState(0);
   const params = useParams();

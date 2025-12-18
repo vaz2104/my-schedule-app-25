@@ -26,7 +26,7 @@ export default function ActiveWeekDaySchedule() {
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
 

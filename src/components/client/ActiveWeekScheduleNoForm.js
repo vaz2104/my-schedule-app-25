@@ -21,7 +21,7 @@ export default function ActiveWeekScheduleNoForm({
 }) {
   const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
 

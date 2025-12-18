@@ -6,7 +6,7 @@ import { TrashIcon } from "../ui/Icons";
 
 export default function DeleteServiceForm({ mapItemId, successHandler }) {
   const [deleteServiceId, setDeleteServiceId] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { setWarningError } = useContext(ThemeContext);
 
   async function deleteService() {

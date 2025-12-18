@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
 
 export default function InviteWorker({ isButtonDisabled = false }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [key, setKey] = useState("");
   const [error, setError] = useState(null);
   const params = useParams();

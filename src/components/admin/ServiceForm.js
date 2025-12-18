@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 
 export default function ServiceForm({ successHandler }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [priceWithSale, setPriceWithSale] = useState("");

@@ -32,7 +32,7 @@ export default function ActiveDaySchedule() {
   const [selectedScheduleItem, setSelectedScheduleItem] = useState(null);
   const [relationToDelete, setRelationToDelete] = useState(null);
   const [confirmMessage, setConfirmMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isEditingAllowed, setIsEditingAllowed] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();

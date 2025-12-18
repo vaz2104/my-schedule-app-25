@@ -28,7 +28,7 @@ export default function ActiveWeekDaySchedule() {
   const [selectedScheduleItem, setSelectedScheduleItem] = useState(null);
   const [relationToDelete, setRelationToDelete] = useState(null);
   const [confirmMessage, setConfirmMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const params = useParams();
   const { baseDashboardLink } = useBaseURL();

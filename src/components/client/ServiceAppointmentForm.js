@@ -30,7 +30,7 @@ export default function ServiceAppointmentForm({
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const { setSuccessMessage } = useContext(ThemeContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { basePlatformLink } = useBaseURL();
 
   const [error, setError] = useState(null);

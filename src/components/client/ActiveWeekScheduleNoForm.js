@@ -4,12 +4,13 @@ import Spinner from "../ui/Spinner";
 import { ScheduleService } from "@/services/ScheduleService";
 import { useParams } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
-import { AuthService } from "@/services/AuthService";
 import formatDate from "@/lib/formatDate";
 import { monthsFullName } from "@/lib/calendar-vars";
 import CalendarService from "../ui/calendar/CalendarService";
 import { cn } from "@/lib/cn";
 import { CheckCircleIcon } from "../ui/Icons";
+import { useAppStore } from "@/store/useAppStore";
+import { CompanyService } from "@/services/CompanyService";
 
 export default function ActiveWeekScheduleNoForm({
   selectedDate,
@@ -20,7 +21,7 @@ export default function ActiveWeekScheduleNoForm({
   selectedWorker,
 }) {
   const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
-
+  const { companyPlan } = useAppStore();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
@@ -30,13 +31,26 @@ export default function ActiveWeekScheduleNoForm({
   async function loadSelectedDaySchedule(date) {
     setIsLoading(true);
     let workerId = null;
+
     if (selectedWorker) {
       workerId = selectedWorker;
     } else {
-      workerId = params?.specialistID ? params?.specialistID : session?.userId;
+      if (companyPlan === "free" || companyPlan === "basic") {
+        const workersResponse = await CompanyService.getWorkers({
+          botId: params?.companyID,
+          isBlocked: false,
+        });
+
+        if (workersResponse?.data?.length)
+          workerId = workersResponse?.data[0]?.workerId?._id;
+      }
     }
 
-    const session = await AuthService.getSession();
+    if (!workerId) {
+      setIsLoading(false);
+      return false;
+    }
+
     const response = await ScheduleService.getMany({
       botId: params?.companyID,
       workerId,

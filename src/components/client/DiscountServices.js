@@ -9,8 +9,11 @@ import ServicesList from "@/components/client/ServicesList";
 import { FireIcon } from "../ui/Icons";
 import Link from "next/link";
 import { useBaseURL } from "@/hooks/useBaseURL";
+import { WorkerService } from "@/services/WorkerService";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function DiscountServices() {
+  const { companyPlan } = useAppStore();
   const { basePlatformLink } = useBaseURL();
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,14 +26,34 @@ export default function DiscountServices() {
       botId: params?.companyID,
     });
 
+    let servicesWithDiscount = [];
+    let filteredServices = [];
     if (servicesResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      //   console.log(servicesResponse.data);
-      const servicesWithDiscount = servicesResponse.data.filter(
+      servicesWithDiscount = servicesResponse.data.filter(
         (service) => service?.priceWithSale && service?.saleEndDay
       );
+    }
+
+    if (companyPlan === "free") {
       setServices(servicesWithDiscount);
+    } else {
+      try {
+        await Promise.all(
+          servicesWithDiscount.map(async (service) => {
+            const workersResponse = await WorkerService.getByService({
+              botId: params?.companyID,
+              serviceId: [service?._id],
+            });
+            if (workersResponse?.data?.length) filteredServices.push(service);
+          })
+        ).then(() => {
+          setServices(filteredServices);
+        });
+      } catch (error) {
+        setError("Сталася помилка при завантаженні даних");
+      }
     }
 
     setIsLoading(false);

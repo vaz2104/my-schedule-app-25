@@ -40,15 +40,19 @@ export default function WeekScheduleCalendar() {
     };
 
     if (
-      role === "worker" ||
-      (companyPlan !== null &&
-        companyPlan !== "business" &&
-        companyPlan !== "businessPlus")
+      // role === "worker" ||
+      // (companyPlan !== null &&
+      //   companyPlan !== "business" &&
+      //   companyPlan !== "businessPlus")
+      role === "worker"
     ) {
       query.workerId = session?.userId;
     }
 
     const response = await ScheduleService.getMany(query);
+
+    console.log(query);
+    console.log(response?.data);
 
     if (response.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

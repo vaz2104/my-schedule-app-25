@@ -11,6 +11,7 @@ import { AuthService } from "@/services/AuthService";
 import { ThemeContext } from "@/context/ThemeContext";
 import { NotificationService } from "@/services/NotificatoinsServices";
 import { WorkerService } from "@/services/WorkerService";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function AppointmentForm({
   selectedSchedule,
@@ -18,6 +19,7 @@ export default function AppointmentForm({
   successHandler,
   closeHandler,
 }) {
+  const { companyPlan } = useAppStore();
   const { setSuccessMessage } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
@@ -34,58 +36,65 @@ export default function AppointmentForm({
     if (closeHandler) closeHandler();
   }
 
-  // async function loadServices() {
-  //   setIsLoading(true);
-  //   const servicesResponse = await ServicesService.getMany({
-  //     botId: params?.companyID,
-  //   });
-
-  //   // console.log(servicesResponse);
-
-  //   if (servicesResponse.status !== 200) {
-  //     setError("Сталася помилка при завантаженні даних");
-  //   } else {
-  //     setServices(servicesResponse.data);
-  //   }
-
-  //   setIsLoading(false);
-  // }
-
   console.log(selectedSchedule);
 
   async function loadServices() {
     setIsLoading(true);
-    const session = await AuthService.getSession();
     const query = {
       botId: params?.companyID,
     };
 
-    //   workerId: params?.specialistID ? params?.specialistID : session?.userId,
+    if (companyPlan === "free") {
+      const companyServicesResponse = await ServicesService.getMany(query);
+      if (companyServicesResponse.status !== 200) {
+        setError("Сталася помилка при завантаженні даних");
+      } else {
+        setServices(companyServicesResponse?.data);
+      }
+    } else {
+      query.workerId = selectedSchedule?.workerId?._id;
+      const workerServicesResponse = await WorkerService.getServices(query);
+      if (workerServicesResponse.status !== 200) {
+        setError("Сталася помилка при завантаженні даних");
+      } else {
+        let filteredServices = [];
+        if (workerServicesResponse?.data?.services?.length > 0) {
+          const { disabledServices } = workerServicesResponse?.data;
+          workerServicesResponse?.data?.services.forEach((object) => {
+            if (
+              Array.isArray(disabledServices) &&
+              !disabledServices.includes(object?._id)
+            ) {
+              filteredServices.push(object);
+            }
+          });
+        }
+        setServices(filteredServices);
+      }
+    }
 
-    query.workerId = selectedSchedule?.workerId?._id;
+    // console.log(servicesResponse);
     console.log(query);
 
-    const servicesResponse = await WorkerService.getServices(query);
+    // if (servicesResponse.status !== 200) {
+    //   setError("Сталася помилка при завантаженні даних");
+    // } else {
+    //   let filteredServices = [];
 
-    if (servicesResponse.status !== 200) {
-      setError("Сталася помилка при завантаженні даних");
-    } else {
-      let filteredServices = [];
+    //   if (servicesResponse.data?.services?.length > 0) {
+    //     const { disabledServices } = servicesResponse.data;
+    //     servicesResponse.data?.services.forEach((object) => {
+    //       if (
+    //         Array.isArray(disabledServices) &&
+    //         !disabledServices.includes(object?._id)
+    //       ) {
+    //         filteredServices.push(object);
+    //       }
+    //     });
+    //   }
 
-      if (servicesResponse.data?.services?.length > 0) {
-        const { disabledServices } = servicesResponse.data;
-        servicesResponse.data?.services.forEach((object) => {
-          if (
-            Array.isArray(disabledServices) &&
-            !disabledServices.includes(object?._id)
-          ) {
-            filteredServices.push(object);
-          }
-        });
-      }
-
-      setServices(filteredServices);
-    }
+    //   setServices(filteredServices);
+    // }
 
     setIsLoading(false);
   }

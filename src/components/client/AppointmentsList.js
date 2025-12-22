@@ -12,8 +12,10 @@ import { filterAppointments, printDateWithMonth } from "@/lib/schedule-helpers";
 import { cn } from "@/lib/cn";
 import { CalendarIcon, ClockIcon } from "../ui/Icons";
 import Thumbnail from "../ui/Thumbnail";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function AppointmentsList() {
+  const { companyPlan } = useAppStore();
   const [appointments, setAppointments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -85,17 +87,20 @@ export default function AppointmentsList() {
             key={appointment?._id}
           >
             <div>
-              <div className="flex items-center">
-                <Thumbnail url={appointment?.workerId?.photoUrl} />
-                <div className="ms-3 text-sm font-normal flex-1">
-                  <div className="text-base font-semibold text-gray-900 dark:text-white">
-                    <>
-                      {appointment?.workerId?.firstName ||
-                        appointment?.workerId?.username}
-                    </>
+              {companyPlan === "free" ||
+                (companyPlan === "basic" && (
+                  <div className="flex items-center">
+                    <Thumbnail url={appointment?.workerId?.photoUrl} />
+                    <div className="ms-3 text-sm font-normal flex-1">
+                      <div className="text-base font-semibold text-gray-900 dark:text-white">
+                        <>
+                          {appointment?.workerId?.firstName ||
+                            appointment?.workerId?.username}
+                        </>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                ))}
 
               <div className="flex items-center">
                 <div className="flex items-center">

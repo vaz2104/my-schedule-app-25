@@ -90,10 +90,15 @@ export function getScheduleDays(schedule, key) {
     }
   });
 
+  const filteredWithNoAppointments = [];
+  daysWithNoAppointments.forEach((el) => {
+    if (!daysWithAppointments.includes(el)) filteredWithNoAppointments.push(el);
+  });
+
   const object = {
     daysWithSchedule,
     daysWithAppointments,
-    daysWithNoAppointments,
+    daysWithNoAppointments: filteredWithNoAppointments,
   };
 
   return key ? object[key] : object;

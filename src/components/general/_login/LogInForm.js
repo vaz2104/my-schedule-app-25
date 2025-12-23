@@ -10,7 +10,7 @@ export default function LogInForm() {
   const { setWarningError } = useContext(ThemeContext);
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const loginHandler = async () => {
     if (!username || !pass) {

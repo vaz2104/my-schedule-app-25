@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 
 export default function CancelAppointmentForm({ mapItemId, successHandler }) {
   const [appointmentId, setAppointmentId] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { setWarningError } = useContext(ThemeContext);
   const params = useParams();
 

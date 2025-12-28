@@ -76,7 +76,7 @@ export default function WorkerActiveWeekDaySchedule({
                     )}
                     <span
                       className={cn(
-                        "p-2 rounded-3xl text-sm text-center block border",
+                        "p-2 rounded-3xl text-sm text-center border  h-14 flex items-center justify-center",
                         isDisabled ? disabledStateClasses : activeStateClasses
                       )}
                     >

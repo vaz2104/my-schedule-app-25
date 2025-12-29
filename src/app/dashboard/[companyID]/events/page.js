@@ -19,6 +19,7 @@ export default function Events() {
     const response = await NotificationService.getMany({
       recipient: session?.userId,
       recipientRole: "admin",
+      botId: params?.companyID,
     });
 
     if (response.status !== 200) {

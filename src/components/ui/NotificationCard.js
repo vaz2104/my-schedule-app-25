@@ -3,6 +3,7 @@ import { CheckCircleIcon, ExclamationCircleIcon } from "./Icons";
 import pringDate from "@/lib/pringDate";
 import formatDate from "@/lib/formatDate";
 import Badge from "./Badge";
+import Thumbnail from "./Thumbnail";
 
 export default function NotificationCard({ dataObject }) {
   const { notification, createdAt, isOpened } = dataObject;
@@ -21,18 +22,14 @@ export default function NotificationCard({ dataObject }) {
         <div className="flex">
           <div
             className={cn(
-              "relative inline-block shrink-0 w-12 h-12  border-2 border-gray-200 rounded-full",
+              "relative inline-block size-12",
               type === "subscribe" && "border-green-600",
               type === "unsubscribe" && "border-red-500"
             )}
           >
-            <img
-              src={
-                "https://doodleipsum.com/700x700/avatar?i=310c74837ffe0803164ed110256826e1"
-              }
-              className="w-12 h-12 rounded-full"
-              alt="Jese Leos image"
-            />
+            <div className={cn("")}>
+              <Thumbnail url={author?.photoUrl} />
+            </div>
 
             <span
               className={cn(

@@ -58,7 +58,7 @@ export default function HistoryPage() {
         </div>
       </div>
       <div className="mt-4 mb-4">
-        <h2 className="font-bold text-xl">Ваша історія записів</h2>
+        <h2 className="font-bold text-xl text-center">Ваша історія записів</h2>
       </div>
       <div className="">
         <AppointmentsList />

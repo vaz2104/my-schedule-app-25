@@ -20,6 +20,9 @@ export default function SchedulePage() {
 
   return (
     <div className="p-4">
+      <div className="mb-8 mt-4 text-center">
+        <h2 className="font-bold text-xl">Весь графік</h2>
+      </div>
       <MonthScheduleCalendar />
       <div className="mt-8 mb-4">
         <ActiveWeekDaySchedule />

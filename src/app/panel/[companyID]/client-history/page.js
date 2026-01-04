@@ -47,18 +47,18 @@ export default function HistoryPage() {
 
   return (
     <div className="p-4">
-      <div className="mt-1.5 p-4">
+      <div className="px-4">
         <div className={"flex justify-center"}>
           <Thumbnail url={client?.photoUrl} size="lg" />
         </div>
         <div className="text-sm font-normal text-center mt-2">
           <div className="font-bold text-xl text-gray-900 dark:text-white">
-            {client?.firstName} {client?.lastName}
+            {client?.firstName || client?.username}
           </div>
         </div>
       </div>
       <div className="mt-4 mb-4">
-        <h2 className="font-bold text-xl text-center">Ваша історія записів</h2>
+        <h2 className="font-bold text-xl">Ваша історія записів</h2>
       </div>
       <div className="">
         <AppointmentsList />

@@ -1,6 +1,7 @@
 "use client";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
+import Thumbnail from "@/components/ui/Thumbnail";
 import { AuthService } from "@/services/AuthService";
 import { CompanyService } from "@/services/CompanyService";
 import { useParams } from "next/navigation";
@@ -92,7 +93,19 @@ export default function SettingsPage() {
           <Spinner />
         </div>
       )}
-      <div className="mb-8 mt-4 text-center">
+
+      <div className="px-4">
+        <div className={"flex justify-center"}>
+          <Thumbnail url={clientSettings?.telegramUserId?.photoUrl} size="lg" />
+        </div>
+        <div className="text-sm font-normal text-center mt-2">
+          <div className="font-bold text-xl text-gray-900 dark:text-white">
+            {clientSettings?.telegramUserId?.firstName ||
+              clientSettings?.telegramUserId?.username}
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 mb-4">
         <h2 className="font-bold text-xl">Ваші налаштування</h2>
       </div>
       <div className="py-6 border-b border-gray-200">

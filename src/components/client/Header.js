@@ -51,14 +51,18 @@ export default function Header() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full px-4 bg-gray-50 z-30">
-      <div className="flex justify-between items-center py-3">
-        <Link href={basePlatformLink} className="flex items-center">
-          <div className="relative">
-            <Thumbnail url={botData?.avatar} size="xs" theme="light" />
+    <div className="fixed top-0 left-0 w-full px-4 z-30">
+      <div className="absolute w-full h-full top-0 left-0 bg-white blur-xl"></div>
+      <div className="relative flex justify-center py-3 max-w-3xl m-auto">
+        <div className="absolute h-14 bg-main w-full top-0 rounded-b-2xl "></div>
+        <Link href={basePlatformLink} className="">
+          <div className="relative size-16 m-auto rounded-full border-4 border-white box-content shadow-2xl">
+            <Thumbnail url={botData?.avatar} size="lg" theme="light" />
           </div>
 
-          <div className="ml-2 text-md font-bold">{botData?.first_name}</div>
+          <div className="mt-1 text-md font-bold text-center">
+            {botData?.first_name}
+          </div>
         </Link>
       </div>
     </div>

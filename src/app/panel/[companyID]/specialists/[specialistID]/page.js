@@ -46,11 +46,11 @@ export default function SchedulePage() {
   return (
     <div className="p-4">
       {params?.companyID && profile && (
-        <div className="mt-1.5 mb-4">
-          <div className={cn("m-auto size-16 border-gray-200 rounded-full")}>
-            <Thumbnail url={profile?.photoUrl} size="lg" />
+        <div className="mt-1.5 mb-4 flex items-center bg-gray-100 rounded-lg p-4 py-3">
+          <div className={cn("")}>
+            <Thumbnail url={profile?.photoUrl} size="md" />
           </div>
-          <div className="text-sm font-normal text-center mt-2">
+          <div className="text-sm font-normal text-center ml-2">
             <div className="font-bold text-xl text-gray-900 dark:text-white">
               {profile?.firstName || profile?.username}
             </div>

@@ -17,7 +17,7 @@ export default function HistoryPage() {
     const session = await AuthService.getSession();
     const clientDataResponse = await ClientService.getSingle(session?.userId);
 
-    if (clientDataResponse.status !== 200) {
+    if (clientDataResponse?.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
       setClient(clientDataResponse.data);
@@ -47,18 +47,18 @@ export default function HistoryPage() {
 
   return (
     <div className="p-4">
-      <div className="mt-1.5">
-        <div className={"flex justify-center"}>
-          <Thumbnail url={client?.photoUrl} size="lg" />
+      <div className="mt-1.5 flex items-center bg-gray-100 rounded-lg p-4 py-3">
+        <div className={""}>
+          <Thumbnail url={client?.photoUrl} size="md" />
         </div>
-        <div className="text-sm font-normal text-center mt-2">
+        <div className="text-sm font-normal text-center ml-4">
           <div className="font-bold text-xl text-gray-900 dark:text-white">
             {client?.firstName} {client?.lastName}
           </div>
         </div>
       </div>
       <div className="mt-4 mb-4">
-        <h2 className="font-bold text-lg text-center">Історія записів</h2>
+        <h2 className="font-bold text-lg text-center">Ваша історія записів</h2>
       </div>
       <div className="">
         <AppointmentsList />

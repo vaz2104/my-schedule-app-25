@@ -93,7 +93,7 @@ export default function SettingsPage() {
         </div>
       )}
       <div className="mb-8 mt-4 text-center">
-        <h2 className="font-bold text-xl">Налаштування</h2>
+        <h2 className="font-bold text-xl">Ваші налаштування</h2>
       </div>
       <div className="py-6 border-b border-gray-200">
         <label className="flex items-center cursor-pointer">

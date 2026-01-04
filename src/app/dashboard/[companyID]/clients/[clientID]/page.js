@@ -19,7 +19,7 @@ export default function ClientSingle() {
 
     const clientDataResponse = await ClientService.getSingle(params?.clientID);
 
-    if (clientDataResponse.status !== 200) {
+    if (clientDataResponse?.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
       setClient(clientDataResponse.data);

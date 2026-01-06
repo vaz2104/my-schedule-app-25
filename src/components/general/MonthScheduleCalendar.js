@@ -13,9 +13,10 @@ import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import { CompanyService } from "@/services/CompanyService";
 import { useAppStore } from "@/store/useAppStore";
+import { AuthService } from "@/services/AuthService";
 
 export default function MonthScheduleCalendar({ selectedWorker }) {
-  const { companyPlan } = useAppStore();
+  const { companyPlan, role } = useAppStore();
   const { initCalendarDate } = useCalendarStore(
     useShallow((state) => ({
       initCalendarDate: state.initCalendarDate,
@@ -41,17 +42,33 @@ export default function MonthScheduleCalendar({ selectedWorker }) {
       if (params?.specialistID) {
         workerId = params?.specialistID;
       } else {
-        if (companyPlan === "free" || companyPlan === "basic") {
-          const workersResponse = await CompanyService.getWorkers({
-            botId: params?.companyID,
-            isBlocked: false,
-          });
+        // console.log(role);
 
-          if (workersResponse?.data?.length)
-            workerId = workersResponse?.data[0]?.workerId?._id;
+        if (role === "worker") {
+          const session = await AuthService.getSession();
+          workerId = session?.userId;
+        } else {
+          if (companyPlan === "free" || companyPlan === "basic") {
+            const workersResponse = await CompanyService.getWorkers({
+              botId: params?.companyID,
+              isBlocked: false,
+            });
+
+            console.log(workersResponse);
+
+            if (workersResponse?.data?.length)
+              workerId = workersResponse?.data[0]?.workerId?._id;
+          }
         }
       }
     }
+
+    console.log({
+      botId: params?.companyID,
+      workerId,
+      startDate,
+      endDate,
+    });
 
     const response = await ScheduleService.getMany({
       botId: params?.companyID,

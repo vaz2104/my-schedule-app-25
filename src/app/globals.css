@@ -181,6 +181,9 @@ body {
 .button.red {
   @apply text-white bg-red-500 hover:bg-red-600
 }
+.button.medium {
+  @apply py-1.5
+}
 
 .step {
   @apply h-10 w-10 bg-gray-200 border border-gray-200 flex items-center justify-center rounded-full text-gray-400

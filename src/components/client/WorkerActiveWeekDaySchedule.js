@@ -52,7 +52,7 @@ export default function WorkerActiveWeekDaySchedule({
 
                 return (
                   <li
-                    className="relative w-1/3 px-1 my-1.5"
+                    className="relative w-1/4 sm:w-1/5 px-1 my-1.5"
                     key={`schedule-${itemKey}`}
                     onClick={() =>
                       !isDisabled
@@ -60,23 +60,23 @@ export default function WorkerActiveWeekDaySchedule({
                         : null
                     }
                   >
-                    {isReserved && (
+                    {/* {isReserved && (
                       <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center animate__animated animate__bounceIn">
                         <span
                           className={cn(
-                            "absolute top-1/2 left-1/4 w-1/2 h-[1px] block bg-gray-300 rotate-25"
+                            "absolute top-1/2 left-1/4 w-1/2 h-[1px] block bg-gray-200 rotate-25"
                           )}
                         ></span>
                         <span
                           className={cn(
-                            "absolute top-1/2 left-1/4 w-1/2 h-[1px] block bg-gray-300  -rotate-25"
+                            "absolute top-1/2 left-1/4 w-1/2 h-[1px] block bg-gray-200  -rotate-25"
                           )}
                         ></span>
                       </div>
-                    )}
+                    )} */}
                     <span
                       className={cn(
-                        "p-2 rounded-3xl text-sm text-center border  h-14 flex items-center justify-center",
+                        "p-2 rounded-2xl text-md text-center border h-14 flex items-center justify-center font-bold",
                         isDisabled ? disabledStateClasses : activeStateClasses
                       )}
                     >

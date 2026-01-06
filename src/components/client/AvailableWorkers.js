@@ -16,6 +16,7 @@ import { useAppStore } from "@/store/useAppStore";
 import WorkerActiveWeekDaySchedule from "./WorkerActiveWeekDaySchedule";
 import Image from "next/image";
 import NoSchedule from "./NoSchedule";
+import { CalendarIcon } from "../ui/Icons";
 
 export default function AvailableWorkers() {
   const { adminId } = useAppStore();
@@ -84,7 +85,7 @@ export default function AvailableWorkers() {
           {workers.map((worker) => {
             return (
               <div
-                className=" bg-gray-50 rounded-xl p-4 mb-4"
+                className="  rounded-xl p-4 mb-4"
                 key={`schedule${worker?._id}`}
               >
                 <div className="flex items-center justify-between">
@@ -92,7 +93,11 @@ export default function AvailableWorkers() {
                     href={`${basePlatformLink}/specialists/${worker?.workerId?._id}`}
                     className="flex items-center"
                   >
-                    <Thumbnail url={worker?.workerId?.photoUrl} theme="light" />
+                    <Thumbnail
+                      url={worker?.workerId?.photoUrl}
+                      size="md"
+                      theme="light"
+                    />
                     <div className="ms-3 text-sm font-normal">
                       <div className="text-base font-semibold text-gray-900 dark:text-white">
                         {adminId === worker?.workerId?._id ? (
@@ -108,10 +113,11 @@ export default function AvailableWorkers() {
                   </Link>
                   <div>
                     <Link
-                      className="text-sm text-gray-900 underline"
+                      className="button dark medium"
                       href={`${basePlatformLink}/specialists/${worker?.workerId?._id}`}
                     >
-                      Графік на місяць
+                      <CalendarIcon className={"text-white"} />
+                      <span className="ml-1">Весь графік</span>
                     </Link>
                   </div>
                 </div>

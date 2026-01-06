@@ -11,6 +11,7 @@ import { cn } from "@/lib/cn";
 import { CheckCircleIcon } from "../ui/Icons";
 import { useAppStore } from "@/store/useAppStore";
 import { CompanyService } from "@/services/CompanyService";
+import NoSchedule from "./NoSchedule";
 
 export default function ActiveWeekScheduleNoForm({
   selectedDate,
@@ -86,7 +87,7 @@ export default function ActiveWeekScheduleNoForm({
   }
 
   return (
-    <div className="relative mt-6">
+    <div className="relative mt-6 pb-6">
       {isLoading && (
         <div className="bg-white/50 backdrop-blur-xs p-4 flex justify-center items-center absolute -top-1 -right-1 -bottom-1 -left-1 rounded-xl z-20">
           <Spinner />
@@ -129,7 +130,7 @@ export default function ActiveWeekScheduleNoForm({
 
                 return (
                   <li
-                    className="relative w-1/3 px-1 my-1.5"
+                    className="relative w-1/4 px-1 my-1.5"
                     key={`schedule-${itemKey}`}
                     onClick={() =>
                       !isDisabled
@@ -137,7 +138,7 @@ export default function ActiveWeekScheduleNoForm({
                         : null
                     }
                   >
-                    {isReserved && (
+                    {/* {isReserved && (
                       <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center animate__animated animate__bounceIn">
                         <span
                           className={cn(
@@ -150,7 +151,7 @@ export default function ActiveWeekScheduleNoForm({
                           )}
                         ></span>
                       </div>
-                    )}
+                    )} */}
 
                     {selectedAppointment === itemKey && (
                       <span className="absolute -top-2 right-0 z-20 w-6 h-6 bg-white rounded-full animate__animated animate__bounceIn">
@@ -161,7 +162,7 @@ export default function ActiveWeekScheduleNoForm({
                     )}
                     <span
                       className={cn(
-                        "p-2 rounded-3xl text-sm text-center block border",
+                        "p-2 rounded-2xl text-md text-center border h-14 flex items-center justify-center font-bold",
                         isDisabled ? disabledStateClasses : activeStateClasses
                       )}
                     >
@@ -174,13 +175,7 @@ export default function ActiveWeekScheduleNoForm({
           </div>
         </Fragment>
       ) : (
-        <Fragment>
-          <div className="mt-16 mb-24">
-            <p className="text-center text-md font-medium my-12 text-gray-400">
-              Часи прийому не вказані
-            </p>
-          </div>
-        </Fragment>
+        <NoSchedule />
       )}
     </div>
   );

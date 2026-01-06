@@ -5,6 +5,8 @@ import { CheckCircleIcon, ExclamationCircleIcon } from "../ui/Icons";
 
 export default function WorkersList({ workers, baseURL }) {
   const { adminId, role } = useAppStore();
+  console.log(role);
+
   if (!workers?.length)
     return (
       <div className="p-4">

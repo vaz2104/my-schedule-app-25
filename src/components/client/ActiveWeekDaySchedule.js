@@ -14,6 +14,7 @@ import { useShallow } from "zustand/shallow";
 import Image from "next/image";
 import { useAppStore } from "@/store/useAppStore";
 import { CompanyService } from "@/services/CompanyService";
+import NoSchedule from "./NoSchedule";
 
 export default function ActiveWeekDaySchedule() {
   const { companyPlan } = useAppStore();
@@ -163,26 +164,7 @@ export default function ActiveWeekDaySchedule() {
           </div>
         </Fragment>
       ) : (
-        <Fragment>
-          {/* <div className="mt-16 mb-24">
-            <p className="text-center text-md font-medium my-12 text-gray-400">
-              Часи прийому не вказані
-            </p>
-          </div> */}
-
-          <div className="text-center text-gray-400 mt-16">
-            <div className="flex justify-center">
-              <Image
-                src={"/no-sappointments.png"}
-                width={320}
-                height={222}
-                alt=""
-              />
-            </div>
-
-            <p className="mt-6">Часи прийому не вказані</p>
-          </div>
-        </Fragment>
+        <NoSchedule />
       )}
 
       <AppointmentForm

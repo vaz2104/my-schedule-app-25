@@ -51,12 +51,12 @@ export default function BookedAppointments() {
 
   return (
     <div className="p-4">
-      {/* <div className="mt-4 mb-4">
+      <div className="mt-4 mb-4">
         <h2 className="font-bold text-lg text-center">Історія записів</h2>
       </div>
       <div className="">
         <AppointmentsList />
-      </div>  */}
+      </div>
     </div>
   );
 }

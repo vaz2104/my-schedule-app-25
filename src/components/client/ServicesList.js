@@ -5,7 +5,7 @@ export default function ServicesList({ updateListHandler, services }) {
     return (
       <div className="p-4">
         <div className="text-center text-gray-400 mt-16">
-          <p>У Вас поки немає доданих послуг</p>
+          <p>Список послуг відсутній</p>
         </div>
       </div>
     );

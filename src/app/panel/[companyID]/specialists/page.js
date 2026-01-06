@@ -1,5 +1,5 @@
 "use client";
-import WorkersList from "@/components/admin/WorkersList";
+import WorkersList from "@/components/client/WorkersList";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import { useBaseURL } from "@/hooks/useBaseURL";

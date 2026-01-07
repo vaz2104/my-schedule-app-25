@@ -119,15 +119,16 @@ export default function ActiveWeekDaySchedule() {
                   selectedDaySchedule?.schedule[itemKey]
                 );
 
-                let activeStateClasses = "border-main bg-main text-white";
+                let activeStateClasses =
+                  "border-main bg-main text-white cursor-pointer";
                 let disabledStateClasses =
-                  "border-gray-200 bg-gray-100 text-gray-300";
+                  "border-gray-200 bg-gray-100 text-gray-300 cursor-default";
 
                 const isDisabled = isReserved || isOldDate;
 
                 return (
                   <li
-                    className="relative w-1/3 px-1 my-1.5"
+                    className="relative w-1/4 sm:w-1/5 px-1 my-1.5"
                     key={`schedule-${itemKey}`}
                     onClick={() =>
                       !isDisabled
@@ -135,7 +136,7 @@ export default function ActiveWeekDaySchedule() {
                         : null
                     }
                   >
-                    {isReserved && (
+                    {/* {isReserved && (
                       <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center animate__animated animate__bounceIn">
                         <span
                           className={cn(
@@ -148,10 +149,10 @@ export default function ActiveWeekDaySchedule() {
                           )}
                         ></span>
                       </div>
-                    )}
+                    )} */}
                     <span
                       className={cn(
-                        "p-2 rounded-3xl text-sm text-center block border",
+                        "p-2 rounded-2xl text-md text-center border h-14 flex items-center justify-center font-bold",
                         isDisabled ? disabledStateClasses : activeStateClasses
                       )}
                     >

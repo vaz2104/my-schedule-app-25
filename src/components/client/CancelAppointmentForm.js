@@ -1,7 +1,7 @@
 import { Fragment, useContext, useState } from "react";
 import ConfirmModal from "../ui/ConfirmModal";
 import { ThemeContext } from "@/context/ThemeContext";
-import { CloseIcon } from "../ui/Icons";
+import { CloseIcon, TrashIcon } from "../ui/Icons";
 import { AppointmentService } from "@/services/AppointmentService";
 import { NotificationService } from "@/services/NotificatoinsServices";
 import { AuthService } from "@/services/AuthService";
@@ -44,11 +44,11 @@ export default function CancelAppointmentForm({ mapItemId, successHandler }) {
   return (
     <Fragment>
       <button
-        className="button blank !px-2 !text-red-600 "
+        className="button red medium !text-white "
         onClick={() => setAppointmentId(mapItemId)}
       >
         <span className="mr-1">Скасувати</span>
-        <CloseIcon className="w-4 text-red-600" />
+        <TrashIcon className="w-4 text-white" />
       </button>
       <ConfirmModal
         triger={appointmentId}

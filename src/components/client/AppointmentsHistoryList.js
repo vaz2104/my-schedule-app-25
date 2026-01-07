@@ -6,7 +6,7 @@ import Spinner from "../ui/Spinner";
 import { AuthService } from "@/services/AuthService";
 
 import { AppointmentService } from "@/services/AppointmentService";
-import CancelAppointmentForm from "../client/CancelAppointmentForm";
+import CancelAppointmentForm from "./CancelAppointmentForm";
 import CalendarService from "../ui/calendar/CalendarService";
 import { filterAppointments, printDateWithMonth } from "@/lib/schedule-helpers";
 import { cn } from "@/lib/cn";
@@ -14,7 +14,7 @@ import { CalendarIcon, ClockIcon } from "../ui/Icons";
 import Thumbnail from "../ui/Thumbnail";
 import { useAppStore } from "@/store/useAppStore";
 
-export default function AppointmentsList() {
+export default function AppointmentsHistoryList() {
   const { companyPlan } = useAppStore();
   const [appointments, setAppointments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -87,8 +87,8 @@ export default function AppointmentsList() {
             key={appointment?._id}
           >
             <div>
-              {companyPlan === "free" ||
-                (companyPlan === "basic" && (
+              {companyPlan !== "free" ||
+                (companyPlan !== "basic" && (
                   <div className="flex items-center">
                     <Thumbnail url={appointment?.workerId?.photoUrl} />
                     <div className="ms-3 text-sm font-normal flex-1">
@@ -120,13 +120,10 @@ export default function AppointmentsList() {
                   </div>
                 </div>
               </div>
-              <div>
-                {appointment?.serviceId?._id && (
-                  <>
-                    <div>{appointment?.serviceId?.service}</div>
-                  </>
-                )}
-              </div>
+
+              {appointment?.serviceId?._id && (
+                <div className="mt-2">{appointment?.serviceId?.service}</div>
+              )}
             </div>
             {!idDateDisabled && (
               <div className="ml-2 flex-1 flex justify-end">

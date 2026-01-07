@@ -1,5 +1,5 @@
 "use client";
-import AppointmentsList from "@/components/client/AppointmentsList";
+import AppointmentsHistoryList from "@/components/client/AppointmentsHistoryList";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
@@ -61,7 +61,7 @@ export default function HistoryPage() {
         <h2 className="font-bold text-xl text-center">Ваша історія записів</h2>
       </div>
       <div className="">
-        <AppointmentsList />
+        <AppointmentsHistoryList />
       </div>
     </div>
   );

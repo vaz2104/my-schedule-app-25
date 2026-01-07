@@ -64,7 +64,7 @@ export default function Footer() {
           <div className="footer-nav-item__label">Головна</div>
         </Link>
 
-        {company?.plan === "free" ? (
+        {company?.plan === "free" || company?.plan === "basic" ? (
           <Link
             href={`${basePlatformLink}/schedule`}
             className="footer-nav-item"

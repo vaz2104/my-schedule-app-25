@@ -1,17 +1,16 @@
 "use client";
-import { CheckCircleIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import { monthsFullName } from "../ui/calendar/calendar-vars";
-import { cn } from "@/lib/cn";
 import { AppointmentService } from "@/services/AppointmentService";
 import { AuthService } from "@/services/AuthService";
 import { ThemeContext } from "@/context/ThemeContext";
 import { NotificationService } from "@/services/NotificatoinsServices";
 import { WorkerService } from "@/services/WorkerService";
 import { useAppStore } from "@/store/useAppStore";
+import FormServicesList from "./FormServicesList";
 
 export default function AppointmentForm({
   selectedSchedule,
@@ -36,15 +35,13 @@ export default function AppointmentForm({
     if (closeHandler) closeHandler();
   }
 
-  console.log(selectedSchedule);
-
   async function loadServices() {
     setIsLoading(true);
     const query = {
       botId: params?.companyID,
     };
 
-    if (companyPlan === "free") {
+    if (companyPlan === "free" || companyPlan === "basic") {
       const companyServicesResponse = await ServicesService.getMany(query);
       if (companyServicesResponse.status !== 200) {
         setError("Сталася помилка при завантаженні даних");
@@ -73,33 +70,10 @@ export default function AppointmentForm({
       }
     }
 
-    // console.log(servicesResponse);
-    console.log(query);
-
-    // if (servicesResponse.status !== 200) {
-    //   setError("Сталася помилка при завантаженні даних");
-    // } else {
-    //   let filteredServices = [];
-
-    //   if (servicesResponse.data?.services?.length > 0) {
-    //     const { disabledServices } = servicesResponse.data;
-    //     servicesResponse.data?.services.forEach((object) => {
-    //       if (
-    //         Array.isArray(disabledServices) &&
-    //         !disabledServices.includes(object?._id)
-    //       ) {
-    //         filteredServices.push(object);
-    //       }
-    //     });
-    //   }
-
-    //   setServices(filteredServices);
-    // }
-
     setIsLoading(false);
   }
 
-  async function createService() {
+  async function createAppointment() {
     setIsLoading(true);
     const session = await AuthService.getSession();
 
@@ -120,7 +94,7 @@ export default function AppointmentForm({
       setIsLoading(false);
     } else {
       closeModal();
-      const session = await AuthService.getSession();
+
       await NotificationService.createNotification({
         notification: {
           botId: params?.companyID,
@@ -152,8 +126,8 @@ export default function AppointmentForm({
     <BaseModal
       title={"Новий запис на прийом"}
       triger={selectedSchedule}
-      cancelFn={closeHandler}
-      confirmFn={createService}
+      cancelFn={closeModal}
+      confirmFn={createAppointment}
       error={error}
       hideErrorFn={() => setError(null)}
       loading={isLoading}
@@ -197,59 +171,11 @@ export default function AppointmentForm({
           </label>
 
           {isService && (
-            <Fragment>
-              {services?.length > 0 ? (
-                <div className="mt-4">
-                  {services.map((service) => {
-                    return (
-                      <li
-                        className="flex items-center py-4 border-b border-gray-200"
-                        key={service?._id}
-                        onClick={() => setSelectedService(service?._id)}
-                      >
-                        {selectedService === service?._id ? (
-                          <CheckCircleIcon
-                            className={
-                              "w-4 h-4 text-green-500 animate__animated animate__bounceIn"
-                            }
-                          />
-                        ) : (
-                          <div className="w-4 h-4 rounded-full border-2 border-gray-400"></div>
-                        )}
-
-                        <div className="flex-1 ml-4">
-                          <div>{service.service}</div>
-                          <div className="text-gray-500">
-                            {service?.priceWithSale && (
-                              <span className="text-red-600">
-                                {service?.priceWithSale} грн.
-                              </span>
-                            )}
-
-                            {service?.price && (
-                              <span
-                                className={cn(
-                                  service?.priceWithSale && "ml-2 line-through"
-                                )}
-                              >
-                                {service?.price} грн.
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </li>
-                    );
-                  })}
-                  <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400"></ul>
-                </div>
-              ) : (
-                <div className="p-4">
-                  <div className="text-center text-gray-400 mt-16">
-                    <p>Відсутня інформація про послуги</p>
-                  </div>
-                </div>
-              )}
-            </Fragment>
+            <FormServicesList
+              services={services}
+              selectedService={selectedService}
+              selectHandler={setSelectedService}
+            />
           )}
         </div>
       </div>

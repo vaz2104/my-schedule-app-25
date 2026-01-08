@@ -117,7 +117,7 @@ export default function AppointmentsHistoryList() {
                   )}
                 </span>
               </span>
-              <div className="pt-1 flex items-start">
+              <div className="pt-1 sm:flex sm:items-start">
                 <div>
                   <div className="flex items-center">
                     <div className="flex items-center">
@@ -173,7 +173,7 @@ export default function AppointmentsHistoryList() {
                 </div>
 
                 {!idDateDisabled && (
-                  <div className="-mt-1 ml-2 flex-1 flex justify-end">
+                  <div className="mt-4 sm:-mt-1 sm:ml-2 sm:flex-1 sm:flex sm:justify-end">
                     <CancelAppointmentForm
                       mapItemId={appointment?._id}
                       successHandler={loadAppointments}

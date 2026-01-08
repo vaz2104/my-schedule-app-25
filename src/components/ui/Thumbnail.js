@@ -12,7 +12,7 @@ export default function Thumbnail({ url, size = "sm", theme = "dark" }) {
 
   switch (size) {
     case "xs":
-      sizeStyles = "size-10";
+      sizeStyles = "size-8";
       iconSizeStyles = "size-5";
       break;
     case "sm":

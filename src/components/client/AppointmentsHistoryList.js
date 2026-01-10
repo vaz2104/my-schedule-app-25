@@ -87,7 +87,7 @@ export default function AppointmentsHistoryList() {
 
           return (
             <li
-              className={cn("mb-10 ms-8", idDateDisabled && "text-gray-400")}
+              className={cn("mb-10 ms-8", idDateDisabled && "")}
               key={appointment?._id}
             >
               {/* //   className={cn(
@@ -105,7 +105,7 @@ export default function AppointmentsHistoryList() {
                   {idDateDisabled ? (
                     <CheckCircleIcon
                       className={cn(
-                        "w-8 h-8 text-gray-400 animate__animated animate__bounceIn"
+                        "w-8 h-8 text-green-500 animate__animated animate__bounceIn"
                       )}
                     />
                   ) : (

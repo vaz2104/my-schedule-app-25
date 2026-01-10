@@ -293,7 +293,13 @@ export default function ServiceAppointmentForm({
             <div className="relative p-4 w-full max-w-md max-h-full">
               <div className="py-8 bg-white rounded-lg w-full">
                 <div className="px-4">
-                  <MonthScheduleCalendar selectedWorker={selectedWorker} />
+                  <MonthScheduleCalendar
+                    selectedWorker={
+                      params?.specialistID
+                        ? params?.specialistID
+                        : selectedWorker
+                    }
+                  />
                   <div className="mt-8 mb-4">
                     <ActiveWeekScheduleNoForm
                       selectedDate={selectedDate}
@@ -301,7 +307,11 @@ export default function ServiceAppointmentForm({
                       setSelectedAppointment={setSelectedAppointment}
                       selectedSchedule={selectedSchedule}
                       selectedAppointment={selectedAppointment}
-                      selectedWorker={selectedWorker}
+                      selectedWorker={
+                        params?.specialistID
+                          ? params?.specialistID
+                          : selectedWorker
+                      }
                     />
                   </div>
                 </div>

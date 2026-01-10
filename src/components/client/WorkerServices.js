@@ -96,70 +96,56 @@ export default function WorkerServices() {
           *Послуги, які працівник може надавати
         </p>
       </div>
-      {
-        services?.length > 0 && (
-          <>
-            <div className="">
-              {services.map((service) => {
-                return (
-                  <div
-                    className="flex justify-between items-center py-4 border-b border-gray-200"
-                    key={service?._id}
-                  >
-                    <div>
-                      <div className="font-bold">{service?.service}</div>
-                      {service?.saleEndDay && (
-                        <div>
-                          <span className="mr-1 translate-y-1 inline-block">
-                            <FireIcon className={"text-red-500"} />
-                          </span>
-                          <span className="text-red-500 text-sm">
-                            знижка діє до{" "}
-                            {formatDate(service?.saleEndDay, "ui")}
-                          </span>
-                        </div>
-                      )}
-
-                      <div className="text-gray-500">
-                        {service?.priceWithSale && (
-                          <span className="text-red-600">
-                            {service?.priceWithSale} грн.
-                          </span>
-                        )}
-
-                        {service?.price && (
-                          <span
-                            className={cn(
-                              service?.priceWithSale && "ml-2 line-through"
-                            )}
-                          >
-                            {service?.price} грн.
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="ml-2">
-                      <button
-                        className="button"
-                        onClick={() => setSelectedService(service)}
-                      >
-                        Записатися
-                      </button>
-                    </div>
+      <div className="">
+        {services.map((service) => {
+          return (
+            <div
+              className="flex justify-between items-center py-4 border-b border-gray-200"
+              key={service?._id}
+            >
+              <div>
+                <div className="font-bold">{service?.service}</div>
+                {service?.saleEndDay && (
+                  <div>
+                    <span className="mr-1 translate-y-1 inline-block">
+                      <FireIcon className={"text-red-500"} />
+                    </span>
+                    <span className="text-red-500 text-sm">
+                      знижка діє до {formatDate(service?.saleEndDay, "ui")}
+                    </span>
                   </div>
-                );
-              })}
+                )}
+
+                <div className="text-gray-500">
+                  {service?.priceWithSale && (
+                    <span className="text-red-600">
+                      {service?.priceWithSale} грн.
+                    </span>
+                  )}
+
+                  {service?.price && (
+                    <span
+                      className={cn(
+                        service?.priceWithSale && "ml-2 line-through"
+                      )}
+                    >
+                      {service?.price} грн.
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="ml-2">
+                <button
+                  className="button"
+                  onClick={() => setSelectedService(service)}
+                >
+                  Записатися
+                </button>
+              </div>
             </div>
-          </>
-        )
-        //  : (
-        //   <>
-        //     <div className="text-center text-gray-400 mt-16">
-        //       <p>Жодних доступних місць для запису</p>
-        //     </div>
-        //   </>
-        // )
-      }
+          );
+        })}
+      </div>
 
       <ServiceAppointmentForm
         selectedService={selectedService}

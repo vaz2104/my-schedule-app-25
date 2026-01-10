@@ -123,9 +123,10 @@ export default function ActiveWeekScheduleNoForm({
                   selectedDaySchedule?.schedule[itemKey]
                 );
 
-                let activeStateClasses = "border-main bg-main text-white";
+                let activeStateClasses =
+                  "border-main bg-main text-white cursor-pointer";
                 let disabledStateClasses =
-                  "border-gray-200 bg-gray-100 text-gray-300";
+                  "border-gray-200 bg-gray-100 text-gray-300 cursor-default";
 
                 const isDisabled = isReserved || isOldDate;
 

@@ -76,6 +76,7 @@ export default function ActiveWeekScheduleNoForm({
 
   useEffect(() => {
     loadSelectedDaySchedule(selectedDate);
+    setSelectedAppointment(null);
   }, [selectedDate]);
 
   if (error) {

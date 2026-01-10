@@ -30,7 +30,7 @@ export default function Services() {
       allServices = [...servicesResponse.data];
     }
 
-    if (companyPlan === "free") {
+    if (companyPlan === "free" || companyPlan === "basic") {
       setServices(allServices);
     } else {
       try {

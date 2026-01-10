@@ -51,7 +51,11 @@ export default function ServiceAppointmentForm({
   }
 
   async function bookAppointment() {
-    if (!selectedAppointment || !selectedSchedule?._id) {
+    if (
+      !selectedAppointment ||
+      !selectedSchedule?._id ||
+      selectedService?._id
+    ) {
       setError("Будь ласка, оберіть дату та час прийому!");
       return;
     }
@@ -129,7 +133,7 @@ export default function ServiceAppointmentForm({
     <BaseModal
       title={"Новий запис на прийом"}
       triger={selectedService}
-      cancelFn={closeHandler}
+      cancelFn={closeModal}
       confirmFn={bookAppointment}
       error={error}
       hideErrorFn={() => setError(null)}
@@ -170,8 +174,7 @@ export default function ServiceAppointmentForm({
             </li>
             {!params?.specialistID &&
               companyPlan !== "free" &&
-              companyPlan !== "basic" &&
-              workers?.length >= 2 && (
+              companyPlan !== "basic" && (
                 <li className="mb-10 ms-6">
                   <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
                     2
@@ -180,7 +183,11 @@ export default function ServiceAppointmentForm({
                     <div className="text-lg text-gray-500">
                       Оберіть працівника
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-2">
+                      <p className="mb-4 text-gray-400 text-sm">
+                        {workers?.length == 1 &&
+                          "Для даної послуги доступний лише один фахівець"}
+                      </p>
                       {workers.map((worker) => {
                         return (
                           <div key={worker?._id}>
@@ -238,7 +245,6 @@ export default function ServiceAppointmentForm({
                 <div className="mt-4">
                   {selectedAppointment ? (
                     <div className="flex items-center mt-2 text-gray-500 font-bold">
-                      {" "}
                       {new Date(selectedSchedule?.date).getDate()}{" "}
                       {monthsFullName[
                         new Date(selectedSchedule?.date).getMonth()

@@ -25,7 +25,7 @@ export default function ServiceCard({
     );
 
   return (
-    <div className="flex justify-between items-center py-4 text-gray-900 border-b border-gray-200">
+    <div className="flex justify-between items-center p-4 text-gray-900  bg-gray-50 my-4 rounded-xl shadow">
       <div>
         <div className="font-bold">{service}</div>
         {saleEndDay && (

@@ -36,7 +36,7 @@ export default function DiscountServices() {
       );
     }
 
-    if (companyPlan === "free") {
+    if (companyPlan === "free" || companyPlan === "basic") {
       setServices(servicesWithDiscount);
     } else {
       try {
@@ -81,7 +81,7 @@ export default function DiscountServices() {
   if (!services?.length) return <></>;
 
   return (
-    <div className="bg-gray-100 p-4 rounded-xl mt-16">
+    <div className="py-4 rounded-xl mt-16">
       <div className="mb-8 mt-4">
         <h2 className="font-bold text-lg text-center">
           {" "}

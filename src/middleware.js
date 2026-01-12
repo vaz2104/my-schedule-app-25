@@ -32,18 +32,19 @@ export default async function middleware(req) {
   // 5. Redirect to /login if the user is not authenticated
   //    or the role from the session is not equal to the role of the URL
   if (
+    (isProtectedRoute && !session?.userId) ||
     (isProtectedRoute &&
-      session?.userId &&
       session?.role === "admin" &&
       !req.nextUrl.pathname.startsWith("/dashboard")) ||
     (isProtectedRoute &&
-      session?.userId &&
       session?.role === "client" &&
       !req.nextUrl.pathname.startsWith("/panel")) ||
-    (isProtectedRoute && !session?.userId)
+    (isProtectedRoute &&
+      req.nextUrl.pathname.startsWith("/panel") &&
+      pathParts[1] !== session?.panel)
   ) {
     const pathParts = path.slice(1).split("/");
-    console.log(pathParts);
+    // console.log(pathParts);
     let query = "";
     if (pathParts[0] === "panel")
       query = `?panelID=${pathParts[1] || ""}&role=client`;

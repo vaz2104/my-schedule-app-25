@@ -14,9 +14,9 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-  const { userId, role } = await req.json();
+  const options = await req.json();
 
-  await createSession(userId, role);
+  await createSession(options);
   const cookieStore = await cookies();
   const cookieSession = cookieStore.get("session");
   const session = await decrypt(cookieSession?.value);
@@ -34,8 +34,8 @@ export async function DELETE(req) {
 }
 
 export async function PUT(req) {
-  const { role, userId } = await req.json();
-  await updateSession({ role, userId });
+  const options = await req.json();
+  await updateSession(options);
 
   const cookieStore = await cookies();
   const cookieSession = cookieStore.get("session");

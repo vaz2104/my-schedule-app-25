@@ -29,13 +29,18 @@ export default function TelegramAuthorization({ telegramUserID }) {
 
     const platformUser = platformUserResponse?.data[0];
 
+    const sessionQuery = {
+      userId: platformUser?._id,
+      role,
+    };
+
+    if (panelID) {
+      sessionQuery.panel = panelID;
+    }
     const newSession = await fetch("/api/session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: platformUser?._id,
-        role,
-      }),
+      body: JSON.stringify(sessionQuery),
     });
 
     if (newSession) {

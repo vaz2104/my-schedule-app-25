@@ -42,6 +42,7 @@ export default async function middleware(req) {
       !req.nextUrl.pathname.startsWith("/panel")) ||
     (isProtectedRoute &&
       req.nextUrl.pathname.startsWith("/panel") &&
+      session?.panel &&
       pathParts[1] !== session?.panel)
   ) {
     // console.log(pathParts);

@@ -85,82 +85,87 @@ export default function InitNewBot() {
     return <Presentation toggleHint={() => setIsHintChecked(true)} />;
 
   return (
-    <div className="ms-container py-10">
-      <BackButton url={"/dashboard"} label={"Назад"} />
-
-      <div className="">
-        <Steps activeStep={activeStep} />
-
-        {activeStep < 4 && (
-          <div className="my-6 text-xl font-semibold text-center">
-            Крок {activeStep}
-          </div>
-        )}
-
-        {/* step 1 */}
-        {activeStep === 1 && <Step1 toket={botToken} setToken={setBotToken} />}
-
-        {/* step 2 */}
-        {activeStep === 2 && <Step2 botData={bot} />}
-
-        {/* step 3 */}
-        {activeStep === 3 && <Step3 botData={bot} />}
-
-        {/* step 4 */}
-        {activeStep === 4 && <Step4 lottieRef={lottieRef} />}
-
-        <div className="flex justify-center mt-10">
-          {activeStep > 2 && activeStep < 4 && (
-            <div className={`mx-1`}>
-              <button
-                className={`button gray `}
-                onClick={() => nextStep(activeStep - 1)}
-              >
-                Повернутися
-              </button>
-            </div>
-          )}
+    <div>
+      <div className="mt-4">
+        <BackButton url={"/dashboard"} label={"Назад"} />
+      </div>
+      <div className="ms-container pb-10">
+        <div className="">
+          <Steps activeStep={activeStep} />
 
           {activeStep < 4 && (
-            <div className="mx-1">
-              <button
-                className={`button min-w-48`}
-                onClick={() => nextStep(activeStep + 1)}
-                disabled={loading}
-              >
-                {loading ? (
-                  <Spinner size="sm" className={"text-mainDark fill-white"} />
-                ) : (
-                  "Далі"
-                )}
-              </button>
+            <div className="my-6 text-xl font-semibold text-center">
+              Крок {activeStep}
             </div>
           )}
 
-          {activeStep === 4 && (
-            <Link href={`/dashboard/`} className={`button`}>
-              Розпочати роботу
-            </Link>
+          {/* step 1 */}
+          {activeStep === 1 && (
+            <Step1 toket={botToken} setToken={setBotToken} />
           )}
-        </div>
-      </div>
 
-      <ConfirmProccessModal
-        triger={telegramBotData}
-        confirmFn={saveBot}
-        cancelFn={clearStepOneState}
-        loading={loading}
-      >
-        <div className="py-4">
-          <BotCard
-            name={telegramBotData?.first_name}
-            thumbnail={telegramBotData?.avatar}
-          />
-          <div className="text-gray-500 mt-6 text-center animate__animated animate__fadeIn">
-            Це дійсно Ваш бот і Ви хочете додати його до системи?
+          {/* step 2 */}
+          {activeStep === 2 && <Step2 botData={bot} />}
+
+          {/* step 3 */}
+          {activeStep === 3 && <Step3 botData={bot} />}
+
+          {/* step 4 */}
+          {activeStep === 4 && <Step4 lottieRef={lottieRef} />}
+
+          <div className="flex justify-center mt-10">
+            {activeStep > 2 && activeStep < 4 && (
+              <div className={`mx-1`}>
+                <button
+                  className={`button gray `}
+                  onClick={() => nextStep(activeStep - 1)}
+                >
+                  Повернутися
+                </button>
+              </div>
+            )}
+
+            {activeStep < 4 && (
+              <div className="mx-1">
+                <button
+                  className={`button min-w-48`}
+                  onClick={() => nextStep(activeStep + 1)}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <Spinner size="sm" className={"text-mainDark fill-white"} />
+                  ) : (
+                    "Далі"
+                  )}
+                </button>
+              </div>
+            )}
+
+            {activeStep === 4 && (
+              <Link href={`/dashboard/`} className={`button`}>
+                Розпочати роботу
+              </Link>
+            )}
           </div>
         </div>
-      </ConfirmProccessModal>
+
+        <ConfirmProccessModal
+          triger={telegramBotData}
+          confirmFn={saveBot}
+          cancelFn={clearStepOneState}
+          loading={loading}
+        >
+          <div className="py-4">
+            <BotCard
+              name={telegramBotData?.first_name}
+              thumbnail={telegramBotData?.avatar}
+            />
+            <div className="text-gray-500 mt-6 text-center animate__animated animate__fadeIn">
+              Це дійсно Ваш бот і Ви хочете додати його до системи?
+            </div>
+          </div>
+        </ConfirmProccessModal>
+      </div>
     </div>
   );
 }

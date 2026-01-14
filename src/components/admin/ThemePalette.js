@@ -150,11 +150,11 @@ export default function ThemePalette({ activePalette }) {
         <div className="w-1/3 p-1">
           <div
             className="border border-gray-100 bg-gray-50 p-2 rounded-xl"
-            onClick={() => selectPaletteHandler("dark")}
+            onClick={() => selectPaletteHandler("black")}
           >
             <div>
               <div className="w-12 h-12 rounded-full m-auto bg-mainDark flex justify-center items-center">
-                {activePalette === "dark" && (
+                {activePalette === "black" && (
                   <CheckCircleIcon className={"w-6 h-6 text-white"} />
                 )}
               </div>

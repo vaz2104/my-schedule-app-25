@@ -34,10 +34,10 @@
   --woodlandLight: #A6A57A; 
   --woodlandLightDark: #79803C;
 
-  --dark: #363434;
-  --darkDark: #292828;
-  --darkLight: #D4D7D4; 
-  --darkLightDark: #BABDBA;
+  --black: #363434;
+  --blackDark: #292828;
+  --blackLight: #D4D7D4; 
+  --blackLightDark: #BABDBA;
 }
 
 [data-theme=lime] {
@@ -74,11 +74,11 @@
   --mainLight: var(--woodlandLight);
   --mainLightDark: var(--woodlandLightDark);
 }
-[data-theme=dark] {
-  --main: var(--dark);
-  --mainDark: var(--darkDark);
-  --mainLight: var(--darkLight);
-  --mainLightDark: var(--darkLightDark);
+[data-theme=black] {
+  --main: var(--black);
+  --mainDark: var(--blackDark);
+  --mainLight: var(--blackLight);
+  --mainLightDark: var(--blackLightDark);
 } 
 
 @theme {
@@ -109,10 +109,11 @@
   --color-woodlandDark: var(--woodlandDark);
   --color-woodlandLight: var(--woodlandLight);
   --color-woodlandLightDark: var(--woodlandLightDark);
-  --color-mainDark: var(--dark);
-  --color-darkDark: var(--darkDark);
-  --color-darkLight: var(--darkLight);
-  --color-darkLightDark: var(--darkLightDark);
+
+  --color-mainBlack: var(--black);
+  --color-blackDark: var(--blackDark);
+  --color-blackLight: var(--blackLight);
+  --color-blackLightDark: var(--blackLightDark);
 }
 
 @custom-variant honey (&:where([data-theme=honey], [data-theme=honey] *));
@@ -120,7 +121,7 @@
 @custom-variant pink (&:where([data-theme=pink], [data-theme=pink] *));
 @custom-variant blue (&:where([data-theme=blue], [data-theme=blue] *));
 @custom-variant woodland (&:where([data-theme=woodland], [data-theme=woodland] *));
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant black (&:where([data-theme=black], [data-theme=black] *));
 
 body {
   background: var(--background);

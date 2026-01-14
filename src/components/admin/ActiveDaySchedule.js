@@ -19,6 +19,7 @@ import ConfirmModal from "../ui/ConfirmModal";
 import { NotificationService } from "@/services/NotificatoinsServices";
 import { AppointmentService } from "@/services/AppointmentService";
 import { useAppStore } from "@/store/useAppStore";
+import NoSchedule from "./NoSchedule";
 
 export default function ActiveDaySchedule() {
   const { adminId, companyPlan } = useAppStore();
@@ -276,13 +277,7 @@ export default function ActiveDaySchedule() {
           </div>
         </Fragment>
       ) : (
-        <Fragment>
-          <div className="min-h-42 flex items-center">
-            <p className="w-full text-center text-md font-medium text-gray-400">
-              Часи прийому не вказані
-            </p>
-          </div>
-        </Fragment>
+        <NoSchedule />
       )}
       <ConfirmModal
         triger={confirmMessage}

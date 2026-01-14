@@ -61,6 +61,7 @@ export default function MonthScheduleStatistic() {
     let status = true;
     if (
       companyPlan !== "free" &&
+      companyPlan !== "basic" &&
       adminId === session?.userId &&
       adminId !== params?.specialistID
     ) {

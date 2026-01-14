@@ -16,6 +16,7 @@ import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import ConfirmModal from "../ui/ConfirmModal";
 import { AppointmentService } from "@/services/AppointmentService";
+import NoSchedule from "./NoSchedule";
 
 export default function ActiveWeekDaySchedule() {
   const { selectedDate } = useCalendarStore(
@@ -207,13 +208,7 @@ export default function ActiveWeekDaySchedule() {
           </div>
         </Fragment>
       ) : (
-        <Fragment>
-          <div className="mt-8">
-            <p className="text-center text-md font-medium my-12 text-gray-400">
-              Часи прийому не вказані
-            </p>
-          </div>
-        </Fragment>
+        <NoSchedule />
       )}
       <ConfirmModal
         triger={confirmMessage}

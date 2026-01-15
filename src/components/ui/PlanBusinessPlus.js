@@ -5,21 +5,39 @@ export default function PlanBusinessPlus({
   selectHandler,
   exchange,
   price,
+  salePrice,
 }) {
+  const priceForExchange = salePrice || price;
   return (
     <div className="bg-gray-50 shadow-sm p-4 pb-8 rounded-xl h-full flex flex-col">
       <div className="mb-4 mt-4 text-center">
         <h2 className="font-bold text-2xl text-gray-700">Бізнес Plus</h2>
       </div>
-      <div className="flex justify-center items-baseline text-gray-900 dark:text-white">
-        <span className="text-3xl font-semibold">€</span>
-        <span className="text-5xl font-extrabold tracking-tight">{price}</span>
-        <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
-          /міс
-        </span>
+      <div className="flex items-end justify-center">
+        <div className="flex justify-center items-baseline text-gray-900 dark:text-white">
+          <span className="text-3xl font-semibold">€</span>
+          <span className="text-5xl font-extrabold tracking-tight">
+            {salePrice || price}
+          </span>
+          <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
+            /міс
+          </span>
+        </div>
+        {salePrice && (
+          <div className="relative ml-4 flex justify-center items-baseline text-gray-400 dark:text-white t">
+            <div className="absolute top-1/2 -left-1 -right-1 border border-gray-400 rotate-15"></div>
+            <span className="text-2xl font-semibold">€</span>
+            <span className="text-3xl font-extrabold tracking-tight">
+              {price}
+            </span>
+            <span className="ms-1 font-normal text-gray-500 dark:text-gray-400">
+              /міс
+            </span>
+          </div>
+        )}
       </div>
       <div className="mt-2 text-center text-gray-400">
-        {Math.ceil(price * exchange)} ₴ /місяць
+        {Math.ceil(priceForExchange * exchange)} ₴ /місяць
       </div>
       <div className="mt-4 max-w-xs m-auto">
         <p className="text-gray-500 text-base text-center min-h-24">

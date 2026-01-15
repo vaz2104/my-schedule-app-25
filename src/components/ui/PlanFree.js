@@ -31,19 +31,19 @@ export default function PlanFree({
       <div className="mt-4">
         <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
           <li className="flex items-center">
-            <CheckCircleIcon className={"w-4 h-4 text-green-600"} />
-            <p className="ml-2">1 співробітник</p>
+            <div className="w-4">
+              <CheckCircleIcon className={"w-4 h-4 text-green-600"} />
+            </div>
+            <p className="ml-2">Спробуйте сьогодні без ніяких зобов'язань!</p>
           </li>
           <li className="flex items-center">
-            <CheckCircleIcon className={"w-4 h-4 text-red-400"} />
+            <div className="w-4">
+              <CheckCircleIcon className={"w-4 h-4 text-red-400"} />
+            </div>
+
             <p className="ml-2 text-red-400">
-              Доступні <span className="font-bold">лише 3</span> записи на день
-            </p>
-          </li>
-          <li className="flex items-center">
-            <CheckCircleIcon className={"w-4 h-4 text-red-400"} />
-            <p className="ml-2 text-red-400">
-              <span className="font-bold ">Тільки 5</span> клієнтів мають доступ
+              Безкоштовний доступ до платформи без ніяких обмежень{" "}
+              <span className="font-bold">лише на 7 днів</span>
             </p>
           </li>
         </ul>

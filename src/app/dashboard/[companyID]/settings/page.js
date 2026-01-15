@@ -1,16 +1,71 @@
 "use client";
 import ThemePalette from "@/components/admin/ThemePalette";
+import Alert from "@/components/ui/Alert";
 import PlanBase from "@/components/ui/PlanBase";
 import PlanBusiness from "@/components/ui/PlanBusiness";
 import PlanBusinessPlus from "@/components/ui/PlanBusinessPlus";
 import PlanFree from "@/components/ui/PlanFree";
+import Spinner from "@/components/ui/Spinner";
 import { useBaseURL } from "@/hooks/useBaseURL";
 import { useAppStore } from "@/store/useAppStore";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
   const { themePalette, companyPlan } = useAppStore();
   const { baseDashboardLink } = useBaseURL();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [exchange, setExchange] = useState(0);
+
+  async function getExchangeData() {
+    const url =
+      "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        setError("Сталася помилка при виконанні запиту");
+        setIsLoading(false);
+        return;
+      }
+
+      const result = await response.json();
+
+      result.forEach((element) => {
+        if (element?.cc === "EUR") setExchange(element?.rate);
+      });
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error.message);
+      setError("Сталася помилка при виконанні запиту");
+      setIsLoading(false);
+      return;
+    }
+  }
+
+  function selectPlanHandler(plan) {
+    localStorage.setItem("plan", plan);
+    redirect("/login");
+  }
+
+  useEffect(() => {
+    getExchangeData();
+  });
+
+  if (isLoading)
+    return (
+      <div className="py-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <Spinner />
+      </div>
+    );
+
+  if (error) {
+    return (
+      <div className="p-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <Alert className={"w-full"}>{error}</Alert>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
@@ -22,12 +77,32 @@ export default function SettingsPage() {
           <h2 className="font-bold text-lg">Ваш тарифний план</h2>
         </div>
         {companyPlan === "free" && <PlanFree activePlan={companyPlan} />}
-        {companyPlan === "basic" && <PlanBase activePlan={companyPlan} />}
+        {companyPlan === "basic" && (
+          <PlanBase
+            selectHandler={() => selectPlanHandler("basic")}
+            exchange={exchange}
+            price={process.env.NEXT_PUBLIC_PLAN_BASE || 0}
+            salePrice={process.env.NEXT_PUBLIC_PLAN_BASE_SALE || null}
+            activePlan={companyPlan}
+          />
+        )}
         {companyPlan === "business" && (
-          <PlanBusiness activePlan={companyPlan} />
+          <PlanBusiness
+            selectHandler={() => selectPlanHandler("business")}
+            exchange={exchange}
+            price={process.env.NEXT_PUBLIC_PLAN_BUSINESS || 0}
+            salePrice={process.env.NEXT_PUBLIC_PLAN_BUSINESS_SALE || null}
+            activePlan={companyPlan}
+          />
         )}
         {companyPlan === "businessPlus" && (
-          <PlanBusinessPlus activePlan={companyPlan} />
+          <PlanBusinessPlus
+            selectHandler={() => selectPlanHandler("businessPlus")}
+            exchange={exchange}
+            price={process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS || 0}
+            salePrice={process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS_SALE || null}
+            activePlan={companyPlan}
+          />
         )}
 
         <div className="mt-4 flex justify-center">

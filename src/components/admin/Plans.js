@@ -121,30 +121,32 @@ export default function Plans() {
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanBase
-              activePlan={companyPlan}
               selectHandler={() => selectPlanHandler("basic")}
               exchange={exchange}
-              price={15}
+              price={process.env.NEXT_PUBLIC_PLAN_BASE || 0}
+              salePrice={process.env.NEXT_PUBLIC_PLAN_BASE_SALE || null}
             />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanBusiness
-              activePlan={companyPlan}
               selectHandler={() => selectPlanHandler("business")}
               exchange={exchange}
-              price={29}
+              price={process.env.NEXT_PUBLIC_PLAN_BUSINESS || 0}
+              salePrice={process.env.NEXT_PUBLIC_PLAN_BUSINESS_SALE || null}
             />
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="px-4 py-2 h-full">
             <PlanBusinessPlus
-              activePlan={companyPlan}
               selectHandler={() => selectPlanHandler("businessPlus")}
               exchange={exchange}
-              price={69}
+              price={process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS || 0}
+              salePrice={
+                process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS_SALE || null
+              }
             />
           </div>
         </SwiperSlide>

@@ -114,6 +114,7 @@ export default function HomePlans() {
               selectHandler={() => selectPlanHandler("free")}
               exchange={exchange}
               price={0}
+              salePrice={0}
             />
           </div>
         </SwiperSlide>
@@ -122,7 +123,8 @@ export default function HomePlans() {
             <PlanBase
               selectHandler={() => selectPlanHandler("basic")}
               exchange={exchange}
-              price={15}
+              price={process.env.NEXT_PUBLIC_PLAN_BASE || 0}
+              salePrice={process.env.NEXT_PUBLIC_PLAN_BASE_SALE || null}
             />
           </div>
         </SwiperSlide>
@@ -131,7 +133,8 @@ export default function HomePlans() {
             <PlanBusiness
               selectHandler={() => selectPlanHandler("business")}
               exchange={exchange}
-              price={29}
+              price={process.env.NEXT_PUBLIC_PLAN_BUSINESS || 0}
+              salePrice={process.env.NEXT_PUBLIC_PLAN_BUSINESS_SALE || null}
             />
           </div>
         </SwiperSlide>
@@ -140,7 +143,10 @@ export default function HomePlans() {
             <PlanBusinessPlus
               selectHandler={() => selectPlanHandler("businessPlus")}
               exchange={exchange}
-              price={69}
+              price={process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS || 0}
+              salePrice={
+                process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS_SALE || null
+              }
             />
           </div>
         </SwiperSlide>

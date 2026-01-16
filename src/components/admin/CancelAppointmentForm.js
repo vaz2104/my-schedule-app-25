@@ -45,11 +45,11 @@ export default function CancelAppointmentForm({ mapItemId, successHandler }) {
   return (
     <Fragment>
       <button
-        className="button blank !px-2 !text-red-600 "
+        className="button red medium !px-2 !text-red-600 "
         onClick={() => setAppointmentId(mapItemId)}
       >
-        <span className="mr-1">Скасувати</span>
-        <CloseIcon className="w-4 text-red-600" />
+        <span className="mr-1 text-white">Скасувати</span>
+        <CloseIcon className="w-4 text-white" />
       </button>
       <ConfirmModal
         triger={appointmentId}

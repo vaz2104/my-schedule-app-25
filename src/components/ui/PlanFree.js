@@ -34,7 +34,9 @@ export default function PlanFree({
             <div className="w-4">
               <CheckCircleIcon className={"w-4 h-4 text-green-600"} />
             </div>
-            <p className="ml-2">Спробуйте сьогодні без ніяких зобов'язань!</p>
+            <p className="ml-2">
+              Спробуйте сьогодні без ніяких зобов&apos;язань!
+            </p>
           </li>
           <li className="flex items-center">
             <div className="w-4">

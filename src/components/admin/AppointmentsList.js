@@ -88,14 +88,14 @@ export default function AppointmentsList() {
                 {appointment?.scheduleId?.schedule[appointment?.appointmentKey]}
               </div>
             </div>
-            {!idDateDisabled && (
-              <div className="ml-4 flex-1 flex justify-end">
+            <div className="ml-4 flex-1 flex justify-end">
+              {!idDateDisabled && (
                 <CancelAppointmentForm
                   mapItemId={appointment?._id}
                   successHandler={loadAppointments}
                 />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         );
       })}

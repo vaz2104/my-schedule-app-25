@@ -69,7 +69,7 @@ export default function ClientSingle() {
       <div className="mt-16 mb-4">
         <h2 className="font-bold text-lg text-center">Історія записів</h2>
       </div>
-      <div className="">
+      <div className="px-4">
         <AppointmentsList />
       </div>
     </div>

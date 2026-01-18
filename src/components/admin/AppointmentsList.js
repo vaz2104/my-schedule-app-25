@@ -17,6 +17,7 @@ import {
 import Thumbnail from "../ui/Thumbnail";
 import { useAppStore } from "@/store/useAppStore";
 import Badge from "../ui/Badge";
+import NoHistoryList from "../general/NoHistoryList";
 
 export default function AppointmentsList() {
   const { companyPlan } = useAppStore();
@@ -60,14 +61,7 @@ export default function AppointmentsList() {
     );
   }
 
-  if (!appointments?.length)
-    return (
-      <div className="p-4">
-        <div className="text-center text-gray-400 mt-16">
-          <p>Записи відсутні</p>
-        </div>
-      </div>
-    );
+  if (!appointments?.length) return <NoHistoryList />;
 
   return (
     <div className="">

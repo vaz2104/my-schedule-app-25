@@ -57,7 +57,7 @@ export default function Events() {
         <h2 className="font-bold text-xl">Події</h2>
       </div>
       <div>
-        {events?.length ? (
+        {!events?.length ? (
           <NoNotifications />
         ) : (
           <>

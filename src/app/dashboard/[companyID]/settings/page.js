@@ -126,7 +126,7 @@ export default function SettingsPage() {
         </div>
         <div className="py-6 bg-gray-50 p-4 pb-8">
           <label className="flex items-center cursor-pointer">
-            <span className="block mr-3 text-base font-medium text-gray-600 dark:text-white flex-1">
+            <span className="block mr-3 text-base font-medium text-gray-600 flex-1">
               Закрити бот для відвідувачів
             </span>
             <input

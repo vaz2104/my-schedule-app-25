@@ -30,7 +30,7 @@ export default function HeaderDashboard() {
 
   return (
     <header className="px-4">
-      <nav className="bg-white border-gray-200 lg:px-6 py-4 dark:bg-gray-800 max-w-3xl mx-auto">
+      <nav className="bg-white border-gray-200 lg:px-6 py-4 max-w-3xl mx-auto">
         <div
           className={cn(
             `flex flex-wrap justify-between items-center mx-auto max-w-screen-xl`,

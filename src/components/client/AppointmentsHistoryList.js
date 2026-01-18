@@ -105,7 +105,7 @@ export default function AppointmentsHistoryList() {
                   {idDateDisabled ? (
                     <CheckCircleIcon
                       className={cn(
-                        "w-8 h-8 text-green-500 animate__animated animate__bounceIn"
+                        "w-8 h-8 text-green-600 animate__animated animate__bounceIn"
                       )}
                     />
                   ) : (

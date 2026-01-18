@@ -20,6 +20,8 @@ import { NotificationService } from "@/services/NotificatoinsServices";
 import { AppointmentService } from "@/services/AppointmentService";
 import { useAppStore } from "@/store/useAppStore";
 import NoSchedule from "./NoSchedule";
+import Thumbnail from "../ui/Thumbnail";
+import CancelAppointmentForm from "./CancelAppointmentForm";
 
 export default function ActiveDaySchedule() {
   const { adminId, companyPlan } = useAppStore();
@@ -141,6 +143,7 @@ export default function ActiveDaySchedule() {
     let status = true;
     if (
       companyPlan !== "free" &&
+      companyPlan !== "basic" &&
       adminId === session?.userId &&
       adminId !== params?.specialistID
     ) {
@@ -212,7 +215,7 @@ export default function ActiveDaySchedule() {
       {selectedDaySchedule &&
       Object.keys(selectedDaySchedule?.schedule).length ? (
         <Fragment>
-          <div className="mt-2">
+          <div className="mt-2 ">
             {Object.keys(selectedDaySchedule?.schedule).map((itemKey) => {
               const isOldDate = CalendarService.isOldDate(
                 selectedDate,
@@ -230,45 +233,70 @@ export default function ActiveDaySchedule() {
               return (
                 <div
                   className={cn(
-                    "py-4 relative flex justify-between items-center",
+                    "my-4 rounded-xl overflow-hidden shadow-md",
                     isOldDate && "opacity-45"
                   )}
                   key={`schedule-${itemKey}`}
                 >
-                  <div className="absolute bottom-0 left-2 right-2 border-t border-t-gray-200"></div>
-                  <div className="font-bold text-lg ml-2 py-1">
-                    {selectedDaySchedule?.schedule[itemKey]}
-                  </div>
-                  {bookedAppointment ? (
-                    <div className="flex-1 ml-4 flex items-center">
-                      <Link
-                        href={`${baseDashboardLink}/clients/${bookedAppointment?.clientId?._id}`}
-                        className="text-sm text-gray-500"
-                      >
-                        {bookedAppointment?.clientId?.firstName ||
-                          bookedAppointment?.clientId?.username}
-                      </Link>
+                  <div className="relative flex items-center justify-between flex-wrap p-4 text-gray-900 bg-gray-100 ">
+                    <div className="font-bold text-xl pt-0.5">
+                      {selectedDaySchedule?.schedule[itemKey]}
                     </div>
-                  ) : (
-                    <div className="flex-1 ml-4 flex items-center">
-                      <p className="text-sm text-gray-500">Запис відсутній</p>
-                    </div>
-                  )}
 
-                  {!isOldDate && isEditingAllowed && (
-                    <div className="text-right">
-                      <div className="flex">
-                        <div className="flex justify-center">
-                          <button
-                            className="button blank !px-2"
-                            onClick={() =>
-                              initDeletingHandler(itemKey, bookedAppointment)
-                            }
-                          >
-                            <TrashIcon className="w-4 text-red-600" />
-                          </button>
+                    {!isOldDate && (
+                      <div className="text-right order-2 sm:order-3">
+                        <div className="flex">
+                          <div className="flex justify-center">
+                            <button
+                              className="button blank medium !px-2 md:!max-w-54"
+                              onClick={() =>
+                                initDeletingHandler(itemKey, bookedAppointment)
+                              }
+                            >
+                              <span className="text-red-600">
+                                Видалити час з графіку
+                              </span>
+                              <TrashIcon className="ml-2 w-4 text-red-600" />
+                            </button>
+                          </div>
                         </div>
                       </div>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 border-t border-t-gray-200"></div>
+                  </div>
+
+                  {bookedAppointment ? (
+                    <div className="mt-2 p-4">
+                      <div className="flex items-center justify-between">
+                        <Link
+                          href={`${baseDashboardLink}/clients/${bookedAppointment?.clientId?._id}`}
+                          className="flex items-center"
+                        >
+                          <div>
+                            <Thumbnail
+                              url={bookedAppointment?.clientId?.photoUrl}
+                            />
+                          </div>
+                          <div className="font-bold text-gray-500 underline ml-4">
+                            {bookedAppointment?.clientId?.firstName ||
+                              bookedAppointment?.clientId?.username}
+                          </div>
+                        </Link>
+                        {!isOldDate && (
+                          <div className="ml-2">
+                            <CancelAppointmentForm
+                              mapItemId={bookedAppointment?._id}
+                              successHandler={() =>
+                                loadSelectedDaySchedule(selectedDate)
+                              }
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-2 py-6 flex items-center justify-center w-full">
+                      <p className="text-sm text-gray-500">Запис відсутній</p>
                     </div>
                   )}
                 </div>

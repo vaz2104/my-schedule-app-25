@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NotificationService } from "@/services/NotificatoinsServices";
 import { AuthService } from "@/services/AuthService";
+import NoNotifications from "@/components/admin/NoNotifications";
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -56,12 +57,8 @@ export default function Events() {
         <h2 className="font-bold text-xl">Події</h2>
       </div>
       <div>
-        {!events?.length ? (
-          <div className="mt-8">
-            <p className="text-center text-md font-medium my-12 text-gray-400">
-              Події відсутні
-            </p>
-          </div>
+        {events?.length ? (
+          <NoNotifications />
         ) : (
           <>
             {events.map((event, index) => {

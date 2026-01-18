@@ -7,7 +7,7 @@ export default function Services() {
   const { role } = useAppStore();
 
   return (
-    <div className="">
+    <div className="py-4">
       <div className="mb-8 mt-4 text-center">
         <h2 className="font-bold text-xl">Послуги</h2>
       </div>

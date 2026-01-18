@@ -4,9 +4,9 @@ import React from "react";
 export default function Step1({ toket, setToken }) {
   return (
     <div>
-      <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400 ml-3">
+      <ol className="relative text-gray-500 border-s border-gray-200 ml-3">
         <li className="mb-10 ms-6">
-          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
             1
           </span>
           <div className="pt-0.5">
@@ -33,7 +33,7 @@ export default function Step1({ toket, setToken }) {
           </div>
         </li>
         <li className="mb-10 ms-6">
-          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
             2
           </span>
           <div className="pt-0.5">
@@ -65,7 +65,7 @@ export default function Step1({ toket, setToken }) {
           </div>
         </li>
         <li className="mb-10 ms-6">
-          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
             3
           </span>
           <div className="pt-0.5">
@@ -84,7 +84,7 @@ export default function Step1({ toket, setToken }) {
           </div>
         </li>
         <li className="mb-10 ms-6">
-          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
             4
           </span>
           <div className="pt-0.5">
@@ -105,7 +105,7 @@ export default function Step1({ toket, setToken }) {
           </div>
         </li>
         <li className="ms-6">
-          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
             5
           </span>
           <div className="pt-1.5">

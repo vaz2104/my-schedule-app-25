@@ -22,7 +22,7 @@ export const CalendarIcon = ({ className }) => {
 export const AngleLeftIcon = ({ className }) => {
   return (
     <svg
-      className={cn("w-6 h-6 text-gray-800 dark:text-white", className)}
+      className={cn("w-6 h-6 text-gray-800", className)}
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -43,7 +43,7 @@ export const AngleLeftIcon = ({ className }) => {
 export const AngleRightIcon = ({ className }) => {
   return (
     <svg
-      className={cn("w-6 h-6 text-gray-800 dark:text-white", className)}
+      className={cn("w-6 h-6 text-gray-800", className)}
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -65,7 +65,7 @@ export const AngleRightIcon = ({ className }) => {
 export const CloseIcon = ({ className }) => {
   return (
     <svg
-      className={cn("w-6 h-6 text-gray-800 dark:text-white", className)}
+      className={cn("w-6 h-6 text-gray-800", className)}
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"

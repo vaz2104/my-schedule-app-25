@@ -47,7 +47,7 @@ export default function NotificationCard({ dataObject }) {
             </span>
           </div>
           <div className="ms-3 text-sm font-normal">
-            <div className="text-sm font-semibold text-gray-900 dark:text-white">
+            <div className="text-sm font-semibold text-gray-900">
               {author?.firstName || author?.username}
             </div>
             <p className="text-xs text-gray-400">{pringDate(createdAt)}</p>

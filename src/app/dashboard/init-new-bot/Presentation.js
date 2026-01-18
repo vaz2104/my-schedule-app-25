@@ -17,7 +17,7 @@ export default function Presentation({ toggleHint }) {
             className="animate__animated animate__fadeIn max-w-md mx-auto w-full"
             alt=""
           />
-          <div className="mt-8 font-light text-gray-500 sm:text-xl dark:text-gray-400 px-8 text-center animate__animated animate__fadeIn">
+          <div className="mt-8 font-light text-gray-500 sm:text-xl px-8 text-center animate__animated animate__fadeIn">
             Пройдіть лише 3 кроки та отримайте власний телеграм бот з
             персональним графіком роботи
           </div>

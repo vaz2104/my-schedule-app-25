@@ -51,7 +51,7 @@ export default function SchedulePage() {
             <Thumbnail url={profile?.photoUrl} size="lg" />
           </div>
           <div className="text-sm font-normal text-center mt-2">
-            <div className="font-bold text-xl text-gray-900 dark:text-white">
+            <div className="font-bold text-xl text-gray-900 ">
               {profile?.firstName || profile?.username}
             </div>
           </div>

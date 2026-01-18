@@ -109,7 +109,7 @@ export default function Clients() {
       </div>
       <div className="mb-8">
         {role === "admin" && (
-          <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="mb-4 border-b border-gray-200">
             <ul className="flex flex-wrap -mb-px text-sm font-medium text-center">
               <li className="me-2" role="presentation">
                 <button

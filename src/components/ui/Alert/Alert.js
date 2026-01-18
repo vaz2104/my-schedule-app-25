@@ -5,26 +5,26 @@ export default function Alert({ type = "error", children, className }) {
 
   switch (type) {
     case "error":
-      classes = "bg-red-100 text-red-800 dark:text-red-400";
+      classes = "bg-red-100 text-red-800";
       break;
     case "warning":
-      classes = "bg-yellow-100 text-yellow-800 dark:text-yellow-400";
+      classes = "bg-yellow-100 text-yellow-800";
       break;
     case "success":
-      classes = "bg-green-50 text-green-800 dark:text-green-400";
+      classes = "bg-green-50 text-green-800";
       break;
     case "default":
-      classes = "bg-gray-50 text-gray-800 dark:text-gray-400";
+      classes = "bg-gray-50 text-gray-800";
       break;
     case "info":
-      classes = "bg-blue-50 text-blue-800 dark:text-blue-400";
+      classes = "bg-blue-50 text-blue-800";
       break;
   }
 
   return (
     <div
       className={cn(
-        "flex items-center p-4 text-sm rounded-lg dark:bg-gray-800",
+        "flex items-center p-4 text-sm rounded-lg",
         classes,
         className
       )}

@@ -94,7 +94,7 @@ export default function AvailableWorkers() {
                   >
                     <Thumbnail url={worker?.workerId?.photoUrl} theme="light" />
                     <div className="ms-3 text-sm font-normal">
-                      <div className="text-base font-semibold text-gray-900 dark:text-white">
+                      <div className="text-base font-semibold text-gray-900 ">
                         {adminId === worker?.workerId?._id ? (
                           <>Ви</>
                         ) : (

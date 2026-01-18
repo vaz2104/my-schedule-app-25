@@ -5,18 +5,18 @@ import { EnvelopeIcon, PhoneIcon } from "../ui/Icons";
 
 export default function Footer() {
   return (
-    <footer className="p-4 bg-white md:p-8 dark:bg-gray-800">
+    <footer className="p-4 bg-white md:p-8">
       <div className="mx-auto max-w-screen-xl text-center">
         <a
           href="#"
-          className="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+          className="flex justify-center items-center text-2xl font-semibold text-gray-900"
         >
           MYSCHEDULE
         </a>
-        <p className=" text-gray-500 dark:text-gray-400">
+        <p className=" text-gray-500">
           Графік роботи онлайн для українських бізнес-команд
         </p>
-        <ul className="flex flex-wrap justify-center items-center my-6 text-main dark:text-white">
+        <ul className="flex flex-wrap justify-center items-center my-6 text-main">
           <li>
             <Link
               href="tel:0987766155"
@@ -36,7 +36,7 @@ export default function Footer() {
             </Link>
           </li>
         </ul>
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+        <span className="text-sm text-gray-500 sm:text-center">
           © {new Date().getFullYear()}{" "}
           <Link href="/" className="hover:underline">
             MYSCHEDULE

@@ -76,7 +76,7 @@ export default function AppointmentsHistoryList() {
 
   return (
     <div className="">
-      <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400 ml-3">
+      <ol className="relative text-gray-500 border-s border-gray-200 ml-3">
         {appointments.map((appointment) => {
           // console.log(appointment);
 
@@ -97,7 +97,7 @@ export default function AppointmentsHistoryList() {
 
               <span
                 className={cn(
-                  "absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700",
+                  "absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white",
                   !idDateDisabled && "bg-main"
                 )}
               >
@@ -160,7 +160,7 @@ export default function AppointmentsHistoryList() {
                           size="xs"
                         />
                         <div className="ms-2 text-sm font-normal flex-1">
-                          <div className=" dark:text-white">
+                          <div className="">
                             <>
                               {appointment?.workerId?.firstName ||
                                 appointment?.workerId?.username}

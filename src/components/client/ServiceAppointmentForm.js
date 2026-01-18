@@ -141,9 +141,9 @@ export default function ServiceAppointmentForm({
     >
       <div className="">
         <div className="mt-8">
-          <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400 ml-3">
+          <ol className="relative text-gray-500 border-s border-gray-200 ml-3">
             <li className="mb-10 ms-6">
-              <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+              <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
                 1
               </span>
               <div className="pt-0.5">
@@ -176,7 +176,7 @@ export default function ServiceAppointmentForm({
               companyPlan !== "free" &&
               companyPlan !== "basic" && (
                 <li className="mb-10 ms-6">
-                  <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                  <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
                     2
                   </span>
                   <div className="pt-0.5">
@@ -200,7 +200,7 @@ export default function ServiceAppointmentForm({
                             >
                               <Thumbnail url={worker?.workerId?.photoUrl} />
                               <div className="ms-3 text-sm font-normal flex-1 ">
-                                <div className="text-base font-semibold text-gray-900 dark:text-white">
+                                <div className="text-base font-semibold text-gray-900">
                                   <>
                                     {worker?.workerId?.firstName ||
                                       worker?.workerId?.username}
@@ -232,7 +232,7 @@ export default function ServiceAppointmentForm({
               )}
 
             <li className={cn("mb-10 ms-6")}>
-              <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+              <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
                 {!params?.specialistID &&
                 companyPlan !== "free" &&
                 companyPlan !== "basic" &&

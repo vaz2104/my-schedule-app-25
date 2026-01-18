@@ -27,7 +27,7 @@ export default function WorkersList({ workers, baseURL }) {
             >
               <Thumbnail url={worker?.workerId?.photoUrl} />
               <div className="ms-3 text-sm font-normal flex-1">
-                <div className="text-base font-semibold text-gray-900 dark:text-white">
+                <div className="text-base font-semibold text-gray-900">
                   {adminId === worker?.workerId?._id ? (
                     <>Ви</>
                   ) : (

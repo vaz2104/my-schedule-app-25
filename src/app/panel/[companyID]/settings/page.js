@@ -99,7 +99,7 @@ export default function SettingsPage() {
           <Thumbnail url={clientSettings?.telegramUserId?.photoUrl} size="lg" />
         </div>
         <div className="text-sm font-normal text-center mt-2">
-          <div className="font-bold text-xl text-gray-900 dark:text-white">
+          <div className="font-bold text-xl text-gray-900 ">
             {clientSettings?.telegramUserId?.firstName ||
               clientSettings?.telegramUserId?.username}
           </div>
@@ -110,7 +110,7 @@ export default function SettingsPage() {
       </div>
       <div className="py-6 border-b border-gray-200">
         <label className="flex items-center cursor-pointer">
-          <span className="block mr-3 text-base font-medium text-gray-600 dark:text-white flex-1">
+          <span className="block mr-3 text-base font-medium text-gray-600  flex-1">
             Відправляти мені сповіщення, про нові знижки та послуги
           </span>
           <input
@@ -127,7 +127,7 @@ export default function SettingsPage() {
       </div>
       <div className="py-6 border-b border-gray-200">
         <label className="flex items-center cursor-pointer">
-          <span className="block mr-3 text-base font-medium text-gray-600 dark:text-white flex-1">
+          <span className="block mr-3 text-base font-medium text-gray-600  flex-1">
             Відправляти мені сповіщення, про зміни в розкладі
           </span>
           <input
@@ -147,7 +147,7 @@ export default function SettingsPage() {
       </div>
       <div className="py-6 border-b border-gray-200">
         <label className="flex items-center cursor-pointer">
-          <span className="block mr-3 text-base font-medium text-gray-600 dark:text-white flex-1">
+          <span className="block mr-3 text-base font-medium text-gray-600  flex-1">
             Відправляти мені сповіщення із нагадуванням про запис на прийом
           </span>
           <input

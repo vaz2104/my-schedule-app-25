@@ -13,9 +13,7 @@ export default function ClientCard({ id, name, thumbnail }) {
     >
       <Thumbnail url={thumbnail} />
       <div className="ms-3 text-sm font-normal flex-1 ">
-        <div className="text-base font-semibold text-gray-900 dark:text-white">
-          {name}
-        </div>
+        <div className="text-base font-semibold text-gray-900 ">{name}</div>
       </div>
       {/* <BlockStatus /> */}
     </Link>

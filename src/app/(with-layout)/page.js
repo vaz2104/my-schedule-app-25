@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div>
       <div>
-        <section className="bg-white dark:bg-gray-900 min-h-[calc(100vh-7rem)]">
+        <section className="bg-white min-h-[calc(100vh-7rem)]">
           <div className="grid max-w-screen-xl py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div className="flex justify-center lg:mt-0 lg:col-span-5 lg:order-2">
               <img
@@ -22,10 +22,10 @@ export default function Home() {
               />
             </div>
             <div className="m-auto lg:mr-auto place-self-center lg:col-span-7 lg:order-1 text-center lg:text-left">
-              <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white animate__animated animate__fadeIn">
+              <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl animate__animated animate__fadeIn">
                 Ваш графік роботи у власному Telegram боті
               </h1>
-              <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400 animate__animated animate__fadeIn">
+              <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl animate__animated animate__fadeIn">
                 Повноцінне рішення для роботи з розкладом з будь-якої точки, що
                 дозволяє точно і швидко скласти Ваш графік та надати доступ
                 клієнтам
@@ -81,10 +81,10 @@ export default function Home() {
 
       <div className="mt-24">
         <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">
             Розроблено для таких бізнес-команд, як Ваша
           </h2>
-          <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
+          <p className="mb-5 font-light text-gray-500 sm:text-xl">
             Незалежно від того, чи Ви самозайнята особа з невеликим офісом, чи
             компанія з командою спеціалістів, тут Ви можете обрати тарифний
             план, який ідеально підходить саме Вам
@@ -95,10 +95,10 @@ export default function Home() {
 
       <div className="py-12">
         <div className="mx-auto max-w-screen-md text-center">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
             Демо-версії ботів
           </h2>
-          <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
+          <p className="mb-5 font-light text-gray-500 sm:text-xl">
             Щоб краще зрозуміти, що Ви отримаєте в результаті, ми створили для
             Вас тестові версії ботів, підключені до нашої адміністративної
             панелі, які Ви можете відкрити та ознайомитися з функціоналом
@@ -149,10 +149,10 @@ export default function Home() {
       <div className="">
         <div className="bg-gray-50 py-12 px-4 -mx-4">
           <div className="mx-auto max-w-screen-md text-center">
-            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
               Доступ до адмінпанелі будь-де завдяки Telegram
             </h2>
-            <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
+            <p className="mb-5 font-light text-gray-500 sm:text-xl">
               Керуйте своїм графіком з телефону. Панель адміністратора доступна
               в нашому Telegram-боті, що дозволить Вам отримувати сповіщення та
               завжди мати доступ до свого розкладу
@@ -179,7 +179,7 @@ export default function Home() {
 
       {/* <div className="max-w-6xl m-auto my-12">
         <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 ">
             Часто задавані питання
           </h2>
           <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">

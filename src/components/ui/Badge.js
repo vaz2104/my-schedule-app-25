@@ -5,23 +5,19 @@ export default function Badge({ children, scheme }) {
   let colorScheme = "";
   switch (scheme) {
     case "green":
-      colorScheme =
-        "bg-green-200 text-green-800 dark:bg-green-900 dark:text-green-300";
+      colorScheme = "bg-green-200 text-green-800";
       break;
     case "yellow":
-      colorScheme =
-        "bg-yellow-200 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300";
+      colorScheme = "bg-yellow-200 text-yellow-800";
       break;
     case "blue":
-      colorScheme =
-        "bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-blue-300";
+      colorScheme = "bg-blue-200 text-blue-800";
       break;
     case "red":
-      colorScheme = "bg-red-200 text-red-800 dark:bg-red-900 dark:text-red-300";
+      colorScheme = "bg-red-200 text-red-800";
       break;
     default:
-      colorScheme =
-        "bg-gray-200 text-gray-800 dark:bg-gray-900 dark:text-gray-300";
+      colorScheme = "bg-gray-200 text-gray-800";
       break;
   }
   return (

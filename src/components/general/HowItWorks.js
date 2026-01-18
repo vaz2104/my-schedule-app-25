@@ -15,10 +15,10 @@ export default function HowItWorks() {
   return (
     <div className="">
       <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12 px-4 ">
-        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
           Як це працює?
         </h2>
-        <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
+        <p className="mb-5 font-light text-gray-500 sm:text-xl">
           Всього кілька кроків, які потрібно пройти, аби отримати персональний
           бот з Вашим графіком роботи
         </p>

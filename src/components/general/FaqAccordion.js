@@ -41,7 +41,7 @@ export default function FaqAccordion() {
               <h2>
                 <button
                   type="button"
-                  className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+                  className="flex items-center justify-between w-full py-5 font-medium rtl:text-right text-gray-500 border-b border-gray-200"
                   onClick={() => toggleAccordionTab(`faqItem${index}`)}
                 >
                   <span>{faqItem?.header}</span>
@@ -59,10 +59,8 @@ export default function FaqAccordion() {
                   activeTab === `faqItem${index}` && "block"
                 )}
               >
-                <div className="py-5 border-b border-gray-200 dark:border-gray-700">
-                  <p className="mb-2 text-gray-500 dark:text-gray-400">
-                    {faqItem?.body}
-                  </p>
+                <div className="py-5 border-b border-gray-200">
+                  <p className="mb-2 text-gray-500">{faqItem?.body}</p>
                 </div>
               </div>
             </div>

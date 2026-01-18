@@ -18,7 +18,7 @@ export default function FormServicesList({
 
   return (
     <div className="mt-4">
-      <ul className="space-y-1 text-gray-500 list-inside dark:text-gray-400">
+      <ul className="space-y-1 text-gray-500 list-inside">
         {services.map((service) => {
           return (
             <li

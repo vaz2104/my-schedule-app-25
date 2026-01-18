@@ -15,7 +15,7 @@ export default function FormAuthorization() {
             alt="login poster"
             className="w-64"
           />
-          <div className="mt-8 font-light text-gray-500 sm:text-xl dark:text-gray-400 px-8 text-center">
+          <div className="mt-8 font-light text-gray-500 sm:text-xl px-8 text-center">
             Для входу перейдіть в телеграм бот та згенеруйте пароль для доступу
           </div>
           <div className="mt-8">

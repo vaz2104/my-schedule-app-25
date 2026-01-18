@@ -33,7 +33,7 @@ export default function BaseModal({
     >
       <div className={cn("relative p-4 w-full max-w-md max-h-full", modalSize)}>
         {/* <!-- Modal content --> */}
-        <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+        <div className="relative bg-white rounded-lg shadow-sm">
           {/* <!-- Modal loader layer --> */}
           {loading && (
             <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-white/40 backdrop-blur-xs z-50 flex justify-center items-center">
@@ -73,14 +73,14 @@ export default function BaseModal({
             )}
           >
             {title && (
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white  pr-6">
+              <h3 className="text-xl font-semibold text-gray-900  pr-6">
                 {title}
               </h3>
             )}
 
             <button
               type="button"
-              className="absolute top-4 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              className="absolute top-4 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
               data-modal-hide="popup-modal"
               onClick={cancelFn || closeFn}
               disabled={loading}
@@ -93,7 +93,7 @@ export default function BaseModal({
           <div className="p-4 pt-0">
             {description && (
               <div className="mt-4">
-                <p className="flex mb-4 items-center text-sm font-normal text-gray-500 dark:text-gray-400">
+                <p className="flex mb-4 items-center text-sm font-normal text-gray-500">
                   {description}
                 </p>
               </div>

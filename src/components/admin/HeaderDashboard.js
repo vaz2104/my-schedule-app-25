@@ -46,7 +46,7 @@ export default function HeaderDashboard() {
             <CalendarPlusIcon
               className={"mr-2 size-6 sm:size-9 text-main mb-0.5"}
             />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="self-center text-xl font-semibold whitespace-nowrap ">
               MYSCHEDULE
             </span>
           </Link>

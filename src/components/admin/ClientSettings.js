@@ -51,7 +51,7 @@ export default function ClientSettings() {
   return (
     <div>
       <div className="flex justify-between items-center py-4 border-b border-gray-200">
-        <span className="block mr-3 text-base font-medium text-gray-600 dark:text-white flex-1">
+        <span className="block mr-3 text-base font-medium text-gray-600  flex-1">
           Сповіщення, про нові знижки та послуги
         </span>
         <div className="ml-2">
@@ -70,7 +70,7 @@ export default function ClientSettings() {
         </div>
       </div>
       <div className="flex justify-between items-center py-4 border-b border-gray-200">
-        <span className="block mr-3 text-base font-medium text-gray-600 dark:text-white flex-1">
+        <span className="block mr-3 text-base font-medium text-gray-600  flex-1">
           Сповіщення, про зміни в розкладі
         </span>
         <div className="ml-2">
@@ -89,7 +89,7 @@ export default function ClientSettings() {
         </div>
       </div>
       <div className="flex justify-between items-center py-4 border-b border-gray-200">
-        <span className="block mr-3 text-base font-medium text-gray-600 dark:text-white flex-1">
+        <span className="block mr-3 text-base font-medium text-gray-600  flex-1">
           Сповіщення із нагадуванням про запис на прийом
         </span>
         <div className="ml-2">

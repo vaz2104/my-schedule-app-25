@@ -11,12 +11,10 @@ export default function PlanFree({
       <div className="mb-4 mt-4 text-center">
         <h2 className="font-bold text-2xl text-gray-700">Безкоштовний</h2>
       </div>
-      <div className="flex justify-center items-baseline text-gray-900 dark:text-white">
+      <div className="flex justify-center items-baseline text-gray-900">
         <span className="text-3xl font-semibold">€</span>
         <span className="text-5xl font-extrabold tracking-tight">{price}</span>
-        <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
-          /міс
-        </span>
+        <span className="ms-1 text-xl font-normal text-gray-500">/міс</span>
       </div>
       <div className="mt-2 text-center text-gray-400">
         {Math.ceil(price * exchange)} ₴ /місяць
@@ -29,7 +27,7 @@ export default function PlanFree({
       </div>
 
       <div className="mt-4">
-        <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+        <ul className="max-w-md space-y-1 text-gray-500 list-inside">
           <li className="flex items-center">
             <div className="w-4">
               <CheckCircleIcon className={"w-4 h-4 text-green-600"} />

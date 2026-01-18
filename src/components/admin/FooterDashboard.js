@@ -5,9 +5,9 @@ import { EnvelopeIcon, PhoneIcon } from "../ui/Icons";
 
 export default function FooterDashboard() {
   return (
-    <footer className="p-4 bg-white md:p-8 dark:bg-gray-800">
+    <footer className="p-4 bg-white md:p-8">
       <div className="max-w-3xl mx-auto text-center ">
-        <ul className="flex flex-wrap justify-center items-center my-4 text-main dark:text-white">
+        <ul className="flex flex-wrap justify-center items-center my-4 text-main ">
           <li>
             <Link
               href="tel:0987766155"
@@ -27,7 +27,7 @@ export default function FooterDashboard() {
             </Link>
           </li>
         </ul>
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+        <span className="text-sm text-gray-500 sm:text-center">
           © {new Date().getFullYear()}{" "}
           <Link href="/" className="hover:underline">
             MYSCHEDULE

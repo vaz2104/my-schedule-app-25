@@ -1,0 +1,16 @@
+import Image from "next/image";
+import poster from "/public/no-services.svg";
+
+export default function NoServicesList() {
+  return (
+    <div className="mt-10">
+      <div className="flex justify-center opacity-90">
+        <Image src={poster} alt="my icon" width={320} height={320} />
+      </div>
+
+      <p className="my-4 text-lg text-center text-gray-400 ">
+        У Вас поки немає доданих послуг!
+      </p>
+    </div>
+  );
+}

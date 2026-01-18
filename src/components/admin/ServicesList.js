@@ -1,14 +1,8 @@
+import NoServicesList from "./NoServicesList";
 import ServiceCard from "./ServiceCard";
 
 export default function ServicesList({ updateListHandler, services }) {
-  if (!services?.length)
-    return (
-      <div className="p-4">
-        <div className="text-center text-gray-400 mt-16">
-          <p>У Вас поки немає доданих послуг</p>
-        </div>
-      </div>
-    );
+  if (services?.length) return <NoServicesList />;
 
   return (
     <div className="border-t border-gray-200">

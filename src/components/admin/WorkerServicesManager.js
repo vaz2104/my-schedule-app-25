@@ -9,6 +9,7 @@ import { CheckCircleIcon, MinusCircleIcon } from "../ui/Icons";
 import { cn } from "@/lib/cn";
 import { WorkerService } from "@/services/WorkerService";
 import { AuthService } from "@/services/AuthService";
+import NoServicesList from "./NoServicesList";
 
 export default function WorkerServicesManager() {
   const [isLoading, setIsLoading] = useState(true);
@@ -134,11 +135,7 @@ export default function WorkerServicesManager() {
           </div>
         </>
       ) : (
-        <>
-          <div className="text-center text-gray-400 mt-16">
-            <p>Жодних доступних місць для запису</p>
-          </div>
-        </>
+        <NoServicesList />
       )}
     </div>
   );

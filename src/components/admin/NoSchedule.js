@@ -1,4 +1,5 @@
 import Image from "next/image";
+import poster from "/public/no-day-schedule-admin.svg";
 
 export default function NoSchedule() {
   return (
@@ -6,9 +7,10 @@ export default function NoSchedule() {
       <div className="flex justify-center">
         <Image
           src={"/no-appointments-modified copy.png"}
-          width={320}
-          height={222}
+          width={440}
+          height={300}
           alt=""
+          className="max-w-xs sm:max-w-max"
         />
       </div>
 

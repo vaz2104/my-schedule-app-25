@@ -6,11 +6,11 @@ export default function NoSchedule() {
     <div className="text-center text-gray-400 mt-10">
       <div className="flex justify-center">
         <Image
-          src={"/no-appointments-modified copy.png"}
+          src={poster}
           width={440}
           height={300}
           alt=""
-          className="max-w-xs sm:max-w-max"
+          className="max-w-sm"
         />
       </div>
 

@@ -7,7 +7,7 @@ export default function NoSchedule() {
       <div className="flex justify-center bg-white">
         <Image
           src={poster}
-          alt="my icon"
+          alt="NoSchedule"
           width={440}
           height={440}
           className="w-xs sm:w-md"

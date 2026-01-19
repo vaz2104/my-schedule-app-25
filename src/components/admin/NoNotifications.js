@@ -5,7 +5,13 @@ export default function NoNotifications() {
   return (
     <div className="text-center text-gray-400 mt-10">
       <div className="flex justify-center">
-        <Image src={poster} alt="my icon" width={320} height={320} />
+        <Image
+          src={poster}
+          alt="my icon"
+          width={320}
+          height={320}
+          className="max-w-full"
+        />
       </div>
 
       <p className="my-8 text-lg">Події відсутні!</p>

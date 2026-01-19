@@ -10,7 +10,7 @@ export default function NoHistoryList() {
           alt="NoHistoryList"
           width={440}
           height={440}
-          className="max-w-xs sm:max-w-max"
+          className="max-w-full"
         />
       </div>
 

@@ -10,7 +10,7 @@ export default function NoSchedule() {
           width={440}
           height={300}
           alt=""
-          className="max-w-sm"
+          className="max-w-full"
         />
       </div>
 

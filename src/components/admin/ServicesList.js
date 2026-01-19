@@ -2,7 +2,7 @@ import NoServicesList from "./NoServicesList";
 import ServiceCard from "./ServiceCard";
 
 export default function ServicesList({ updateListHandler, services }) {
-  if (services?.length) return <NoServicesList />;
+  if (!services?.length) return <NoServicesList />;
 
   return (
     <div className="border-t border-gray-200">

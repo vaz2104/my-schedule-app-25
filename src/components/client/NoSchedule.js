@@ -10,7 +10,7 @@ export default function NoSchedule() {
           alt="my icon"
           width={440}
           height={440}
-          className="w-full max-w-xs sm:max-w-md m-auto"
+          className="w-xs sm:w-md m-auto border-0"
         />
       </div>
 

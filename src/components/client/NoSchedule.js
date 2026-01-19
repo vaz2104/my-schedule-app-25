@@ -3,18 +3,20 @@ import poster from "/public/no-day-schedule-client.svg";
 
 export default function NoSchedule() {
   return (
-    <div className="text-center text-gray-400 mt-10">
-      <div className="flex justify-center opacity-90">
+    <div className="mt-10">
+      <div className="">
         <Image
           src={poster}
           alt="my icon"
           width={440}
           height={440}
-          className="max-w-full"
+          className="w-full max-w-xs sm:max-w-md m-auto"
         />
       </div>
 
-      <p className="mt-2">Жодних доступних місць для запису!</p>
+      <p className="mt-2 text-center text-gray-500 text-lg">
+        Жодних доступних місць для запису!
+      </p>
     </div>
   );
 }

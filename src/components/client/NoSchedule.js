@@ -4,13 +4,13 @@ import poster from "/public/no-day-schedule-client.svg";
 export default function NoSchedule() {
   return (
     <div className="mt-10">
-      <div className="">
+      <div className="flex justify-center bg-white">
         <Image
           src={poster}
           alt="my icon"
           width={440}
           height={440}
-          className="w-xs sm:w-md m-auto border-none"
+          className="w-xs sm:w-md"
         />
       </div>
 

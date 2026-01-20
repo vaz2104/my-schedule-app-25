@@ -86,7 +86,7 @@ export default function InitNewBot() {
 
   return (
     <div>
-      <div className="mt-4">
+      <div className="px-4 mt-4">
         <BackButton url={"/dashboard"} label={"Назад"} />
       </div>
       <div className="ms-container pb-10">

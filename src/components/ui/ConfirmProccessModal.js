@@ -42,7 +42,7 @@ export default function ConfirmProccessModal({
                 <button
                   data-modal-hide="popup-modal"
                   type="button"
-                  className="button w-full min-w-48"
+                  className="button w-full"
                   onClick={confirmFn}
                   disabled={loading}
                 >

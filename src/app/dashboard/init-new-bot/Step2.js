@@ -34,14 +34,12 @@ export default function Step2({ botData }) {
                   @BotFather
                 </a>
                 та перейдіть по наступних кроках: <br />
-                <span className="font-bold">/mybots</span> {`>`}{" "}
+                <span className="font-bold">Open</span> {`>`}{" "}
                 <span className="font-bold">
                   {`"`}Назва Вашого бота{`"`}
                 </span>{" "}
-                {` > `} <span className="font-bold">Bot Settings</span>
-                {` > `} <span className="font-bold">Configure Mini App</span>{" "}
-                {` > `}
-                <span className="font-bold">Enable Mini App</span>
+                {` > `} <span className="font-bold">Mini Apps</span>
+                {` > `} <span className="font-bold">Main App</span>
               </p>
             </div>
           </li>
@@ -49,9 +47,42 @@ export default function Step2({ botData }) {
             <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
               2
             </span>
+            <div className="pt-1.5">
+              <p className="font-light text-left text-gray-500 text-sm">
+                Вставте Ваше персональне посилання в поле{" "}
+                <span className="font-bold">
+                  {`"`}Enter URL{`"`}
+                </span>
+              </p>
+            </div>
+          </li>
+          <li className="mb-10 ms-6">
+            <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
+              3
+            </span>
             <div className="pt-0.5">
               <p className="my-1 font-light text-left text-gray-500 text-sm">
-                Вставте в поле Ваше персональне посилання та відправте
+                В блоці{" "}
+                <span className="text-gray-500 font-bold">
+                  &quot;Launch Mode&quot;
+                </span>{" "}
+                оберіть варіант{" "}
+                <span className="text-gray-500 font-bold">
+                  &quot;Fullsize&quot;
+                </span>
+              </p>
+            </div>
+          </li>
+          <li className="mb-10 ms-6">
+            <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
+              4
+            </span>
+            <div className="pt-1.5">
+              <p className="font-light text-left text-gray-500 text-sm">
+                Натисніть кнопку{" "}
+                <span className="font-bold">
+                  {`"`}Save{`"`}
+                </span>
               </p>
             </div>
           </li>

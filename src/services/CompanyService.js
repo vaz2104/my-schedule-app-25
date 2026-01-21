@@ -10,13 +10,10 @@ class CompanyServiceClass {
     return botData;
   }
 
-  async saveNewBot(adminId, token) {
+  async saveNewBot(options) {
     const botData = await fetchApi(
       `${process.env.NEXT_PUBLIC_BOT_BACKEND_URL}/api/company`,
-      {
-        adminId,
-        token,
-      }
+      options
     );
     return botData;
   }

@@ -19,7 +19,7 @@ import { ThemeContext } from "@/context/ThemeContext";
 
 export default function InitNewBot() {
   const { setWarningError } = useContext(ThemeContext);
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(2);
   const [isHintChecked, setIsHintChecked] = useState(false);
   const [botToken, setBotToken] = useState("");
   const [loading, setLoading] = useState(false);
@@ -60,16 +60,17 @@ export default function InitNewBot() {
 
     const session = await AuthService.getSession();
 
-    const newBotResponse = await CompanyService.saveNewBot(
-      session.userId,
-      botToken
-    );
+    const newBotResponse = await CompanyService.saveNewBot({
+      adminId: session.userId,
+      token: botToken,
+      telegramBotId: telegramBotData?.id,
+    });
 
     if (newBotResponse?.status === 200) {
       setBot(newBotResponse?.data);
       setActiveStep(activeStep + 1);
     } else {
-      setWarningError("Бот з даним токеном вже зареєстрований в системі!");
+      setWarningError("Даний бот вже зареєстрований в системі!");
     }
 
     clearStepOneState();

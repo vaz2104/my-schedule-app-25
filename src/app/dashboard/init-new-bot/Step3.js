@@ -37,13 +37,12 @@ export default function Step3({ botData }) {
                   @BotFather
                 </a>
                 та перейдіть по наступних кроках: <br />
-                <span className="font-bold">/mybots</span> {`>`}{" "}
+                <span className="font-bold">Open</span> {`>`}{" "}
                 <span className="font-bold">
                   {`"`}Назва Вашого бота{`"`}
                 </span>{" "}
-                {` > `} <span className="font-bold">Bot Settings</span>
-                {` > `} <span className="font-bold">Menu Button</span> {` > `}
-                <span className="font-bold">Configure menu button</span>
+                {` > `} <span className="font-bold">Mini Apps</span>
+                {` > `} <span className="font-bold">Menu Button</span>
               </p>
             </div>
           </li>
@@ -53,7 +52,10 @@ export default function Step3({ botData }) {
             </span>
             <div className="pt-1.5">
               <p className="font-light text-left text-gray-500 text-sm">
-                Вставте в поле посилання та відправте
+                Вставте посилання в поле{" "}
+                <span className="font-bold">
+                  {`"`}Enter URL{`"`}
+                </span>
               </p>
             </div>
           </li>
@@ -63,9 +65,29 @@ export default function Step3({ botData }) {
             </span>
             <div className="pt-1.5">
               <p className="font-light text-left text-gray-500 text-sm">
-                Напишіть назву, яка буде відображатися на кнопці. Наприклад:{" "}
+                В поле{" "}
+                <span className="font-bold">
+                  {`"`}Enter Title{`"`}
+                </span>{" "}
+                напишіть назву, яка буде відображатися на кнопці
+              </p>
+              <p className="font-light text-left text-gray-500 text-sm">
+                Наприклад:{" "}
                 <span className="font-bold">
                   {`"`}Відкрити графік{`"`}
+                </span>
+              </p>
+            </div>
+          </li>
+          <li className="mb-10 ms-6">
+            <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
+              4
+            </span>
+            <div className="pt-1.5">
+              <p className="font-light text-left text-gray-500 text-sm">
+                Натисніть кнопку{" "}
+                <span className="font-bold">
+                  {`"`}Save{`"`}
                 </span>
               </p>
             </div>

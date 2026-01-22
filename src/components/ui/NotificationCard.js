@@ -16,7 +16,7 @@ export default function NotificationCard({ dataObject }) {
       <div
         className={cn(
           `w-full mb-4 p-4 text-gray-900 rounded-lg shadow-sm bg-white border border-gray-50`,
-          !isOpened && "bg-gray-100 border-gray-200"
+          !isOpened && "bg-gray-100 border-gray-200",
         )}
       >
         <div className="flex">
@@ -24,7 +24,7 @@ export default function NotificationCard({ dataObject }) {
             className={cn(
               "relative inline-block size-12",
               type === "subscribe" && "border-green-600",
-              type === "unsubscribe" && "border-red-500"
+              type === "unsubscribe" && "border-red-500",
             )}
           >
             <div className={cn("")}>
@@ -33,9 +33,9 @@ export default function NotificationCard({ dataObject }) {
 
             <span
               className={cn(
-                "absolute bottom-0 right-0 -mr-1 -mb-1 inline-flex items-center justify-center rounded-full",
+                "absolute bottom-0 right-0 -mr-1 -mb-1 inline-flex items-center justify-center rounded-full bg-white",
                 type === "clientNewAppointment" && "text-green-600 ",
-                type === "clientCancelAppointment" && "text-red-500 "
+                type === "clientCancelAppointment" && "text-red-500 ",
               )}
             >
               {type === "clientNewAppointment" && (

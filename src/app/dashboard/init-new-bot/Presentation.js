@@ -10,7 +10,7 @@ export default function Presentation({ toggleHint }) {
       </div>
 
       <div className="ms-container">
-        <div className="h-screen flex flex-col justify-center">
+        <div className="py-8 sm:py-4 sm:h-screen flex flex-col justify-center">
           <div className="flex justify-center bg-white">
             <Image
               src={poster}

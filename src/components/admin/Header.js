@@ -43,7 +43,7 @@ export default function Header() {
         </div> */}
         {/* <div className="ml-1 text-sm -translate-y-0.5">Lite</div>  */}
         <button
-          className="ml-3 group flex items-center rounded-lg px-2 pr-1 py-1 text-sm font-medium text-red-600 "
+          className="ml-3 group flex items-center rounded-lg px-2 pr-1 py-2 text-sm font-medium text-red-600 "
           onClick={logout}
         >
           <span className="mr-1 flex-1 whitespace-nowrap">Завершити</span>

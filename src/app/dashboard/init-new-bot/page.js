@@ -19,7 +19,7 @@ import { ThemeContext } from "@/context/ThemeContext";
 
 export default function InitNewBot() {
   const { setWarningError } = useContext(ThemeContext);
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(1);
   const [isHintChecked, setIsHintChecked] = useState(false);
   const [botToken, setBotToken] = useState("");
   const [loading, setLoading] = useState(false);

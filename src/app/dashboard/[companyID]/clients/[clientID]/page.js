@@ -4,7 +4,7 @@ import ClientSettings from "@/components/admin/ClientSettings";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
-import { ClientService } from "@/services/ClientService";
+import { UserService } from "@/services/UserService";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function ClientSingle() {
   async function loadClientData() {
     setIsLoading(true);
 
-    const clientDataResponse = await ClientService.getSingle(params?.clientID);
+    const clientDataResponse = await UserService.getSingle(params?.clientID);
 
     if (clientDataResponse?.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

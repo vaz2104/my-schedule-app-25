@@ -1,5 +1,7 @@
 import fetchApi from "../lib/fetchApi";
 
+// IS NOT USING
+
 class ClientServiceClass {
   async getSingle(id) {
     if (!id) return null;

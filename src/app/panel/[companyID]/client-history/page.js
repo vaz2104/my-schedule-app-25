@@ -4,7 +4,7 @@ import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
 import { AuthService } from "@/services/AuthService";
-import { ClientService } from "@/services/ClientService";
+import { UserService } from "@/services/UserService";
 import { useEffect, useState } from "react";
 
 export default function HistoryPage() {
@@ -15,7 +15,7 @@ export default function HistoryPage() {
   async function loadClientData() {
     setIsLoading(true);
     const session = await AuthService.getSession();
-    const clientDataResponse = await ClientService.getSingle(session?.userId);
+    const clientDataResponse = await UserService.getSingle(session?.userId);
 
     if (clientDataResponse?.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

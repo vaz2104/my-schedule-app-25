@@ -30,9 +30,10 @@ export default function Clients() {
 
     if (clientsResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
+      return [];
     } else {
       clientsResponse.data.forEach((client) => {
-        clientsList.push({ clientId: client?.telegramUserId });
+        clientsList.push(client?.telegramUserId);
       });
     }
     return clientsList;
@@ -115,7 +116,7 @@ export default function Clients() {
                 <button
                   className={cn(
                     "inline-block p-4",
-                    tabId === "related" && "border-b-2 rounded-t-lg"
+                    tabId === "related" && "border-b-2 rounded-t-lg",
                   )}
                   type="button"
                   onClick={() => loadClientsCategory("related")}
@@ -127,7 +128,7 @@ export default function Clients() {
                 <button
                   className={cn(
                     "inline-block p-4",
-                    tabId === "all" && "border-b-2 rounded-t-lg"
+                    tabId === "all" && "border-b-2 rounded-t-lg",
                   )}
                   type="button"
                   onClick={() => loadClientsCategory("all")}

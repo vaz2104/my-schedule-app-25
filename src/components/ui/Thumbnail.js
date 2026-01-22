@@ -39,7 +39,7 @@ export default function Thumbnail({ url, size = "sm", theme = "dark" }) {
     >
       {url ? (
         <img
-          className="max-w-full max-h-full"
+          className="max-w-full max-h-full w-fit"
           src={url}
           alt=""
           width={40}

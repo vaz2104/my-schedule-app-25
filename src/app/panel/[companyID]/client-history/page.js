@@ -5,17 +5,24 @@ import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
 import { AuthService } from "@/services/AuthService";
 import { UserService } from "@/services/UserService";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function HistoryPage() {
   const [client, setClient] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const params = useParams();
 
   async function loadClientData() {
     setIsLoading(true);
     const session = await AuthService.getSession();
-    const clientDataResponse = await UserService.getSingle(session?.userId);
+    const clientDataResponse = await UserService.getTelegramUser(
+      session?.userId,
+      {
+        companyID: params?.companyID,
+      },
+    );
 
     if (clientDataResponse?.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

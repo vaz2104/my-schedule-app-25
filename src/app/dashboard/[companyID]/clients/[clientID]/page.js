@@ -17,7 +17,12 @@ export default function ClientSingle() {
   async function loadClientData() {
     setIsLoading(true);
 
-    const clientDataResponse = await UserService.getSingle(params?.clientID);
+    const clientDataResponse = await UserService.getTelegramUser(
+      params?.clientID,
+      {
+        companyID: params?.companyID,
+      },
+    );
 
     if (clientDataResponse?.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

@@ -25,11 +25,11 @@ export default function ClientsList({ isLoading, clients }) {
       )}
       {clients.map((client) => {
         return (
-          <div key={client?.clientId?._id}>
+          <div key={client?._id}>
             <ClientCard
-              id={client?.clientId?._id}
-              name={client.clientId?.firstName || client.clientId?.username}
-              thumbnail={client.clientId?.photoUrl}
+              id={client?._id}
+              name={client?.firstName || client?.username}
+              thumbnail={client?.photoUrl}
             />
           </div>
         );

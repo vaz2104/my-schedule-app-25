@@ -28,7 +28,7 @@ export default function ActiveDaySchedule() {
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
-    }))
+    })),
   );
 
   const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
@@ -89,11 +89,11 @@ export default function ActiveDaySchedule() {
 
     if (relationToDelete) {
       const appointmentResponse = await AppointmentService.getSingle(
-        relationToDelete?._id
+        relationToDelete?._id,
       );
 
       const deleteAppointmentResponse = await AppointmentService.delete(
-        relationToDelete?._id
+        relationToDelete?._id,
       );
 
       if (deleteAppointmentResponse.status !== 200) {
@@ -117,14 +117,14 @@ export default function ActiveDaySchedule() {
     let updateScheduleResponse = null;
     if (!Object.keys(newSchedule).length) {
       updateScheduleResponse = await ScheduleService.delete(
-        selectedDaySchedule?._id
+        selectedDaySchedule?._id,
       );
     } else {
       updateScheduleResponse = await ScheduleService.update(
         selectedDaySchedule?._id,
         {
           schedule: newSchedule,
-        }
+        },
       );
     }
 
@@ -192,7 +192,7 @@ export default function ActiveDaySchedule() {
               Object.keys(selectedDaySchedule?.schedule)[
                 Object.keys(selectedDaySchedule?.schedule).length - 1
               ]
-            ]
+            ],
           ) &&
             isEditingAllowed && (
               <DayScheduleModalForm
@@ -219,7 +219,7 @@ export default function ActiveDaySchedule() {
             {Object.keys(selectedDaySchedule?.schedule).map((itemKey) => {
               const isOldDate = CalendarService.isOldDate(
                 selectedDate,
-                selectedDaySchedule?.schedule[itemKey]
+                selectedDaySchedule?.schedule[itemKey],
               );
 
               let bookedAppointment = null;
@@ -234,7 +234,7 @@ export default function ActiveDaySchedule() {
                 <div
                   className={cn(
                     "my-4 rounded-xl overflow-hidden shadow-md",
-                    isOldDate && "opacity-45"
+                    isOldDate && "opacity-55",
                   )}
                   key={`schedule-${itemKey}`}
                 >

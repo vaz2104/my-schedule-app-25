@@ -15,7 +15,7 @@ export default function TelegramAuthorization({ telegramUserID }) {
   console.log(role);
 
   async function loadUserInfo() {
-    const platformUserResponse = await UserService.getTelegramUser({
+    const platformUserResponse = await UserService.getTelegramUsers({
       userId: telegramUserID,
     });
 

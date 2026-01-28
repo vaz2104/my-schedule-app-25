@@ -14,7 +14,7 @@ export async function updateUserSessionID() {
 
     if (!session) return false;
 
-    const platformUserResponse = await UserService.getTelegramUser({
+    const platformUserResponse = await UserService.getTelegramUsers({
       userId: telegramUserID,
     });
 
@@ -33,7 +33,7 @@ export async function updateUserSessionID() {
     // console.log("platformUser", platformUser);
 
     const updatedSession = await AuthService.updateSessionUserId(
-      platformUser?._id
+      platformUser?._id,
     );
     // console.log("session updated", updatedSession);
   }

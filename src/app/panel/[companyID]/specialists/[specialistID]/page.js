@@ -18,15 +18,13 @@ export default function SchedulePage() {
     useShallow((state) => ({
       setInitCalendarDate: state.setInitCalendarDate,
       setSelectedDate: state.setSelectedDate,
-    }))
+    })),
   );
 
   async function getProfileData() {
     if (!params?.specialistID) return false;
 
-    const response = await UserService.getTelegramUser({
-      _id: params?.specialistID,
-    });
+    const response = await UserService.getTelegramUser(params?.specialistID);
 
     if (response.status !== 200) {
       setError("Сталася помилка при завантаженні даних");

@@ -30,9 +30,7 @@ export default function WorkerStatusControls() {
   async function profileDataQuery() {
     if (!params?.specialistID) return false;
 
-    const response = await UserService.getTelegramUser({
-      _id: params?.specialistID,
-    });
+    const response = await UserService.getTelegramUser(params?.specialistID);
 
     if (response.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
@@ -79,8 +77,8 @@ export default function WorkerStatusControls() {
       companyPlan === "basic" || companyPlan === "free"
         ? 1
         : companyPlan === "business"
-        ? 3
-        : 10000;
+          ? 3
+          : 10000;
 
     let activeWorkers = 0;
 
@@ -97,7 +95,7 @@ export default function WorkerStatusControls() {
 
     if (disableStatus === false && availablePositions <= 0) {
       setWarningError(
-        "Активація не можлива! Досягнуто ліміт активних працівників. Змініть план на інший аби збільшити кількість активних працівників!"
+        "Активація не можлива! Досягнуто ліміт активних працівників. Змініть план на інший аби збільшити кількість активних працівників!",
       );
       setIsUpdating(false);
       return;
@@ -107,7 +105,7 @@ export default function WorkerStatusControls() {
 
     const updatingResponse = await CompanyService.updateWorkerRelation(
       relation?._id,
-      { isBlocked: disableStatus }
+      { isBlocked: disableStatus },
     );
 
     // console.log(updatingResponse);

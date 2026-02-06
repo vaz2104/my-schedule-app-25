@@ -41,6 +41,9 @@ export default function AddressForm({ dbAddress }) {
       )}
       <div className="mb-4">
         <h2 className="font-bold text-lg">Ваша адреса</h2>
+        <h3 className="text-sm text-gray-500">
+          Додайте адресу, щоб Ваші клієнти могли легко Вас знайшли
+        </h3>
       </div>
       <div className="">
         <div className="">

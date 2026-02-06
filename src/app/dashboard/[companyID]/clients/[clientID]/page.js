@@ -33,8 +33,6 @@ export default function ClientSingle() {
     setIsLoading(false);
   }
 
-  console.log(client);
-
   useEffect(() => {
     loadClientData();
   }, []);
@@ -53,8 +51,6 @@ export default function ClientSingle() {
       </div>
     );
   }
-
-  // console.log(client);
 
   return (
     <div className="p-4">

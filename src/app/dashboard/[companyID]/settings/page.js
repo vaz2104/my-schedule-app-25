@@ -1,4 +1,7 @@
 "use client";
+import AddressForm from "@/components/admin/AddressForm";
+import NewPhoneForm from "@/components/admin/NewPhoneForm";
+import PhoneNumberForm from "@/components/admin/PhoneNumberForm";
 import ThemePalette from "@/components/admin/ThemePalette";
 import Alert from "@/components/ui/Alert";
 import PlanBase from "@/components/ui/PlanBase";
@@ -7,8 +10,10 @@ import PlanBusinessPlus from "@/components/ui/PlanBusinessPlus";
 import PlanFree from "@/components/ui/PlanFree";
 import Spinner from "@/components/ui/Spinner";
 import { useBaseURL } from "@/hooks/useBaseURL";
+import { CompanyService } from "@/services/CompanyService";
 import { useAppStore } from "@/store/useAppStore";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
@@ -17,6 +22,22 @@ export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [exchange, setExchange] = useState(0);
+  const [companyData, setCompanyData] = useState(null);
+  const params = useParams();
+
+  async function loadData() {
+    setIsLoading(true);
+
+    const response = await CompanyService.getBot(params?.companyID);
+
+    if (response?.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      setCompanyData(response.data);
+    }
+
+    setIsLoading(false);
+  }
 
   async function getExchangeData() {
     const url =
@@ -50,7 +71,8 @@ export default function SettingsPage() {
 
   useEffect(() => {
     getExchangeData();
-  });
+    loadData();
+  }, []);
 
   if (isLoading)
     return (
@@ -72,7 +94,18 @@ export default function SettingsPage() {
       <div className="mb-8 mt-4 text-center">
         <h2 className="font-bold text-xl">Мої налаштування</h2>
       </div>
-      <div className="mb-12">
+      <AddressForm dbAddress={companyData?.address || ""} />
+      <PhoneNumberForm
+        dbPhoneNumbers={companyData?.phoneNumbers || []}
+        successHandler={loadData}
+      />
+      <div className="mt-6">
+        <NewPhoneForm
+          phoneNumbersState={companyData?.phoneNumbers || []}
+          successHandler={loadData}
+        />
+      </div>
+      <div className="mt-16 mb-12">
         <div className="mb-2">
           <h2 className="font-bold text-lg">Ваш тарифний план</h2>
         </div>

@@ -18,6 +18,10 @@ export default async function RootLayout({ children }) {
       }}
       suppressHydrationWarning
     >
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, interactive-widget=resizes-content"
+      ></meta>
       <body>
         <ThemeProvider attribute="data-theme" defaultTheme="blue" enableSystem>
           {children}

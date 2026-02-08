@@ -14,7 +14,7 @@ export default function Alert({ type = "error", children, className }) {
       classes = "bg-green-50 text-green-800";
       break;
     case "default":
-      classes = "bg-gray-50 text-gray-800";
+      classes = "bg-gray-100 text-gray-800";
       break;
     case "info":
       classes = "bg-blue-50 text-blue-800";
@@ -26,7 +26,7 @@ export default function Alert({ type = "error", children, className }) {
       className={cn(
         "flex items-center p-4 text-sm rounded-lg",
         classes,
-        className
+        className,
       )}
       role="alert"
     >

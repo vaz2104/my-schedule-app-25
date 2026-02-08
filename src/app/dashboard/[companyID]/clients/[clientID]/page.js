@@ -2,39 +2,37 @@
 import AppointmentsList from "@/components/admin/AppointmentsList";
 import ClientSettings from "@/components/admin/ClientSettings";
 import Alert from "@/components/ui/Alert";
+import Badge from "@/components/ui/Badge";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
+import { CompanyService } from "@/services/CompanyService";
 import { UserService } from "@/services/UserService";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ClientSingle() {
-  const [client, setClient] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [clientSettings, setClientSettings] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
 
-  async function loadClientData() {
-    setIsLoading(true);
+  async function getClientSettings() {
+    const clientsResponse = await CompanyService.getClients({
+      botId: params?.companyID,
+      telegramUserId: params?.clientID,
+    });
 
-    const clientDataResponse = await UserService.getTelegramUser(
-      params?.clientID,
-      {
-        companyID: params?.companyID,
-      },
-    );
-
-    if (clientDataResponse?.status !== 200) {
+    if (clientsResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      setClient(clientDataResponse.data);
+      setClientSettings(clientsResponse.data[0]);
     }
 
     setIsLoading(false);
   }
 
   useEffect(() => {
-    loadClientData();
+    getClientSettings();
   }, []);
 
   if (isLoading)
@@ -56,16 +54,42 @@ export default function ClientSingle() {
     <div className="p-4">
       <div className="mt-1.5">
         <div className={"flex justify-center"}>
-          <Thumbnail url={client?.photoUrl} size="lg" />
+          <Thumbnail url={clientSettings?.telegramUserId?.photoUrl} size="lg" />
         </div>
         <div className="text-sm font-normal text-center mt-2">
           <div className="font-bold text-xl text-gray-900">
-            {client?.firstName} {client?.lastName}
+            {clientSettings?.firstName} {clientSettings?.lastName}
           </div>
         </div>
+        {clientSettings?.telegramUserId?.username && (
+          <div className="mt-4 flex justify-center">
+            <a
+              href={`https://t.me/${clientSettings?.telegramUserId?.username}`}
+              target="_blunk"
+              className="text-main hover:underline"
+            >
+              @{clientSettings?.telegramUserId?.username}
+            </a>
+          </div>
+        )}
+        {clientSettings?.phoneNumber ? (
+          <div className="mt-4 flex justify-center">
+            <a
+              href={`https://t.me/${clientSettings?.telegramUserId?.username}`}
+              target="_blunk"
+              className="text-main hover:underline"
+            >
+              @{clientSettings?.telegramUserId?.username}
+            </a>
+          </div>
+        ) : (
+          <div className="mt-4 ">
+            <Alert type="default">Номер телефону не вказано</Alert>
+          </div>
+        )}
       </div>
 
-      <ClientSettings />
+      <ClientSettings clientSettings={clientSettings} />
 
       <div className="mt-16 mb-4">
         <h2 className="font-bold text-lg text-center">Історія записів</h2>

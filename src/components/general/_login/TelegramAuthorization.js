@@ -19,6 +19,8 @@ export default function TelegramAuthorization({ telegramUserID }) {
       userId: telegramUserID,
     });
 
+    console.log(platformUserResponse);
+
     if (
       platformUserResponse.status !== 200 ||
       platformUserResponse?.data?.length === 0

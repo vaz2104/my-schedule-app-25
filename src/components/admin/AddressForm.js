@@ -33,7 +33,7 @@ export default function AddressForm({ dbAddress }) {
   }, [dbAddress]);
 
   return (
-    <div className="mt-16 p-1 relative">
+    <div className=" p-1 relative">
       {isUpdating && (
         <div className="bg-white/5 backdrop-blur-xs p-4 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-20">
           <Spinner />

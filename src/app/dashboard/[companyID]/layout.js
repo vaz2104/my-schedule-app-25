@@ -1,6 +1,7 @@
 "use client";
 import Footer from "@/components/admin/Footer";
 import Header from "@/components/admin/Header";
+import StatusBar from "@/components/admin/StatusBar";
 import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import { AuthService } from "@/services/AuthService";
@@ -38,7 +39,7 @@ export default function DashboardCompanyLayout({ children }) {
       setRole(
         companyDataResponse.data?.adminId === session?.userId
           ? "admin"
-          : "worker"
+          : "worker",
       );
     }
 
@@ -65,9 +66,10 @@ export default function DashboardCompanyLayout({ children }) {
   }
 
   return (
-    <div className="ms-full-creen relative z-10">
+    <div className="ms-full-creen relative z-10 pt-15">
       <Header />
-      <main className="flex-1 pt-16 pb-22">{children}</main>
+      <StatusBar />
+      <main className="flex-1 pb-22">{children}</main>
       <Footer />
     </div>
   );

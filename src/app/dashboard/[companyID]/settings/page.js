@@ -109,7 +109,9 @@ export default function SettingsPage() {
         <div className="mb-2">
           <h2 className="font-bold text-lg">Ваш тарифний план</h2>
         </div>
-        {companyPlan === "free" && <PlanFree activePlan={companyPlan} />}
+        {companyPlan === "free" && (
+          <PlanFree activePlan={companyPlan} exchange={exchange} price={0} />
+        )}
         {companyPlan === "basic" && (
           <PlanBase
             selectHandler={() => selectPlanHandler("basic")}

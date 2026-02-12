@@ -4,7 +4,7 @@ import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import Thumbnail from "@/components/ui/Thumbnail";
 import { AuthService } from "@/services/AuthService";
-import { UserService } from "@/services/UserService";
+import { CompanyService } from "@/services/CompanyService";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,17 +17,15 @@ export default function HistoryPage() {
   async function loadClientData() {
     setIsLoading(true);
     const session = await AuthService.getSession();
-    const clientDataResponse = await UserService.getTelegramUser(
-      session?.userId,
-      {
-        companyID: params?.companyID,
-      },
-    );
+    const clientDataResponse = await CompanyService.getClients({
+      botId: params?.companyID,
+      telegramUserId: session?.userId,
+    });
 
     if (clientDataResponse?.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      setClient(clientDataResponse.data);
+      setClient(clientDataResponse.data[0]);
     }
 
     setIsLoading(false);
@@ -56,11 +54,11 @@ export default function HistoryPage() {
     <div className="p-4">
       <div className="px-4">
         <div className={"flex justify-center"}>
-          <Thumbnail url={client?.photoUrl} size="lg" />
+          <Thumbnail url={client?.telegramUserId?.photoUrl} size="lg" />
         </div>
         <div className="text-sm font-normal text-center mt-2">
           <div className="font-bold text-xl text-gray-900">
-            {client?.firstName || client?.username}
+            {client?.firstName} {client?.lastName}
           </div>
         </div>
       </div>

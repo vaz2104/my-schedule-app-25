@@ -102,8 +102,7 @@ export default function SettingsPage() {
         </div>
         <div className="text-sm font-normal text-center mt-2">
           <div className="font-bold text-xl text-gray-900 ">
-            {clientSettings?.telegramUserId?.firstName ||
-              clientSettings?.telegramUserId?.username}
+            {clientSettings?.firstName} {clientSettings?.lastName}
           </div>
         </div>
       </div>

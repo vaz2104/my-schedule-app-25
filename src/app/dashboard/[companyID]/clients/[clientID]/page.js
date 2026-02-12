@@ -73,13 +73,12 @@ export default function ClientSingle() {
           </div>
         )}
         {clientSettings?.phoneNumber ? (
-          <div className="mt-4 flex justify-center">
+          <div className="mt-2 flex justify-center">
             <a
-              href={`https://t.me/${clientSettings?.telegramUserId?.username}`}
-              target="_blunk"
-              className="text-main hover:underline"
+              href={`tel:${clientSettings?.phoneNumber}`}
+              className="text-gray-700 text-lg hover:underline"
             >
-              @{clientSettings?.telegramUserId?.username}
+              {clientSettings?.phoneNumber}
             </a>
           </div>
         ) : (

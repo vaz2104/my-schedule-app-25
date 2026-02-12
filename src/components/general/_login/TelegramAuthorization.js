@@ -79,8 +79,11 @@ export default function TelegramAuthorization({ telegramUserID }) {
 
   if (clientRelationError) {
     return (
-      <div className="py-4 flex justify-center items-center h-[calc(100vh-9rem)]">
-        <p>
+      <div className="p-4 flex justify-center items-center h-[calc(100vh-9rem)]">
+        <p className="text-center text-gray-500 text-lg">
+          Вибачте, сталась помилка!
+        </p>
+        <p className="text-center text-gray-500 mt-4">
           Спочатку перейдіть в бот та натисніть кнокпу &quot;Розпочати&quot;
         </p>
       </div>

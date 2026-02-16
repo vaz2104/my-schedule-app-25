@@ -43,11 +43,11 @@ export default function BaseModal({
 
           {error && (
             <div className="rounded-lg absolute top-0 right-0 bottom-0 left-0 bg-white/20 backdrop-blur-xs 75 z-50 flex justify-center items-center">
-              <div className=" bg-red-200 rounded-lg w-full pt-8 pb-4 px-4 mx-8 border border-red-300">
+              <div className=" bg-white rounded-lg w-full p-8 pb-4 mx-8 border border-gray-200 shadow-2xl">
                 <div className="w-24 m-auto">
                   <Lottie animationData={errorAnimation} loop={false} />
                 </div>
-                <p className="text-center mt-2 mb-8 text-sm text-red-700">
+                <p className="text-center mb-8 mt-4 font-normal text-gray-500">
                   {error}
                 </p>
                 {hideErrorFn && (
@@ -69,7 +69,7 @@ export default function BaseModal({
           {/* <!-- Modal header --> */}
           <div
             className={cn(
-              "flex items-center justify-between p-4 md:p-5 rounded-t"
+              "flex items-center justify-between p-4 md:p-5 rounded-t",
             )}
           >
             {title && (

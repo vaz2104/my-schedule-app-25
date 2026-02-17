@@ -1,6 +1,6 @@
 "use client";
 import BaseModal from "../ui/BaseModal";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import { monthsFullName } from "../ui/calendar/calendar-vars";
@@ -11,6 +11,7 @@ import { NotificationService } from "@/services/NotificatoinsServices";
 import { WorkerService } from "@/services/WorkerService";
 import { useAppStore } from "@/store/useAppStore";
 import FormServicesList from "./FormServicesList";
+import { CompanyService } from "@/services/CompanyService";
 
 export default function AppointmentForm({
   selectedSchedule,
@@ -19,7 +20,9 @@ export default function AppointmentForm({
   closeHandler,
 }) {
   const { companyPlan } = useAppStore();
-  const { setSuccessMessage } = useContext(ThemeContext);
+  const { setSuccessMessage, setWarningError } = useContext(ThemeContext);
+  const [clientSettings, setClientSettings] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [services, setServices] = useState([]);
@@ -74,6 +77,18 @@ export default function AppointmentForm({
   }
 
   async function createAppointment() {
+    if (!clientSettings?.phoneNumber) {
+      const regexp = /^(\+38)?0(39|50|63|66|67|68|73|89|9[1-9])[0-9]{7}$/;
+
+      if (phoneNumber === "" || !regexp.test(phoneNumber)) {
+        setWarningError("Будь ласка, вкажіть коректний номер телефону!");
+        setIsLoading(false);
+        return;
+      }
+
+      await savePhoneNumber();
+    }
+
     setIsLoading(true);
     const session = await AuthService.getSession();
 
@@ -110,6 +125,41 @@ export default function AppointmentForm({
     }
   }
 
+  async function getClientSettings() {
+    setIsLoading(true);
+    const session = await AuthService.getSession();
+    const clientsResponse = await CompanyService.getClients({
+      botId: params?.companyID,
+      telegramUserId: session?.userId,
+    });
+
+    if (clientsResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      setClientSettings(clientsResponse.data[0]);
+    }
+    setIsLoading(false);
+  }
+
+  async function savePhoneNumber() {
+    setIsLoading(true);
+
+    let query = {
+      phoneNumber: phoneNumber,
+    };
+
+    const updatedResponse = await CompanyService.updateClientRelation(
+      clientSettings?._id,
+      query,
+    );
+
+    if (updatedResponse.status !== 200) {
+      setError("Сталася помилка при обробці даних");
+      setIsLoading(false);
+      return;
+    }
+  }
+
   async function selectService(status) {
     setIsService(status);
 
@@ -119,6 +169,10 @@ export default function AppointmentForm({
       await loadServices();
     }
   }
+
+  useEffect(() => {
+    getClientSettings();
+  }, []);
 
   if (!selectedSchedule) return <></>;
 
@@ -154,6 +208,27 @@ export default function AppointmentForm({
               })}
             </span>
           </div>
+        </div>
+        <div>
+          {!clientSettings?.phoneNumber && (
+            <div className="pt-0.5">
+              <div className="text-sm text-gray-400">
+                Будь ласка, вкажіть свій номер телефону, аби ми могли зв`язатися
+                з Вами в разі чого
+              </div>
+              <div className="mt-2">
+                <div className="mt-4 mb-8">
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder="Введіть тут"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
         <div className="mt-10">
           <label className="inline-flex items-center cursor-pointer">

@@ -17,6 +17,7 @@ import { WorkerService } from "@/services/WorkerService";
 import Thumbnail from "../ui/Thumbnail";
 import { useBaseURL } from "@/hooks/useBaseURL";
 import { useAppStore } from "@/store/useAppStore";
+import { CompanyService } from "@/services/CompanyService";
 
 export default function ServiceAppointmentForm({
   selectedService,
@@ -24,12 +25,14 @@ export default function ServiceAppointmentForm({
   closeHandler,
 }) {
   const { companyPlan } = useAppStore();
+  const [clientSettings, setClientSettings] = useState(null);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [workers, setWorkers] = useState([]);
   const [selectedWorker, setSelectedWorker] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const { setSuccessMessage } = useContext(ThemeContext);
+  const { setSuccessMessage, setWarningError } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
   const { basePlatformLink } = useBaseURL();
 
@@ -40,7 +43,7 @@ export default function ServiceAppointmentForm({
       initCalendarDate: state.initCalendarDate,
       selectedDate: state.selectedDate,
       setSelectedDate: state.setSelectedDate,
-    }))
+    })),
   );
 
   function closeModal() {
@@ -54,11 +57,24 @@ export default function ServiceAppointmentForm({
     if (
       !selectedAppointment ||
       !selectedSchedule?._id ||
-      selectedService?._id
+      !selectedService?._id
     ) {
       setError("Будь ласка, оберіть дату та час прийому!");
       return;
     }
+
+    if (!clientSettings?.phoneNumber) {
+      const regexp = /^(\+38)?0(39|50|63|66|67|68|73|89|9[1-9])[0-9]{7}$/;
+
+      if (phoneNumber === "" || !regexp.test(phoneNumber)) {
+        setWarningError("Будь ласка, вкажіть коректний номер телефону!");
+        setIsLoading(false);
+        return;
+      }
+
+      await savePhoneNumber();
+    }
+
     setIsLoading(true);
     const session = await AuthService.getSession();
     const query = {
@@ -74,7 +90,7 @@ export default function ServiceAppointmentForm({
     };
 
     const response = await AppointmentService.create(query);
-    console.log(response);
+    // console.log(response);
 
     if (response.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
@@ -113,6 +129,37 @@ export default function ServiceAppointmentForm({
     setIsLoading(false);
   }
 
+  async function getClientSettings() {
+    const session = await AuthService.getSession();
+    const clientsResponse = await CompanyService.getClients({
+      botId: params?.companyID,
+      telegramUserId: session?.userId,
+    });
+
+    if (clientsResponse.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+    } else {
+      setClientSettings(clientsResponse.data[0]);
+    }
+  }
+
+  async function savePhoneNumber() {
+    let query = {
+      phoneNumber: phoneNumber,
+    };
+
+    const updatedResponse = await CompanyService.updateClientRelation(
+      clientSettings?._id,
+      query,
+    );
+
+    if (updatedResponse.status !== 200) {
+      setError("Сталася помилка при обробці даних");
+      setIsLoading(false);
+      return;
+    }
+  }
+
   function closeCalendar() {
     setSelectedAppointment(null);
     setIsCalendarOpen(false);
@@ -126,6 +173,12 @@ export default function ServiceAppointmentForm({
   useEffect(() => {
     loadServiceWorkers();
   }, [selectedService]);
+
+  useEffect(() => {
+    getClientSettings();
+  }, []);
+
+  // console.log(clientSettings);
 
   if (!selectedService) return <></>;
 
@@ -162,7 +215,7 @@ export default function ServiceAppointmentForm({
                     {selectedService?.price && (
                       <span
                         className={cn(
-                          selectedService?.priceWithSale && "ml-2 line-through"
+                          selectedService?.priceWithSale && "ml-2 line-through",
                         )}
                       >
                         {selectedService?.price} грн.
@@ -214,7 +267,7 @@ export default function ServiceAppointmentForm({
                                       className={cn(
                                         "w-6 h-6 text-green-600",
                                         true &&
-                                          "animate__animated animate__bounceIn"
+                                          "animate__animated animate__bounceIn",
                                       )}
                                     />
                                   ) : (
@@ -260,7 +313,7 @@ export default function ServiceAppointmentForm({
                                 </span>
                               );
                             }
-                          }
+                          },
                         )}
                       </span>
                       <button onClick={() => setSelectedAppointment(null)}>
@@ -271,7 +324,7 @@ export default function ServiceAppointmentForm({
                     <button
                       className={cn(
                         "button w-full",
-                        workers?.length >= 2 && !selectedWorker && "gray"
+                        workers?.length >= 2 && !selectedWorker && "gray",
                       )}
                       onClick={() => setIsCalendarOpen(true)}
                       disabled={workers?.length >= 2 && !selectedWorker}
@@ -282,6 +335,37 @@ export default function ServiceAppointmentForm({
                 </div>
               </div>
             </li>
+
+            {!clientSettings?.phoneNumber && (
+              <li className="mb-10 ms-6">
+                <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white">
+                  {!params?.specialistID &&
+                  companyPlan !== "free" &&
+                  companyPlan !== "basic" &&
+                  workers?.length >= 2
+                    ? 4
+                    : 3}
+                </span>
+                <div className="pt-0.5">
+                  <div className="text-lg text-gray-500">Номер телефону</div>
+                  <div className="text-sm text-gray-400">
+                    Будь ласка, вкажіть свій номер телефону, аби ми могли
+                    зв`язатися з Вами в разі чого
+                  </div>
+                  <div className="mt-2">
+                    <div className="mt-4 mb-8">
+                      <input
+                        type="text"
+                        className="input"
+                        placeholder="Введіть тут"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </li>
+            )}
           </ol>
         </div>
 

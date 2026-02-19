@@ -1,11 +1,12 @@
 import Footer from "@/components/client/Footer";
 import Header from "@/components/client/Header";
+import StatusBar from "@/components/client/StatusBar";
 
 export default function DashboardCompanyLayout({ children }) {
   return (
     <div className="ms-full-creen relative z-10">
       <Header />
-
+      <StatusBar />
       <main className="flex-1 pb-22">{children}</main>
       <Footer />
     </div>

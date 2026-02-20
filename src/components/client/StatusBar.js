@@ -37,9 +37,11 @@ export default function StatusBar() {
   async function checkHint(hints, hintKey) {
     let hintId = null;
 
-    hints.map((item) => {
-      if (item.hintType === hintKey) hintId = item._id;
-    });
+    if (hints?.length) {
+      hints.map((item) => {
+        if (item.hintType === hintKey) hintId = item._id;
+      });
+    }
 
     if (!hintId) await createHint(hintKey);
   }
@@ -56,9 +58,10 @@ export default function StatusBar() {
 
     const response = await UserHintsService.create(options);
     if (response?.status !== 200) {
-      setError("Сталася помилка при завантаженні даних");
+      setError("Сталася помилка при обробці запиту");
     } else {
       setVisibleHints((prevHintsState) => [...prevHintsState, type]);
+      setdDbHints((prevHintsState) => [...prevHintsState, response?.data]);
     }
 
     setIsLoading(false);

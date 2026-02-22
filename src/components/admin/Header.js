@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function Header() {
-  const { botName, companyPlan } = useAppStore();
+  const { botName, companyPlan, botThumbnail } = useAppStore();
   const { baseDashboardLink } = useBaseURL();
   function logout() {
     localStorage.removeItem("activePanel");
@@ -28,7 +28,7 @@ export default function Header() {
               ""
             )}
 
-            <Thumbnail size="xs" theme="light" />
+            <Thumbnail url={botThumbnail} size="xs" theme="light" />
           </div>
 
           <div className="ml-2 text-md font-bold">{botName}</div>

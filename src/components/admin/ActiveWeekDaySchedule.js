@@ -10,7 +10,7 @@ import { monthsFullName } from "@/lib/calendar-vars";
 import CalendarService from "../ui/calendar/CalendarService";
 import Link from "next/link";
 import { useBaseURL } from "@/hooks/useBaseURL";
-import { TrashIcon } from "../ui/Icons";
+import { FireIcon, PhoneSolidIcon, PlusIcon, TrashIcon } from "../ui/Icons";
 import { cn } from "@/lib/cn";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
@@ -19,19 +19,25 @@ import { AppointmentService } from "@/services/AppointmentService";
 import NoSchedule from "./NoSchedule";
 import CancelAppointmentForm from "./CancelAppointmentForm";
 import Thumbnail from "../ui/Thumbnail";
+import NewAppointmentForm from "./NewAppointmentForm";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function ActiveWeekDaySchedule() {
+  const { adminId, companyPlan } = useAppStore();
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
     })),
   );
 
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
   const [selectedScheduleItem, setSelectedScheduleItem] = useState(null);
   const [relationToDelete, setRelationToDelete] = useState(null);
   const [confirmMessage, setConfirmMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEditingAllowed, setIsEditingAllowed] = useState(false);
   const [error, setError] = useState(null);
   const params = useParams();
   const { baseDashboardLink } = useBaseURL();
@@ -116,8 +122,30 @@ export default function ActiveWeekDaySchedule() {
     }
   }
 
+  function registrationHandler(schedule, appointment) {
+    setSelectedSchedule(schedule);
+    setSelectedAppointment(appointment);
+  }
+
+  async function checkIsEditingAllowed() {
+    const session = await AuthService.getSession();
+
+    let status = true;
+    if (
+      companyPlan !== "free" &&
+      companyPlan !== "basic" &&
+      adminId === session?.userId &&
+      adminId !== params?.specialistID
+    ) {
+      status = false;
+    }
+
+    setIsEditingAllowed(status);
+  }
+
   useEffect(() => {
     loadSelectedDaySchedule(selectedDate);
+    checkIsEditingAllowed();
   }, [selectedDate]);
 
   if (error) {
@@ -159,8 +187,6 @@ export default function ActiveWeekDaySchedule() {
                 }
               });
 
-              console.log(bookedAppointment?.clientId);
-
               return (
                 <div
                   className={cn(
@@ -174,7 +200,7 @@ export default function ActiveWeekDaySchedule() {
                       {selectedDaySchedule?.schedule[itemKey]}
                     </div>
 
-                    {!isOldDate && (
+                    {!isOldDate && isEditingAllowed && (
                       <div className="text-right order-2 sm:order-3">
                         <div className="flex">
                           <div className="flex justify-center">
@@ -197,37 +223,153 @@ export default function ActiveWeekDaySchedule() {
                   </div>
 
                   {bookedAppointment ? (
-                    <div className="mt-2 p-4">
-                      <div className="flex items-center justify-between">
-                        <Link
-                          href={`${baseDashboardLink}/clients/${bookedAppointment?.clientId?._id}`}
-                          className="flex items-center"
-                        >
-                          <div>
-                            <Thumbnail
-                              url={bookedAppointment?.clientId?.photoUrl}
-                            />
+                    <>
+                      {bookedAppointment?.clientId?._id && (
+                        <div className="mt-2 p-4">
+                          <div className="flex items-center justify-between">
+                            <Link
+                              href={`${baseDashboardLink}/clients/${bookedAppointment?.clientId?._id}`}
+                              className="flex items-center"
+                            >
+                              <div>
+                                <Thumbnail
+                                  url={bookedAppointment?.clientId?.photoUrl}
+                                />
+                              </div>
+                              <div className="font-bold text-gray-500 underline ml-4">
+                                {bookedAppointment?.clientId?.firstName ||
+                                  bookedAppointment?.clientId?.username}
+                              </div>
+                            </Link>
+                            {!isOldDate && isEditingAllowed && (
+                              <div className="ml-2">
+                                <CancelAppointmentForm
+                                  mapItemId={bookedAppointment?._id}
+                                  successHandler={() =>
+                                    loadSelectedDaySchedule(selectedDate)
+                                  }
+                                />
+                              </div>
+                            )}
                           </div>
-                          <div className="font-bold text-gray-500 underline ml-4">
-                            {bookedAppointment?.clientId?.firstName ||
-                              bookedAppointment?.clientId?.username}
+                        </div>
+                      )}
+                      {bookedAppointment?.customClientId?._id && (
+                        <>
+                          <div className="mt-2 p-4">
+                            <div className="sm:flex sm:justify-between">
+                              <div>
+                                <div className="font-bold text-gray-700">
+                                  {bookedAppointment?.customClientId
+                                    ?.firstName ||
+                                    bookedAppointment?.customClientId?.lastName}
+                                </div>
+                                <div className="mt-1">
+                                  <a
+                                    href={`tel:${
+                                      bookedAppointment?.customClientId
+                                        ?.phoneNumber
+                                    }`}
+                                    className="flex items-center text-main"
+                                  >
+                                    <PhoneSolidIcon
+                                      className={"w-5 h-5 text-gray-500"}
+                                    />
+                                    <span className="ml-0.5 text-lg text-gray-500">
+                                      {
+                                        bookedAppointment?.customClientId
+                                          ?.phoneNumber
+                                      }
+                                    </span>
+                                  </a>
+                                </div>
+
+                                <div className="mt-1">
+                                  <div className="font-bold">
+                                    {bookedAppointment?.serviceId?.service}
+                                  </div>
+                                  {bookedAppointment?.serviceId?.saleEndDay && (
+                                    <div>
+                                      <span className="mr-1 translate-y-1 inline-block">
+                                        <FireIcon className={"text-red-500"} />
+                                      </span>
+                                      <span className="text-red-500 text-sm">
+                                        знижка діє до{" "}
+                                        {formatDate(
+                                          bookedAppointment?.serviceId
+                                            ?.saleEndDay,
+                                          "ui",
+                                        )}
+                                      </span>
+                                    </div>
+                                  )}
+
+                                  <div className="text-gray-500">
+                                    {bookedAppointment?.serviceId
+                                      ?.priceWithSale && (
+                                      <span className="text-red-600">
+                                        {
+                                          bookedAppointment?.serviceId
+                                            ?.priceWithSale
+                                        }{" "}
+                                        грн.
+                                      </span>
+                                    )}
+
+                                    {bookedAppointment?.serviceId?.price && (
+                                      <span
+                                        className={cn(
+                                          bookedAppointment?.serviceId
+                                            ?.priceWithSale &&
+                                            "ml-2 line-through",
+                                        )}
+                                      >
+                                        {bookedAppointment?.serviceId?.price}{" "}
+                                        грн.
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {!isOldDate && isEditingAllowed && (
+                                <div className="mt-4 sm:ml-2 sm:mt-0">
+                                  <CancelAppointmentForm
+                                    mapItemId={bookedAppointment?._id}
+                                    successHandler={() =>
+                                      loadSelectedDaySchedule(selectedDate)
+                                    }
+                                  />
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </Link>
-                        {!isOldDate && (
-                          <div className="ml-2">
-                            <CancelAppointmentForm
-                              mapItemId={bookedAppointment?._id}
-                              successHandler={() =>
-                                loadSelectedDaySchedule(selectedDate)
-                              }
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                        </>
+                      )}
+                    </>
                   ) : (
-                    <div className="mt-2 py-6 flex items-center justify-center w-full">
+                    <div
+                      className={cn(
+                        "mt-2  flex items-center w-full",
+                        isOldDate
+                          ? "justify-center p-6"
+                          : "justify-between p-4",
+                      )}
+                    >
                       <p className="text-sm text-gray-500">Запис відсутній</p>
+                      {!isOldDate && isEditingAllowed && (
+                        <div>
+                          <button
+                            className="button medium"
+                            onClick={() =>
+                              registrationHandler(selectedDaySchedule, itemKey)
+                            }
+                          >
+                            <PlusIcon className="w-4 text-white" />
+                            <span className="ml-1 text-white">Додати</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -244,6 +386,13 @@ export default function ActiveWeekDaySchedule() {
         cancelFn={cancelDeleting}
         confirmFn={deleteHandler}
         loading={isLoading}
+      />
+
+      <NewAppointmentForm
+        selectedSchedule={selectedSchedule}
+        selectedAppointment={selectedAppointment}
+        successHandler={() => loadSelectedDaySchedule(selectedDate)}
+        closeHandler={() => setSelectedSchedule(null)}
       />
     </div>
   );

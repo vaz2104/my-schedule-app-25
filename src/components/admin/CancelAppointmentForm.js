@@ -15,26 +15,27 @@ export default function CancelAppointmentForm({ mapItemId, successHandler }) {
 
   async function cancelAppointment() {
     setIsLoading(true);
-    const appointmentResponse = await AppointmentService.getSingle(
-      appointmentId
-    );
+    const appointmentResponse =
+      await AppointmentService.getSingle(appointmentId);
     const response = await AppointmentService.delete(appointmentId);
 
     if (response.status !== 200) {
       setAppointmentId(null);
       setWarningError("Сталася помилка при виконанні запиту");
     } else {
-      const session = await AuthService.getSession();
-      await NotificationService.createNotification({
-        notification: {
-          botId: params?.companyID,
-          author: session?.userId,
-        },
-        recipient: [params?.clientID],
-        recipientRole: "client",
-        type: "adminCancelAppointment",
-        meta: appointmentResponse?.data,
-      });
+      if (appointmentResponse?.clientId?._id) {
+        const session = await AuthService.getSession();
+        await NotificationService.createNotification({
+          notification: {
+            botId: params?.companyID,
+            author: session?.userId,
+          },
+          recipient: [params?.clientID],
+          recipientRole: "client",
+          type: "adminCancelAppointment",
+          meta: appointmentResponse?.data,
+        });
+      }
 
       if (successHandler) successHandler();
     }
@@ -45,7 +46,7 @@ export default function CancelAppointmentForm({ mapItemId, successHandler }) {
   return (
     <Fragment>
       <button
-        className="button red medium !px-2 !text-red-600 "
+        className="button red medium"
         onClick={() => setAppointmentId(mapItemId)}
       >
         <span className="mr-1 text-white">Скасувати</span>

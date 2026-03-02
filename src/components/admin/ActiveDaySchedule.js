@@ -27,6 +27,7 @@ import { useAppStore } from "@/store/useAppStore";
 import NoSchedule from "./NoSchedule";
 import Thumbnail from "../ui/Thumbnail";
 import CancelAppointmentForm from "./CancelAppointmentForm";
+import NewAppointmentForm from "./NewAppointmentForm";
 
 export default function ActiveDaySchedule() {
   const { adminId, companyPlan } = useAppStore();
@@ -36,6 +37,8 @@ export default function ActiveDaySchedule() {
     })),
   );
 
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [selectedDaySchedule, setSelectedDaySchedule] = useState(null);
   const [selectedScheduleItem, setSelectedScheduleItem] = useState(null);
   const [relationToDelete, setRelationToDelete] = useState(null);
@@ -156,6 +159,11 @@ export default function ActiveDaySchedule() {
     }
 
     setIsEditingAllowed(status);
+  }
+
+  function registrationHandler(schedule, appointment) {
+    setSelectedSchedule(schedule);
+    setSelectedAppointment(appointment);
   }
 
   useEffect(() => {
@@ -308,9 +316,7 @@ export default function ActiveDaySchedule() {
                             <div className="sm:flex sm:justify-between">
                               <div>
                                 <div className="font-bold text-gray-700">
-                                  {bookedAppointment?.customClientId
-                                    ?.firstName ||
-                                    bookedAppointment?.customClientId?.lastName}
+                                  {`${bookedAppointment?.customClientId?.firstName} ${bookedAppointment?.customClientId?.lastName}`}
                                 </div>
                                 <div className="mt-1">
                                   <a
@@ -434,6 +440,12 @@ export default function ActiveDaySchedule() {
         cancelFn={cancelDeleting}
         confirmFn={deleteHandler}
         loading={isLoading}
+      />
+      <NewAppointmentForm
+        selectedSchedule={selectedSchedule}
+        selectedAppointment={selectedAppointment}
+        successHandler={() => loadSelectedDaySchedule(selectedDate)}
+        closeHandler={() => setSelectedSchedule(null)}
       />
     </div>
   );

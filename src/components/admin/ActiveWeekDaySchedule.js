@@ -260,9 +260,7 @@ export default function ActiveWeekDaySchedule() {
                             <div className="sm:flex sm:justify-between">
                               <div>
                                 <div className="font-bold text-gray-700">
-                                  {bookedAppointment?.customClientId
-                                    ?.firstName ||
-                                    bookedAppointment?.customClientId?.lastName}
+                                  {`${bookedAppointment?.customClientId?.firstName} ${bookedAppointment?.customClientId?.lastName}`}
                                 </div>
                                 <div className="mt-1">
                                   <a

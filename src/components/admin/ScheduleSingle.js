@@ -16,7 +16,7 @@ export default function ScheduleSingle() {
         setSelectedDate: state.setSelectedDate,
         setInitCalendarDate: state.setInitCalendarDate,
         selectedDate: state.selectedDate,
-      }))
+      })),
     );
 
   function getSelectedDateOnCalendarChange(initDate) {
@@ -36,7 +36,7 @@ export default function ScheduleSingle() {
 
   return (
     <div className="p-4 ">
-      <WorkerStatusControls />
+      {/* <WorkerStatusControls /> */}
       <MonthScheduleStatistic />
       <MonthScheduleCalendar />
       <ActiveDaySchedule />

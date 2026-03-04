@@ -30,15 +30,15 @@ export default function WorkerStatusControls() {
   async function profileDataQuery() {
     if (!params?.specialistID) return false;
 
-    const response = await UserService.getTelegramUser(params?.specialistID);
+    // const response = await UserService.getTelegramUser(params?.specialistID);
 
-    if (response.status !== 200) {
-      setError("Сталася помилка при завантаженні даних");
-    } else {
-      if (response?.data?.length) {
-        setProfile(response?.data[0]);
-      }
-    }
+    // if (response.status !== 200) {
+    //   setError("Сталася помилка при завантаженні даних");
+    // } else {
+    //   if (response?.data?.length) {
+    //     setProfile(response?.data[0]);
+    //   }
+    // }
 
     const workersResponse = await CompanyService.getWorkers({
       botId: params?.companyID,

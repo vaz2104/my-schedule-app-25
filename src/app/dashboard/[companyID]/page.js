@@ -16,7 +16,7 @@ export default function DashboardHome() {
         setInitCalendarDate: state.setInitCalendarDate,
         setInitWeekDate: state.setInitWeekDate,
         setSelectedDate: state.setSelectedDate,
-      }))
+      })),
     );
 
   useEffect(() => {

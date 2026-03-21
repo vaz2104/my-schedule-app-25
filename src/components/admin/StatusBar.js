@@ -9,6 +9,7 @@ import Spinner from "../ui/Spinner";
 import Alert from "../ui/Alert";
 import { BotHintsService } from "@/services/BotHintsService";
 import { AuthService } from "@/services/AuthService";
+import { SubscriptionsService } from "@/services/SubscriptionsService";
 
 export default function StatusBar() {
   const [visibleHints, setVisibleHints] = useState([]);
@@ -130,9 +131,60 @@ export default function StatusBar() {
       responseQueryHints.data,
     );
 
+    await checkSubscriptionStatus(responseQueryHints.data);
+
     setCompanyData(responseBotData.data);
     setdDbHints(responseQueryHints.data);
 
+    setIsLoading(false);
+  }
+
+  // const [isBlocked, setIsBlocked] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const params = useParams();
+
+  async function checkSubscriptionStatus(hints) {
+    const response = await SubscriptionsService.getMany({
+      botId: params?.companyID,
+    });
+
+    if (response?.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+      return;
+    }
+
+    const subscription = response.data[0];
+    const subscriptionEndDate = new Date(subscription.planEndDate); // Current date and time
+    const timestampEndDate = subscriptionEndDate.getTime();
+
+    // if (Date.now() > timestampEndDate) {
+    //   setIsBlocked(true);
+    // }
+
+    console.log(subscription);
+
+    // Source - https://stackoverflow.com/a/72059672
+    // Posted by codmitu
+    // Retrieved 2026-03-07, License - CC BY-SA 4.0
+
+    const perion = Math.ceil(
+      (timestampEndDate - new Date().getTime()) / 86400000,
+    );
+
+    if (subscription?.plan === "free" && perion <= 0) {
+      console.log("Період безкоштовного тарифу завершився.");
+      const statusPaidPlan = subscription?.plan === "free" && perion <= 0;
+      await checkHints(statusPaidPlan, "completedFreePlan", hints);
+    }
+
+    if (subscription?.plan !== "free" && perion <= 3) {
+      const statusPaidPlan = subscription?.plan !== "free" && perion <= 3;
+      console.log("У Вас звершується підписка.");
+      await checkHints(statusPaidPlan, "completedPaidPlan", hints);
+    }
+
+    console.log(perion);
     setIsLoading(false);
   }
 
@@ -192,6 +244,48 @@ export default function StatusBar() {
             <button
               className="button yellow middle"
               onClick={() => hideHintHandler("phoneNumbers")}
+            >
+              Приховати
+            </button>
+          </Alert>
+        )}
+      </div>
+      <div className="mt-2">
+        {visibleHints.includes("completedFreePlan") && (
+          <Alert type="error">
+            <p className="mb-0.5">Період безкоштовного тарифу завершився.</p>
+            <p className="mb-0.5">
+              Доступ клієнтів до Вашого графіку обмежений
+            </p>
+            <p className="mb-2">Всі функції для Вас недоступні.</p>
+            <p className="mb-4">
+              Будь ласка, перейдіть на платний тариф, якщо бажаєте продовжити
+              роботу з нашим сервісом.
+            </p>
+            <button
+              className="button red middle"
+              onClick={() => hideHintHandler("completedFreePlan")}
+            >
+              Приховати
+            </button>
+          </Alert>
+        )}
+      </div>
+      <div className="mt-2">
+        {visibleHints.includes("completedPaidPlan") && (
+          <Alert type="error">
+            <p className="mb-0.5">Період безкоштовного тарифу завершився.</p>
+            <p className="mb-0.5">
+              Доступ клієнтів до Вашого графіку обмежений
+            </p>
+            <p className="mb-2">Всі функції для Вас недоступні.</p>
+            <p className="mb-4">
+              Будь ласка, перейдіть на платний тариф, якщо бажаєте продовжити
+              роботу з нашим сервісом.
+            </p>
+            <button
+              className="button red middle"
+              onClick={() => hideHintHandler("completedFreePlan")}
             >
               Приховати
             </button>

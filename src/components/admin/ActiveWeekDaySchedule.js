@@ -23,7 +23,7 @@ import NewAppointmentForm from "./NewAppointmentForm";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function ActiveWeekDaySchedule() {
-  const { adminId, companyPlan } = useAppStore();
+  const { adminId, companyPlan, subscriptionStatus } = useAppStore();
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
@@ -139,6 +139,8 @@ export default function ActiveWeekDaySchedule() {
     ) {
       status = false;
     }
+
+    if (!subscriptionStatus) status = false;
 
     setIsEditingAllowed(status);
   }

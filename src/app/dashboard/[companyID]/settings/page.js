@@ -1,15 +1,18 @@
 "use client";
 import AddressForm from "@/components/admin/AddressForm";
 import NewPhoneForm from "@/components/admin/NewPhoneForm";
+import NoAccess from "@/components/admin/NoAccess";
 import PhoneNumberForm from "@/components/admin/PhoneNumberForm";
 import ThemePalette from "@/components/admin/ThemePalette";
 import Alert from "@/components/ui/Alert";
+import { CheckCircleIcon } from "@/components/ui/Icons";
 import PlanBase from "@/components/ui/PlanBase";
 import PlanBusiness from "@/components/ui/PlanBusiness";
 import PlanBusinessPlus from "@/components/ui/PlanBusinessPlus";
 import PlanFree from "@/components/ui/PlanFree";
 import Spinner from "@/components/ui/Spinner";
 import { useBaseURL } from "@/hooks/useBaseURL";
+import formatDate from "@/lib/formatDate";
 import { CompanyService } from "@/services/CompanyService";
 import { useAppStore } from "@/store/useAppStore";
 import Link from "next/link";
@@ -17,13 +20,21 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
-  const { themePalette, companyPlan } = useAppStore();
+  const { themePalette, companyPlan, subscriptionStatus, subscriptionEndDate } =
+    useAppStore();
   const { baseDashboardLink } = useBaseURL();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [exchange, setExchange] = useState(0);
   const [companyData, setCompanyData] = useState(null);
   const params = useParams();
+
+  const plans = {
+    free: "Безкоштовний",
+    basic: "Базовий",
+    business: "Бізнес",
+    businessPlus: "Бізнес Plus",
+  };
 
   async function loadData() {
     setIsLoading(true);
@@ -105,49 +116,92 @@ export default function SettingsPage() {
           successHandler={loadData}
         />
       </div>
-      <div className="mt-16 mb-12">
-        <div className="mb-2">
-          <h2 className="font-bold text-lg">Ваш тарифний план</h2>
-        </div>
-        {companyPlan === "free" && (
-          <PlanFree activePlan={companyPlan} exchange={exchange} price={0} />
-        )}
-        {companyPlan === "basic" && (
-          <PlanBase
-            selectHandler={() => selectPlanHandler("basic")}
-            exchange={exchange}
-            price={process.env.NEXT_PUBLIC_PLAN_BASE || 0}
-            salePrice={process.env.NEXT_PUBLIC_PLAN_BASE_SALE || null}
-            activePlan={companyPlan}
-          />
-        )}
-        {companyPlan === "business" && (
-          <PlanBusiness
-            selectHandler={() => selectPlanHandler("business")}
-            exchange={exchange}
-            price={process.env.NEXT_PUBLIC_PLAN_BUSINESS || 0}
-            salePrice={process.env.NEXT_PUBLIC_PLAN_BUSINESS_SALE || null}
-            activePlan={companyPlan}
-          />
-        )}
-        {companyPlan === "businessPlus" && (
-          <PlanBusinessPlus
-            selectHandler={() => selectPlanHandler("businessPlus")}
-            exchange={exchange}
-            price={process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS || 0}
-            salePrice={process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS_SALE || null}
-            activePlan={companyPlan}
-          />
-        )}
 
-        <div className="mt-4 flex justify-center">
-          <Link
-            href={`${baseDashboardLink}/pricing`}
-            className="button w-full !max-w-62"
-          >
-            Переглянути інші плани
-          </Link>
-        </div>
+      <div className="mt-16 mb-12">
+        {subscriptionStatus ? (
+          <>
+            <div className="mb-2">
+              <h2 className="font-bold text-lg">Ваш тарифний план</h2>
+            </div>
+            <div className="flex justify-between items-center my-8 p-4 bg-gray-50 rounded-xl">
+              <div className="flex items-center">
+                <CheckCircleIcon
+                  className={
+                    "w-8 h-8 text-green-600 animate__animated animate__bounceIn"
+                  }
+                />
+                <span className="ml-3 font-bold">{plans[companyPlan]}</span>
+              </div>
+              <div className="">
+                <span className="text-gray-600">дійсний до </span>
+
+                <span className="font-bold">
+                  {formatDate(new Date(subscriptionEndDate), "ui")}
+                </span>
+              </div>
+            </div>
+
+            {/* {companyPlan === "free" && (
+              <PlanFree
+                activePlan={companyPlan}
+                exchange={exchange}
+                price={0}
+              />
+            )}
+            {companyPlan === "basic" && (
+              <PlanBase
+                selectHandler={() => selectPlanHandler("basic")}
+                exchange={exchange}
+                price={process.env.NEXT_PUBLIC_PLAN_BASE || 0}
+                salePrice={process.env.NEXT_PUBLIC_PLAN_BASE_SALE || null}
+                activePlan={companyPlan}
+              />
+            )}
+            {companyPlan === "business" && (
+              <PlanBusiness
+                selectHandler={() => selectPlanHandler("business")}
+                exchange={exchange}
+                price={process.env.NEXT_PUBLIC_PLAN_BUSINESS || 0}
+                salePrice={process.env.NEXT_PUBLIC_PLAN_BUSINESS_SALE || null}
+                activePlan={companyPlan}
+              />
+            )}
+            {companyPlan === "businessPlus" && (
+              <PlanBusinessPlus
+                selectHandler={() => selectPlanHandler("businessPlus")}
+                exchange={exchange}
+                price={process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS || 0}
+                salePrice={
+                  process.env.NEXT_PUBLIC_PLAN_BUSINESS_PLUS_SALE || null
+                }
+                activePlan={companyPlan}
+              />
+            )} */}
+
+            <div className="mt-4 flex justify-center">
+              <Link
+                href={`${baseDashboardLink}/pricing`}
+                className="button w-full !max-w-62"
+              >
+                Переглянути інші плани
+              </Link>
+            </div>
+          </>
+        ) : (
+          <div className="">
+            <div>
+              <NoAccess />
+            </div>
+            <div className="mt-4 flex justify-center">
+              <Link
+                href={`${baseDashboardLink}/pricing`}
+                className="button w-full !max-w-62"
+              >
+                Переглянути всі плани
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mb-12">

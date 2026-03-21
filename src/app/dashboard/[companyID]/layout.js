@@ -6,6 +6,7 @@ import Alert from "@/components/ui/Alert";
 import Spinner from "@/components/ui/Spinner";
 import { AuthService } from "@/services/AuthService";
 import { CompanyService } from "@/services/CompanyService";
+import { SubscriptionsService } from "@/services/SubscriptionsService";
 import { useAppStore } from "@/store/useAppStore";
 import { useTheme } from "next-themes";
 import { useParams } from "next/navigation";
@@ -19,6 +20,8 @@ export default function DashboardCompanyLayout({ children }) {
     setAdminId,
     setRole,
     setBotThumbnail,
+    setSubscriptionStatus,
+    setSubscriptionEndDate,
   } = useAppStore();
   const { setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
@@ -35,11 +38,10 @@ export default function DashboardCompanyLayout({ children }) {
     if (companyDataResponse.status !== 200) {
       setError("Сталася помилка при завантаженні даних");
     } else {
-      console.log(companyDataResponse.data);
+      console.log("companyData =>", companyDataResponse.data);
 
       setTheme(companyDataResponse.data?.themePalette);
       setThemePalette(companyDataResponse.data?.themePalette);
-      setCompanyPlan(companyDataResponse.data?.plan);
       setBotName(companyDataResponse.data?.first_name);
       setBotThumbnail(companyDataResponse.data?.avatar);
       setAdminId(companyDataResponse.data?.adminId);
@@ -50,7 +52,35 @@ export default function DashboardCompanyLayout({ children }) {
       );
     }
 
+    await checkSubscriptionStatus();
+
     setIsLoading(false);
+  }
+
+  async function checkSubscriptionStatus() {
+    const response = await SubscriptionsService.getMany({
+      botId: params?.companyID,
+    });
+
+    if (response?.status !== 200) {
+      setError("Сталася помилка при завантаженні даних");
+      return;
+    }
+
+    const subscription = response.data[0];
+    const subscriptionEndDate = new Date(subscription.planEndDate); // Current date and time
+    const timestampEndDate = subscriptionEndDate.getTime();
+
+    // console.log("subscription =>", subscription);
+
+    const perion = Math.ceil(
+      (timestampEndDate - new Date().getTime()) / 86400000,
+    );
+
+    // console.log("subscription perion =>", perion > 0);
+    setCompanyPlan(subscription?.plan);
+    setSubscriptionStatus(perion > 0);
+    setSubscriptionEndDate(subscription?.planEndDate);
   }
 
   useEffect(() => {

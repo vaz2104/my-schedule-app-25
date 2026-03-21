@@ -19,7 +19,7 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
   const { setInitCalendarDate } = useCalendarStore(
     useShallow((state) => ({
       setInitCalendarDate: state.setInitCalendarDate,
-    }))
+    })),
   );
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -129,9 +129,8 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
     } else {
       setHoursList((prevState) => {
         let newState = prevState ? JSON.parse(JSON.stringify(prevState)) : {};
-        newState[
-          `appointment_${generateRandomKey(5, true)}`
-        ] = `${startHours}:${minutes}`;
+        newState[`appointment_${generateRandomKey(5, true)}`] =
+          `${startHours}:${minutes}`;
 
         return newState;
       });
@@ -183,7 +182,7 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
       setInitCalendarDate(
         new Date(selectedDate).getMonth() === new Date().getMonth()
           ? new Date()
-          : selectedDate
+          : selectedDate,
       );
       closeModal();
     }
@@ -210,7 +209,7 @@ export default function DayScheduleModalForm({ activeSchedule, selectedDate }) {
       setInitCalendarDate(
         new Date(selectedDate).getMonth() === new Date().getMonth()
           ? new Date()
-          : selectedDate
+          : selectedDate,
       );
       closeModal();
     }

@@ -1,7 +1,7 @@
 "use client";
 import { CheckCircleIcon, PlusIcon, TrashIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Calendar from "../ui/calendar/Calendar";
 import { cn } from "@/lib/cn";
 import Lottie from "lottie-react";
@@ -12,13 +12,17 @@ import { AuthService } from "@/services/AuthService";
 import { useCalendarStore } from "../ui/calendar/useCalendarStore";
 import { useShallow } from "zustand/shallow";
 import generateRandomKey from "@/lib/generateRandomKey";
+import { useAppStore } from "@/store/useAppStore";
+import { ThemeContext } from "@/context/ThemeContext";
 
 export default function GenerateSchedule({ successHandler, disabledDays }) {
+  const { subscriptionStatus } = useAppStore();
   const { setInitCalendarDate } = useCalendarStore(
     useShallow((state) => ({
       setInitCalendarDate: state.setInitCalendarDate,
-    }))
+    })),
   );
+  const { setWarningError } = useContext(ThemeContext);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -77,7 +81,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
 
   function deleteScheduleItem(appointmentTime) {
     setHoursList((prevHoursState) =>
-      prevHoursState.filter((id) => id !== appointmentTime)
+      prevHoursState.filter((id) => id !== appointmentTime),
     );
     setStartMinutes("");
     setStartHours("");
@@ -121,7 +125,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
     const modifiedHoursList = {};
     hoursList.forEach(
       (el) =>
-        (modifiedHoursList[`appointment_${generateRandomKey(5, true)}`] = el)
+        (modifiedHoursList[`appointment_${generateRandomKey(5, true)}`] = el),
     );
 
     console.log(selectedDays);
@@ -136,7 +140,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
             schedule: modifiedHoursList,
             timestamp: Date.now(),
           });
-        })
+        }),
       ).then(() => {
         setIsLoading(false);
         setActiveStep(activeStep + 1);
@@ -147,13 +151,20 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
     }
   }
 
+  function buttonHandler() {
+    if (subscriptionStatus) {
+      setIsModalVisible(true);
+    } else {
+      setWarningError(
+        "У вас закінчилась підписка! Будь ласка, підключіть тарифний план, аби отримати доступ до всіх функцій панелі",
+      );
+    }
+  }
+
   return (
     <div>
       <div className="flex justify-center">
-        <button
-          className="button dark w-full"
-          onClick={() => setIsModalVisible(true)}
-        >
+        <button className="button dark w-full" onClick={buttonHandler}>
           <PlusIcon className={"w-4 h-4 me-2"} />
           Додати графік
         </button>
@@ -175,8 +186,8 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
                 activeStep === 1
                   ? "stepActive"
                   : activeStep > 1
-                  ? "stepFinished"
-                  : ""
+                    ? "stepFinished"
+                    : ""
               }`}
             >
               <span>1</span>
@@ -193,8 +204,8 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
                 activeStep === 2
                   ? "stepActive"
                   : activeStep > 2
-                  ? "stepFinished"
-                  : ""
+                    ? "stepFinished"
+                    : ""
               }`}
             >
               <span>2</span>
@@ -212,7 +223,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
                   className={cn(
                     "w-6 h-6 text-gray-400",
                     activeStep === 3 &&
-                      "text-white animate__animated animate__bounceIn"
+                      "text-white animate__animated animate__bounceIn",
                   )}
                 />
               </span>
@@ -247,7 +258,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
               <button
                 className={cn(
                   "button w-full min-w-48",
-                  selectedDays.length === 0 ? "disabled" : "dark"
+                  selectedDays.length === 0 ? "disabled" : "dark",
                 )}
                 onClick={() => setActiveStep(activeStep + 1)}
                 disabled={selectedDays.length === 0}
@@ -363,7 +374,7 @@ export default function GenerateSchedule({ successHandler, disabledDays }) {
                 <button
                   className={cn(
                     "button w-full",
-                    hoursList.length === 0 ? "disabled" : ""
+                    hoursList.length === 0 ? "disabled" : "",
                   )}
                   onClick={() => saveSchedule()}
                   disabled={hoursList.length === 0}

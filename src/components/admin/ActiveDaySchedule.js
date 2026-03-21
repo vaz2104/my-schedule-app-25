@@ -30,12 +30,14 @@ import CancelAppointmentForm from "./CancelAppointmentForm";
 import NewAppointmentForm from "./NewAppointmentForm";
 
 export default function ActiveDaySchedule() {
-  const { adminId, companyPlan } = useAppStore();
+  const { adminId, companyPlan, subscriptionStatus } = useAppStore();
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
     })),
   );
+
+  // console.log("subscriptionStatus", subscriptionStatus);
 
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -158,6 +160,8 @@ export default function ActiveDaySchedule() {
       status = false;
     }
 
+    if (!subscriptionStatus) status = false;
+
     setIsEditingAllowed(status);
   }
 
@@ -196,33 +200,37 @@ export default function ActiveDaySchedule() {
         </div>
       )}
 
-      {selectedDaySchedule &&
-      Object.keys(selectedDaySchedule?.schedule).length ? (
-        <>
-          {!CalendarService.isOldDate(
-            new Date(selectedDaySchedule?.date),
-            selectedDaySchedule?.schedule[
-              Object.keys(selectedDaySchedule?.schedule)[
-                Object.keys(selectedDaySchedule?.schedule).length - 1
-              ]
-            ],
-          ) &&
-            isEditingAllowed && (
-              <DayScheduleModalForm
-                activeSchedule={selectedDaySchedule}
-                selectedDate={selectedDate}
-              />
-            )}
-        </>
-      ) : (
-        <>
-          {!CalendarService.isOldDay(selectedDate) && isEditingAllowed && (
-            <DayScheduleModalForm
-              activeSchedule={selectedDaySchedule}
-              selectedDate={selectedDate}
-            />
+      {subscriptionStatus && (
+        <Fragment>
+          {selectedDaySchedule &&
+          Object.keys(selectedDaySchedule?.schedule).length ? (
+            <>
+              {!CalendarService.isOldDate(
+                new Date(selectedDaySchedule?.date),
+                selectedDaySchedule?.schedule[
+                  Object.keys(selectedDaySchedule?.schedule)[
+                    Object.keys(selectedDaySchedule?.schedule).length - 1
+                  ]
+                ],
+              ) &&
+                isEditingAllowed && (
+                  <DayScheduleModalForm
+                    activeSchedule={selectedDaySchedule}
+                    selectedDate={selectedDate}
+                  />
+                )}
+            </>
+          ) : (
+            <>
+              {!CalendarService.isOldDay(selectedDate) && isEditingAllowed && (
+                <DayScheduleModalForm
+                  activeSchedule={selectedDaySchedule}
+                  selectedDate={selectedDate}
+                />
+              )}
+            </>
           )}
-        </>
+        </Fragment>
       )}
 
       {selectedDaySchedule &&

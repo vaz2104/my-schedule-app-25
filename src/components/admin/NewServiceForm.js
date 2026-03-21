@@ -1,15 +1,20 @@
 "use client";
 import { PlusIcon } from "../ui/Icons";
 import BaseModal from "../ui/BaseModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Calendar from "../ui/calendar/Calendar";
 import { ServicesService } from "@/services/ServicesService";
 import { useParams } from "next/navigation";
 import Alert from "../ui/Alert";
 import { AuthService } from "@/services/AuthService";
 import { NotificationService } from "@/services/NotificatoinsServices";
+import { useAppStore } from "@/store/useAppStore";
+import { ThemeContext } from "@/context/ThemeContext";
 
 export default function NewServiceForm({ successHandler }) {
+  const { subscriptionStatus } = useAppStore();
+  const { setWarningError } = useContext(ThemeContext);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
@@ -41,7 +46,7 @@ export default function NewServiceForm({ successHandler }) {
 
     if (priceWithSale && !saleEndDay) {
       setError(
-        "Ви вказали ціну зі знижкою, але не вказали дату закінчення акції"
+        "Ви вказали ціну зі знижкою, але не вказали дату закінчення акції",
       );
       setIsLoading(false);
       return;
@@ -108,13 +113,20 @@ export default function NewServiceForm({ successHandler }) {
     }
   }
 
+  function buttonHandler() {
+    if (subscriptionStatus) {
+      setIsModalVisible(true);
+    } else {
+      setWarningError(
+        "У вас закінчилась підписка! Будь ласка, підключіть тарифний план, аби отримати доступ до всіх функцій панелі",
+      );
+    }
+  }
+
   return (
     <div>
       <div>
-        <button
-          className="button w-full"
-          onClick={() => setIsModalVisible(true)}
-        >
+        <button className="button w-full" onClick={buttonHandler}>
           <PlusIcon className={"w-5 h-5 me-2"} />
           Додати
         </button>

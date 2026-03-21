@@ -16,6 +16,7 @@ import PlanBusiness from "../ui/PlanBusiness";
 import PlanBusinessPlus from "../ui/PlanBusinessPlus";
 import { useAppStore } from "@/store/useAppStore";
 import Alert from "../ui/Alert";
+import { SubscriptionsService } from "@/services/SubscriptionsService";
 
 export default function Plans() {
   const { setCompanyPlan, companyPlan } = useAppStore();
@@ -53,9 +54,18 @@ export default function Plans() {
     const nextMonthDate = new Date(currentDate);
     nextMonthDate.setMonth(currentDate.getMonth() + 1);
 
-    const response = await CompanyService.update(params?.companyID, {
+    const response = await SubscriptionsService.create({
+      botId: params?.companyID,
       plan: type,
-      planEndDay: `${formatDate(nextMonthDate)}T00:00:00.000Z`,
+      planEndDate: `${formatDate(nextMonthDate)}T00:00:00.000Z`,
+
+      //       botId
+      // orderId
+      // orderDetails
+      // plan
+      // isFinished
+      // planEndDate
+      // timestamp
     });
 
     if (response.status !== 200) {
@@ -64,8 +74,8 @@ export default function Plans() {
       setCompanyPlan(type);
       setSuccessMessage(
         `Вітаємо! Ваш план оновлено та діятиме до <span className="font-bold">${printDateWithMonth(
-          nextMonthDate
-        )}</span>`
+          nextMonthDate,
+        )}</span>`,
       );
     }
 

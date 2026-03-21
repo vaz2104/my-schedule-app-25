@@ -15,7 +15,7 @@ export default function ServiceCard({
   saleEndDay,
   updateListHandler,
 }) {
-  const { role } = useAppStore();
+  const { role, subscriptionStatus } = useAppStore();
 
   if (!service)
     return (
@@ -52,7 +52,7 @@ export default function ServiceCard({
         </div>
       </div>
       <div className="flex">
-        {role === "admin" && (
+        {role === "admin" && subscriptionStatus && (
           <>
             <div className="mr-4">
               <EditServiceForm

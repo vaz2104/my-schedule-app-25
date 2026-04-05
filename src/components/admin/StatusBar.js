@@ -155,7 +155,7 @@ export default function StatusBar() {
     }
 
     const subscription = response.data[0];
-    const subscriptionEndDate = new Date(subscription.planEndDate); // Current date and time
+    const subscriptionEndDate = new Date(subscription?.planEndDate); // Current date and time
     const timestampEndDate = subscriptionEndDate.getTime();
 
     // if (Date.now() > timestampEndDate) {

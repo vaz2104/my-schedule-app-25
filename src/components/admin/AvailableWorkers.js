@@ -14,13 +14,14 @@ import { useShallow } from "zustand/shallow";
 import WorkerActiveDaySchedule from "./WorkerActiveDaySchedule";
 import Thumbnail from "../ui/Thumbnail";
 import { useAppStore } from "@/store/useAppStore";
+import NoWorkers from "./NoWorkers";
 
 export default function AvailableWorkers() {
   const { adminId } = useAppStore();
   const { selectedDate } = useCalendarStore(
     useShallow((state) => ({
       selectedDate: state.selectedDate,
-    }))
+    })),
   );
 
   const [workers, setWorkers] = useState([]);
@@ -122,9 +123,7 @@ export default function AvailableWorkers() {
           })}
         </div>
       ) : (
-        <div className="text-center text-gray-400 mt-16">
-          <p>Жодних доступних місць для запису</p>
-        </div>
+        <NoWorkers />
       )}
     </div>
   );

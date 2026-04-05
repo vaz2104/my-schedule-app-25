@@ -68,7 +68,7 @@ export default function DashboardCompanyLayout({ children }) {
     }
 
     const subscription = response.data[0];
-    const subscriptionEndDate = new Date(subscription.planEndDate); // Current date and time
+    const subscriptionEndDate = new Date(subscription?.planEndDate); // Current date and time
     const timestampEndDate = subscriptionEndDate.getTime();
 
     // console.log("subscription =>", subscription);

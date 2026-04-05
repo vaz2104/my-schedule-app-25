@@ -25,11 +25,13 @@ export default function DashboardCompanyLayout({ children }) {
     }
 
     const subscription = response.data[0];
-    const subscriptionEndDate = new Date(subscription.planEndDate); // Current date and time
-    const timestampEndDate = subscriptionEndDate.getTime();
+    if (subscription?.planEndDate) {
+      const subscriptionEndDate = new Date(subscription?.planEndDate); // Current date and time
+      const timestampEndDate = subscriptionEndDate.getTime();
 
-    if (Date.now() > timestampEndDate) {
-      setIsBlocked(true);
+      if (Date.now() > timestampEndDate) {
+        setIsBlocked(true);
+      }
     }
 
     setIsLoading(false);

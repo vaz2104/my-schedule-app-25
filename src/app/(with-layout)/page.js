@@ -108,39 +108,55 @@ export default function Home() {
               <div className="font-bold text-lg mt-4 mb-2 text-gray-900">
                 Бот з планом Безкоштовний або Базовий
               </div>
-              <img
-                src="demo-single-schedule.png"
-                className="m-auto w-80 mt-8"
-                alt="demo-free"
-              />
-              <p className="mt-4">
+
+              <div className="mt-4">
                 <a
-                  href="https://t.me/MySchedule24DevBot"
+                  href="https://t.me/ViktoriaBeautyShedule_bot"
                   target="_blunk"
-                  className="text-main hover:underline"
+                  className="text-main group"
                 >
-                  @MySchedule24DevBot
+                  <img
+                    src="demo-viktoria-beauty.png"
+                    className="m-auto w-80 mt-8 rounded-full transition-all duration-300 group-hover:translate-y-2.5 group-hover:scale-95"
+                    alt="demo-eva"
+                  />
+                  <div className="transition-all duration-300 group-hover:-translate-y-2.5">
+                    <span className="block text-2xl mt-8">
+                      Viktoria Beauty💋
+                    </span>
+                    <span className="block text-sm text-gray-400">
+                      @ViktoriaBeautyShedule_bot
+                    </span>
+                  </div>
                 </a>
-              </p>
+              </div>
             </div>
             <div className="mx-4">
               <div className="font-bold text-lg mt-4 mb-2 text-gray-900">
                 Бот з планом Бізнес або Бізнес Plus
               </div>
-              <img
-                src="demo-single-schedule.png"
-                className="m-auto w-80 mt-8"
-                alt="demo-free"
-              />
-              <p className="mt-4">
+
+              <div className="mt-4">
                 <a
-                  href="https://t.me/MySchedule24DevBot"
+                  href="https://t.me/EvaBeautySalonBot"
                   target="_blunk"
-                  className="text-main hover:underline"
+                  className="text-main group"
                 >
-                  @MySchedule24DevBot
+                  <img
+                    src="demo-eva.png"
+                    className="m-auto w-80 mt-8 rounded-full transition-all duration-300 group-hover:translate-y-2.5 group-hover:scale-95"
+                    alt="demo-eva"
+                  />
+                  <div className="transition-all duration-300 group-hover:-translate-y-2.5">
+                    <span className="block text-2xl mt-8">
+                      Салон Краси Eva{" "}
+                    </span>
+                    <span className="block text-sm text-gray-400">
+                      @EvaBeautySalonBot
+                    </span>
+                  </div>
                 </a>
-              </p>
+              </div>
             </div>
           </div>
         </div>
